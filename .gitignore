@@ -58,3 +58,8 @@ modules/views/
 # Config
 # --------------------
 /config/env/all.js
+
+#---------------------
+# mean-admin
+#---------------------
+/packages/contrib/mean-admin
