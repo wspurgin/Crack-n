@@ -23,10 +23,6 @@ var messageSchema = new Schema ({
 	timestamp: {
 		type: Date,
 		default: Date.now
-	},
-	project: {
-		type: Schema.ObjectId,
-		required: true
 	}
 });
 
