@@ -11,6 +11,10 @@ Schema = mongoose.Schema;
 */
 
 var phaseSchema = new Schema ({
+	name: {
+		type: String,
+		required: true
+	},
 	startDate: {
 		type: Date,
 		default: Date.now,
@@ -22,6 +26,10 @@ var phaseSchema = new Schema ({
 	},
 	tasks: {
 		type: Array
+	},
+	portionCompleted: {
+		type: Number,
+		default: 0.0
 	}
 });
 

@@ -3,6 +3,7 @@
 /**
  * Module dependencies.
  */
+ 
 var mongoose = require('mongoose'),
   Phase = mongoose.model('Phase');
 
@@ -17,6 +18,7 @@ exports.show = function (req, res) {
 
 exports.addPhase = function (req, res) {
     var phase = new Phase();
+    phase.name = req.name;
     phase.startDate = req.startDate;
     phase.endDate = req.endDate;
     phase.save();
