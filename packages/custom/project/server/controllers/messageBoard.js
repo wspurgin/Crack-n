@@ -7,8 +7,7 @@ var mongoose = require('mongoose'),
   Message = mongoose.model('Message');
 
 exports.projectMessages = function (req, res) {
-	var messages = Message.find({ 'project': req });
-	return res.json(messages);
+	res.json(req.messages);
 };
 
 exports.addMessage = function (req, res) {
