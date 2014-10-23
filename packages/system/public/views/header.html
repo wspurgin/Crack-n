@@ -37,6 +37,29 @@
       </li>
     </ul>
   </div> -->
+   <div data-ng-hide="global.authenticated">
+    <div class="alert alert-danger animated fadeIn" ng-show="loginerror">{{loginerror}}</div>
+    <div class="loginMenu" ng-controller="LoginController"> 
+      <form id="loginForm" ng-submit="login()">
+          <div class="form_group">
+              <label for="loginEmail">Email:</label>
+              <input type="email" name="loginEmail" placeholder="Email" ng-model="user.email">
+          </div>
+          <div class="form_group">
+              <label for="loginPassword">Password:</label>
+              <input type="password" name="loginPassword" placeholder="Password" ng-model="user.password">
+          </div>
+          <button class="signup"><a href="#!/auth/register">Sign Up</a></button>
+          <button type="submit" class="login">Login</button> 
+      </form>
+    </div>
+  </div>
+  <div data-ng-show="global.authenticated">
+    <div class="loggedInMenu">
+        <div class="greeting">Hi, {{global.user.name}}</div>
+        <button class="loggout"><a href="/logout">Log Out</a></button>
+    </div>
+  </div>
   <header>
     <a ui-sref="home"><img src="img/logo.png"></a>
   </header>
