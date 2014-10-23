@@ -10,6 +10,9 @@ module.exports = function(Phase, app, auth, database, passport) {
   app.route('/projects/:project_id/phases/:phase_id')
     .get(phase.show);
 
+  app.route('/projects/:project_id/phases/:phase_id')
+  	.put(phase.edit);
+
   app.route('/projects/:project_id/new-phase')
   	.post(phase.addPhase);
    
