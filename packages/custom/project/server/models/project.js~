@@ -13,6 +13,7 @@ Schema = mongoose.Schema;
 */
 
 var projectSchema = new Schema({
+
 	name: {
 		type: String,
 		required: true
@@ -30,7 +31,7 @@ var projectSchema = new Schema({
 		type: Array
 	},
 	admin: {
-		type: Schema.ObjectID,
+		type: Schema.ObjectId,
 		ref: 'User',
 		required: true
 	},
@@ -44,3 +45,5 @@ var projectSchema = new Schema({
 		 
 
 mongoose.model('Project', projectSchema);
+
+
