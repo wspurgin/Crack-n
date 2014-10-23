@@ -176,4 +176,13 @@ angular.module('mean.users')
           });
       };
     }
-  ]);
+  ])
+  .controller('MyAccountCtrl', ['$scope', '$rootScope', '$http', '$location', 'Global',
+    function($scope, $rootScope, $http, $location, Global) {
+      $scope.global = Global;
+
+      // just to stay consistent with other user controllers
+      $scope.global.registerForm = false;
+
+      // more to come here
+  }]);
