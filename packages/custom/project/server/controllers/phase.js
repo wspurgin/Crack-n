@@ -8,12 +8,23 @@ var mongoose = require('mongoose'),
   Phase = mongoose.model('Phase');
 
 exports.all = function (req, res) {
-	var project = req.project;
-    return res.json(200, project.phases);
+	if (req.project) {
+		var project = req.project;
+		return res.json(200, project.phases);
+	}
+	else {
+		return res.json('Nah bro, there aint no project');
+	}
 };
 
 exports.show = function (req, res) {
-	return res.json(200, req.phase);
+	if (req.phase) {
+		return res.json(200, req.phase);
+	}
+	else {
+		return res.json('Get real bro');
+	}
+	
 };
 
 exports.addPhase = function (req, res) {
