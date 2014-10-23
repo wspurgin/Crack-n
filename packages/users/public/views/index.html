@@ -1,17 +1,6 @@
 <div class="form main-form" ng-controller="AuthCtrl" ng-class="{'register-form' : global.registerForm}">
     <div class="login-form__left" ui-view></div>
-    <div class="login-form__center">
-        <p>or</p>
-    </div>
-    <div class="row login-form__right " data-ng-controller="AuthCtrl">
-        <div class="social_wrap" ng-class="{bigger:socialButtonsCounter > 4 && !global.registerForm}">
-            <ul class="social">
-                <li ng-if="socialButtons.hasOwnProperty('linkedin')" class="social_icon social_icon_in">
-                    <a href="/auth/linkedin" class="button">
-                        <span>Log In With LinkedIn</span>
-                    </a>
-                </li>
-                <li ng-if="socialButtons.hasOwnProperty('facebook')" class="social_icon social_icon_fb">
+   <!--i ng-if="socialButtons.hasOwnProperty('facebook')" class="social_icon social_icon_fb">
                     <a href="/auth/facebook" class="button">
                         <span>Log In With Facebook</span>
                     </a>
@@ -33,6 +22,6 @@
                 </li>
             </ul>
         </div>
-    </div>
+    </div> -->
 
 </div>
