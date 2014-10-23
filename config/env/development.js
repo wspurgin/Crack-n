@@ -7,7 +7,7 @@ module.exports = {
     debug: false
   },
   app: {
-    name: 'BurgerBar'
+    name: 'Crack\'n'
   },
   facebook: {
     clientID: 'DEFAULT_APP_ID',
