@@ -9,11 +9,11 @@ var mongoose = require('mongoose'),
 
 exports.all = function (req, res) {
 	var project = req.project;
-    res.json(project.phases);
+    return res.json(200, project.phases);
 };
 
 exports.show = function (req, res) {
-	res.json(req.phase);
+	return res.json(200, req.phase);
 };
 
 exports.addPhase = function (req, res) {
@@ -22,4 +22,5 @@ exports.addPhase = function (req, res) {
     phase.startDate = req.startDate;
     phase.endDate = req.endDate;
     phase.save();
+    return res.json(201);
 };

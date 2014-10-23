@@ -3,11 +3,12 @@
 /**
  * Module dependencies.
  */
+ 
 var mongoose = require('mongoose'),
   Message = mongoose.model('Message');
 
 exports.projectMessages = function (req, res) {
-	res.json(req.messages);
+	return res.json(200, req.messages);
 };
 
 exports.addMessage = function (req, res) {
@@ -16,4 +17,5 @@ exports.addMessage = function (req, res) {
     message.user = req.user;
     message.timestamp = Date.now;
     message.save();
+    return res.json(201);
 };

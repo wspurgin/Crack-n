@@ -4,10 +4,10 @@ var messages = require('../controllers/messageBoard');
  
 module.exports = function(MessageBoard, app, auth, database, passport) {
   
-  app.route('/project/:project_id/messages')
+  app.route('/projects/:project_id/messages')
     .get(messages.projectMessages);
 
-  app.route('/project/:project_id/new-message')
+  app.route('/projects/:project_id/new-message')
   	.post(messages.addMessage);
    
 };
