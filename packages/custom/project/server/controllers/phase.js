@@ -5,11 +5,13 @@
  */
  
 var mongoose = require('mongoose'),
-  Phase = mongoose.model('Phase');
+  Phase = mongoose.model('Phase'),
+  Project = mongoose.model('Project');
 
 exports.all = function (req, res) {
-	if (req.project) {
-		var project = req.project;
+	var project_id = req.params.project_id;
+	var project = Project.find( {'_id': project_id} ); //MONGODB
+	if (project.length > 0) {
 		return res.json(200, project.phases);
 	}
 	else {
@@ -18,20 +20,30 @@ exports.all = function (req, res) {
 };
 
 exports.show = function (req, res) {
-	if (req.phase) {
-		return res.json(200, req.phase);
+	var project_id = req.params.project_id;
+	var phase_id = req.params.phase_id;
+	var project = Project.find( {'_id': project_id} ); //MONGODB
+	if (project.length > 0) {
+		for (var p in project.phases){
+			if (p.id === phase_id) {
+				var phase = p;
+				return res.json(200, phase);
+			}
+		}
 	}
 	else {
 		return res.json('Get real bro');
 	}
-	
 };
 
 exports.addPhase = function (req, res) {
+	var project_id = req.params.project_id;
+	var project = Project.find( {'_id': project_id} ); //MONGODB
     var phase = new Phase();
     phase.name = req.name;
     phase.startDate = req.startDate;
     phase.endDate = req.endDate;
     phase.save();
+    project.phases.push(phase);
     return res.json(201);
 };
