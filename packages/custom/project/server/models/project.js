@@ -39,7 +39,7 @@ var projectSchema = new Schema({
 	members: {
 		type: Array
 	},
-	messeges: { 
+	messages: { 
 		type: Array
 	}
 });

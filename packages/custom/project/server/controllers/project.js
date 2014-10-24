@@ -8,36 +8,43 @@ var mongoose = require('mongoose'),
   Project = mongoose.model('Project');
 
 exports.all = function (req, res) {
-	var project = Project.find(); // MongoDB
-	if (project.length > 0) {
-		return res.json(200, project.phases);
-	}
-	else {
-		return res.json('No project here');
-	}
+	Project.find().exec(function(err, result) {
+		if (!err) {
+			return res.json(200, result);
+		}
+		else {
+			return res.json('Get real bro');
+		}
+		console.log('project ' + result);
+	});
 };
 
 exports.show = function (req, res) {
 	var project_id = req.params.project_id;
-	var project = Project.find( {'_id': project_id} ); //MONGODB
-	if (project.length > 0) {
-		return res.json(200, project);
-	}
-	else {
-		return res.json('Get real bro');
-	}
+	console.log('project_id ' + project_id);
+	Project.findOne( {'_id': project_id} ).exec(function(err, result) {
+		if (!err) {
+			return res.json(200, result);
+		}
+		else {
+			return res.json('Get real bro');
+		}
+		console.log('project ' + result);
+	}); //MONGODB
+	
 };
 
 exports.edit = function (req, res) {
 	var project_id = req.params.project_id;
-	var project = Project.find( {'_id': project_id} ); //MONGODB
-	if (project.length > 0) {
-		return res.json(200, 'Successfully edited phase');
-	}
-	else {
-		return res.json('Get real bro');
-	}
-
+	Project.findOne( {'_id': project_id} ).exec(function(err, result) {
+		if (!err) {
+			return res.json(200, result, 'Successfully edited phase');
+		}
+		else {
+			return res.json('Get real bro');
+		}
+		console.log('project ' + result);
+	});
 
 };
 
@@ -49,7 +56,7 @@ exports.addProject = function (req, res) {
     project.phases = [];
     project.admin = req.body.name;
     project.members = [];
-    project.messeges = [];
+    project.messages = [];
     project.save();
     return res.json(201);
 };
