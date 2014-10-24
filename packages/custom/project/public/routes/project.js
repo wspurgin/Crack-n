@@ -2,9 +2,14 @@
 
 angular.module('mean.project').config(['$stateProvider',
   function($stateProvider) {
-    $stateProvider.state('project example page', {
-      url: '/project/example',
-      templateUrl: 'project/views/index.html'
-    });
+    $stateProvider
+      .state('project', {
+        url: '/project',
+        templateUrl: 'project/views/index.html'
+      })
+      .state('project_create', {
+        url: '/project/create',
+        templateUrl: 'project/views/create.html'
+      });
   }
 ]);

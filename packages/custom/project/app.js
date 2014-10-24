@@ -18,13 +18,14 @@ Project.register(function(app, auth, database) {
 
   //We are adding a link to the main menu for all authenticated users
   Project.menus.add({
-    title: 'project example page',
-    link: 'project example page',
+    title: 'Create A Project',
+    link: 'project.create',
     roles: ['authenticated'],
     menu: 'main'
   });
   
   Project.aggregateAsset('css', 'project.css');
+  Project.aggregateAsset('js', 'project.js');
 
   /**
     //Uncomment to use. Requires meanio@0.3.7 or above
