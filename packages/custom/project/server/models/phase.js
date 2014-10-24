@@ -25,7 +25,8 @@ var phaseSchema = new Schema ({
 		required: true
 	},
 	tasks: {
-		type: Array
+		type: Array,
+		default: []
 	},
 	portionCompleted: {
 		type: Number,

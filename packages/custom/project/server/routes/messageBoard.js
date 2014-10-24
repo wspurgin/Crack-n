@@ -7,7 +7,7 @@ module.exports = function(MessageBoard, app, auth, database, passport) {
   app.route('/projects/:project_id/messages')
     .get(messages.projectMessages);
 
-  app.route('/projects/:project_id/new-message')
+  app.route('/projects/:project_id/messages')
   	.post(messages.addMessage);
    
 };
