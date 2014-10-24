@@ -12,17 +12,19 @@ var mongoose = require('mongoose'),
 
 var messageSchema = new Schema ({
 	user: {
-		type: Schema.ObjectId,
-		ref: 'User',
+		// type: Schema.ObjectId,
+		// ref: 'User',
+		type: String,
 		required: true
 	},
 	body: {
 		type: String,
 		required: true
 	},
-	timestamp: {
+	timeSent: {
 		type: Date,
-		default: Date.now
+		default: Date.now,
+		required: true
 	}
 });
 

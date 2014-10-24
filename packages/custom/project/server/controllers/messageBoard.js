@@ -28,9 +28,10 @@ exports.addMessage = function (req, res) {
 			var message = new Message();
 		    message.body = req.body.body;
 		    message.user = req.body.user;
-		    message.timestamp = Date.now;
 		    message.save();
+		    console.log('<: ' + message);
 		    result.messages.push(message);
+		    result.save();
 			return res.json(200, result);
 		}
 		else {

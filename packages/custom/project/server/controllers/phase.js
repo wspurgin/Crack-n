@@ -26,12 +26,14 @@ exports.show = function (req, res) {
 	var phase_id = req.params.phase_id;
 	Project.findOne( {'_id': project_id} ).exec(function(err, result) {
 		if (!err) {
-			for (var p in result.phases){
-				if (p.id === phase_id) {
-					var phase = p;
-					return res.json(200, phase);
+			Phase.findOne( {'_id': phase_id} ).exec(function(err, result_phase){
+				if (!err) {
+					return res.json(200, result_phase);
 				}
-			}	
+				else {
+					return res.json('Nah bro, that phase aint real');
+				}
+			});	
 		}
 		else {
 			return res.json('Nah bro, there aint no project');
@@ -45,15 +47,18 @@ exports.edit = function (req, res) {
 	var phase_id = req.params.phase_id;
 	Project.findOne( {'_id': project_id} ).exec(function(err, result) {
 		if (!err) {
-			for (var p in result.phases){
-				if (p.id === phase_id) {
-					var phase = p;
-					if (req.body.name) phase.name = req.body.name;
-					if (req.body.startDate) phase.startDate = req.body.startDate;
-					if (req.body.endDate) phase.endDate = req.body.endDate;
-					return res.json(200, 'Successfully edited phase', phase);
+			Phase.findOne( {'_id': phase_id} ).exec(function(err, result_phase){
+				if (!err) {
+					if (req.body.name) result_phase.name = req.body.name;
+					if (req.body.startDate) result_phase.startDate = req.body.startDate;
+					if (req.body.endDate) result_phase.endDate = req.body.endDate;
+					result_phase.save();
+					return res.json(200, 'Successfully edited phase', result_phase);
 				}
-			}
+				else {
+					return res.json('Nah bro, that phase aint real');
+				}
+			});
 		}
 		else {
 			return res.json('Nah bro, there aint no project');
@@ -73,6 +78,7 @@ exports.addPhase = function (req, res) {
 		    phase.endDate = req.body.endDate;
 		    phase.save();
 		    result.phases.push(phase);
+		    result.save();
 		    return res.json(201);
 		}
 		else {
