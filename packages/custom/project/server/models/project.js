@@ -31,8 +31,9 @@ var projectSchema = new Schema({
 		type: Array
 	},
 	admin: {
-		type: Schema.ObjectId,
-		ref: 'User',
+		// type: Schema.ObjectId,
+		// ref: 'User',
+		type: String,
 		required: true
 	},
 	members: {

@@ -43,11 +43,11 @@ exports.edit = function (req, res) {
 
 exports.addProject = function (req, res) {
     var project = new Project();
-    project.name = req.name;
-    project.startDate = req.startDate;
-    project.endDate = req.endDate;
+    project.name = req.body.name;
+    project.startDate = req.body.startDate;
+    project.endDate = req.body.endDate;
     project.phases = [];
-    project.admin = req.name;
+    project.admin = req.body.name;
     project.members = [];
     project.messeges = [];
     project.save();

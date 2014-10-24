@@ -24,8 +24,8 @@ exports.addMessage = function (req, res) {
 	var project = Project.find( {'_id': project_id} ); //MONGODB
 	if (project.length > 0) {
 	    var message = new Message();
-	    message.body = req.body;
-	    message.user = req.user;
+	    message.body = req.body.body;
+	    message.user = req.body.user;
 	    message.timestamp = Date.now;
 	    message.save();
 	    project.messages.push(message);

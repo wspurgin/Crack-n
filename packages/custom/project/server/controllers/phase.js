@@ -44,9 +44,9 @@ exports.edit = function (req, res) {
 		for (var p in project.phases){
 			if (p.id === phase_id) {
 				var phase = p;
-				if (req.name) phase.name = req.name;
-				if (req.startDate) phase.startDate = req.startDate;
-				if (req.endDate) phase.endDate = req.endDate;
+				if (req.name) phase.name = req.body.name;
+				if (req.startDate) phase.startDate = req.body.startDate;
+				if (req.endDate) phase.endDate = req.body.endDate;
 				return res.json(200, 'Successfully edited phase');
 			}
 		}
@@ -62,9 +62,9 @@ exports.addPhase = function (req, res) {
 	var project_id = req.params.project_id;
 	var project = Project.find( {'_id': project_id} ); //MONGODB
     var phase = new Phase();
-    phase.name = req.name;
-    phase.startDate = req.startDate;
-    phase.endDate = req.endDate;
+    phase.name = req.body.name;
+    phase.startDate = req.body.startDate;
+    phase.endDate = req.body.endDate;
     phase.save();
     project.phases.push(phase);
     return res.json(201);
