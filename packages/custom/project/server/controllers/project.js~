@@ -50,6 +50,6 @@ exports.addProject = function (req, res) {
     project.admin = req.name;
     project.members = [];
     project.messeges = [];
-    project.save();
+    phase.save();
     return res.json(201);
 };
