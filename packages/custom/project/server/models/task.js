@@ -24,7 +24,7 @@ var taskSchema = new Schema ({
 		required: false
 	},
 	assignedMembers: {
-		type: Array,
+		type: String,
 		required: true
 	},
 	dueDates: {
