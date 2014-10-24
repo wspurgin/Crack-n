@@ -1,17 +1,17 @@
 'use strict';
 
-angular.module('mean.project').controller('ProjectController', ['$scope', 'Global', 'Project',
-  function($scope, Global, Project) {
+angular.module('mean.project').controller('ProjectController', ['$scope', '$http', 'Users', 'Global', 'Project',
+  function($scope, $http, Users, Global, Project) {
     $scope.global = Global;
     $scope.package = {
       name: 'project'
     };
   }
 ])
-.controller('CreateProjectCtrl', ['$scope', '$rootScope', '$http', '$location', 'Global',
-    function($scope, $rootScope, $http, $location, Global) {
+.controller('CreateProjectCtrl', ['$scope', '$rootScope', '$http', '$location', 'Global', 'Users',
+    function($scope,  $rootScope, $http, $location, Global, Users) {
         $scope.global = Global;
-
+        console.log($scope.global);
         // This will be the object filled in by the form data
         $scope.project = {};
         
@@ -22,8 +22,8 @@ angular.module('mean.project').controller('ProjectController', ['$scope', 'Globa
         // add starting current user as first admin user
         $scope.project.teamMembers = [
             {
-                _id: $rootScope.user._id, 
-                name: $rootScope.user.name,
+                _id: $scope.global.user._id, 
+                name: $scope.global.user.name,
                 permission: $scope.permissionLevels[0]
             }
         ];

@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('mean.project').config(['$stateProvider',
-  function($stateProvider) {
+angular.module('mean.project').config(['$stateProvider', '$urlRouterProvider',
+  function($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('project', {
         url: '/project',
