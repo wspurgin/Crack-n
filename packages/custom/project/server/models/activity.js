@@ -31,12 +31,11 @@ var logEntrySchema = new Schema ({
 		type		: Date,
 		default		: Date.now
 	}
+});
+
 /**
 * Virtuals
-*
-activityLog.virtual('.toString').get( function() {
-	return this.userName + ' ' + userActivty + ' at ' + hoursAgo(timestamp) +  ".";
 */
-});
+// activityLog.virtual('.example').get( function() { };
 
 mongoose.model('ActivityLog', logEntrySchema);
