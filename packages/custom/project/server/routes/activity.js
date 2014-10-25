@@ -5,7 +5,10 @@ var ActivityLog = require('../controllers/activity');
 module.exports = function(MeanUser, app, auth, database, passport) {
 
   app.route('/activityLog')
-  	.get(ActivityLog.getLog);
+  	.get(ActivityLog.getProjectLog);
+
+    app.route('/activityLog')
+    .get(ActivityLog.getUserLog);
 
   app.route('/activityLog')
   	.post(ActivityLog.createTask);

@@ -1,16 +1,19 @@
 'use strict';
 
+
+// [!] Doesn't yet store project_id.
+
 /**
 * Module dependencies
 */
 var mongoose = require('mongoose'),
 	// Project = mongoose.model('Project'),
 	ActivityLog = mongoose.model('ActivityLog');
-	
+
 /**
-* Return json of Project log for a given project id 
+* Return json of full log for a given Project (passed in req body) 
 */
-exports.getLog = function(req, res) {
+exports.getProjectLog = function(req, res) {
 	var project_id = req.body._id;
 	ActivityLog
 	  .find({'project_id': project_id})
@@ -19,13 +22,18 @@ exports.getLog = function(req, res) {
 		if (err) return res.status(400).json(err); 
 		return res.json(log);
 	  });
-	return res.status(400).json({ error: 'getLog Query failed: ' + req.body.name });
+	return res.status(400).json({error: 'getLog Query failed: ' + req.body.name});
 };
+
+/**
+* Return a json of full log for a given User
+*/
+//exports.getUserLog = function(req, res ) { };
 
 /**
 * Log a Task creation for a given User
 */
-exports.createTask = function(req,res) {
+exports.createTask = function(req, res) {
 	try {
 		var logEntry = new ActivityLog();
 		logEntry.userName = req.body.name;
@@ -45,7 +53,7 @@ exports.createTask = function(req,res) {
 /**
 * Log a Task completion for a given User
 */
-exports.completeTask = function(req,res) {
+exports.completeTask = function(req, res) {
 	try {
 		var logEntry = new ActivityLog();
 		logEntry.userName = req.body.name;
