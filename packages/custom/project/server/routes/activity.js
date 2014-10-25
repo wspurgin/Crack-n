@@ -7,8 +7,10 @@ module.exports = function(MeanUser, app, auth, database, passport) {
   app.route('/activityLog')
   	.get(ActivityLog.getProjectLog);
 
+    /*
     app.route('/activityLog')
-    .get(ActivityLog.getUserLog);
+      .get(ActivityLog.getUserLog);
+      */
 
   app.route('/activityLog')
   	.post(ActivityLog.createTask);
