@@ -28,7 +28,7 @@ exports.getProjectLog = function(req, res) {
 /**
 * Return a json of full log for a given User
 */
-//exports.getUserLog = function(req, res ) { };
+//exports.getUserLog = function(req, res ) {};
 
 /**
 * Log a Task creation for a given User
