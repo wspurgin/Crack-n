@@ -6,13 +6,16 @@
 /**
 * Module dependencies
 */
+/*
 var mongoose = require('mongoose'),
 	// Project = mongoose.model('Project'),
 	ActivityLog = mongoose.model('ActivityLog');
+*/
 
 /**
 * Return json of full log for a given Project (passed in req body) 
 */
+/*
 exports.getProjectLog = function(req, res) {
 	var project_id = req.body._id;
 	ActivityLog
@@ -24,7 +27,7 @@ exports.getProjectLog = function(req, res) {
 	  });
 	return res.status(400).json({error: 'getLog Query failed: ' + req.body.name});
 };
-
+*/
 /**
 * Return a json of full log for a given User
 */
@@ -33,6 +36,7 @@ exports.getProjectLog = function(req, res) {
 /**
 * Log a Task creation for a given User
 */
+/*
 exports.createTask = function(req, res) {
 	try {
 		var logEntry = new ActivityLog();
@@ -48,11 +52,12 @@ exports.createTask = function(req, res) {
 		return res.status(400).json(err);
 	}
 }; 
-
+*/
 
 /**
 * Log a Task completion for a given User
 */
+/*
 exports.completeTask = function(req, res) {
 	try {
 		var logEntry = new ActivityLog();
@@ -68,10 +73,12 @@ exports.completeTask = function(req, res) {
 		return res.status(400).json(err);
 	}
 };
+*/
 
 /**
 * Log a Phase creation for a given User
 */
+/*
 exports.createPhase = function(req, res) {
 	try {
 		var logEntry = new ActivityLog();
@@ -87,10 +94,11 @@ exports.createPhase = function(req, res) {
 		return res.status(400).json(err);
 	}
 };
-
+*/
 /**
 * Log a message post for a given User
 */
+/*
 exports.postMessage = function(req, res) {
 	try {
 		var logEntry = new ActivityLog();
@@ -107,3 +115,4 @@ exports.postMessage = function(req, res) {
 		return res.status(400).json(err);
 	}
 };
+*/
