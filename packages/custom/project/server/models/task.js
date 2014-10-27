@@ -24,7 +24,7 @@ var taskSchema = new Schema ({
 		required: false
 	},
 	assignedMembers: {
-		type: String,
+		type: Array,
 		required: true
 	},
 	dueDates: {
@@ -33,4 +33,4 @@ var taskSchema = new Schema ({
 	}
 });
 
-mongoose.model('Tasks',taskSchema);
+mongoose.model('task',taskSchema);
