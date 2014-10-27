@@ -1,10 +1,14 @@
 <div class="view-content" data-ng-controller="CreateProjectCtrl">
   <form name="createProjectForm" ng-submit="console.log('submiting')">
-    <fieldset class="field-group">
-      <label for="projectName">Project Name</label>
-      <input type="text" maxlength="32" min="1" ng-required />
-      <label for="projectDescription">Project Description</label>
-      <textarea name="projectDescription"></textarea>
+    <fieldset>
+      <div class="field-group">
+        <label for="projectName">Project Name</label>
+        <input type="text" maxlength="32" min="1" ng-required />
+      </div>
+      <div class="field-group">
+        <label for="projectDescription">Project Description</label>
+        <textarea name="projectDescription"></textarea>
+      </div>
     </fieldset>
     <fieldset ng-include="'/project/views/team-finder.html'"></fieldset>
     <button class="submit-button" type="submit">Create</button>

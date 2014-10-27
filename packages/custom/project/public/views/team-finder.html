@@ -1,4 +1,9 @@
 <div class="team-finder">
     <label for="memberSearch">{{'Search for Members'|lowercase}}</label>
-    <input type="search">
+    <input type="search" ng-model="searchText">
+    <div class="searchResults">
+        <div ng-repeat="members in users | filter:searchText">
+            <p>{{members.name}}</p>
+        </div>
+    </div>
 </div>

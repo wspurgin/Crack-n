@@ -11,12 +11,14 @@ angular.module('mean.project').controller('ProjectController', ['$scope', '$http
 .controller('CreateProjectCtrl', ['$scope', '$rootScope', '$http', '$location', 'Global', 'Users',
     function($scope,  $rootScope, $http, $location, Global, Users) {
         $scope.global = Global;
-        console.log($scope.global);
+        if (!$scope.global.authenticated)
+            return $location.url('/');
+
         // This will be the object filled in by the form data
         $scope.project = {};
         
         /* Extra initialization */
-        // TODO: should not hard code permissions (they'll be used else where)
+        // TODO: should not hard code permissions (they'll be used else-where)
         $scope.permissionLevels = ['admin', 'general', 'view_only'];
 
         // add starting current user as first admin user
