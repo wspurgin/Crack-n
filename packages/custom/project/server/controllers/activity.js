@@ -36,7 +36,7 @@ exports.getProjectLog = function(req, res) {
 exports.createTask = function(req, res) {
 	try {
 		var logEntry = new ActivityLog();
-		logEntry.userName = req.body.name;
+		logEntry.name = req.body.name;
 		logEntry.user_id = req.body._id;
 		// logEntry.project_id = req.body.project_id;
 		logEntry.description.type = 'Task';
@@ -105,3 +105,4 @@ exports.postMessage = function(req, res) {
 		return res.status(400).json(err);
 	}
 };
+ 
