@@ -1,13 +1,15 @@
- 'use strict';
+'use strict';
 
 var ActivityLog = require('../controllers/activity');
 
 module.exports = function(MeanUser, app, auth, database, passport) {
 
+  app.route('/project')
+  	.get(ActivityLog.getProject);
 
-  app.route('/activityLog')
-  	.get(ActivityLog.getProjectLog);
-
+ app.route('/project')
+    .post(ActivityLog.clearProject);
+     
   /*
   app.route('/activityLog')
     .get(ActivityLog.getUserLog);
@@ -24,6 +26,5 @@ module.exports = function(MeanUser, app, auth, database, passport) {
 
    app.route('/activityLog')
   	.post(ActivityLog.postMessage);
-
 
 };

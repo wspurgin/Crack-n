@@ -9,8 +9,14 @@ Schema = mongoose.Schema;
 var logEntrySchema = new Schema ({
 	userName		: String,
 	body 		 	: String,
-	user_id			: Schema.Types.ObjectId,
-	project_id 		: Schema.Types.ObjectId, 
+	user_id	: {
+		type 		: Schema.Types.ObjectId,
+		ref			: 'User'
+	},
+	project_id : { 
+		type 		: Schema.Types.ObjectId, 
+		ref 		: 'Project'
+	},
 	description : { 
 		type : {
 			type 	: String,
@@ -18,7 +24,7 @@ var logEntrySchema = new Schema ({
 		},
 		action : {
 			type 	: String, 
-			tring 	: true
+			trim 	: true
 		}
 	},
 	time : {

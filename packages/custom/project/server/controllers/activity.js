@@ -1,34 +1,52 @@
 'use strict';
 
-
-// [!] Doesn't yet store project_id.
-
 /**
 * Module dependencies
 */
 var mongoose = require('mongoose'),
-	// Project = mongoose.model('Project'),
 	ActivityLog = mongoose.model('ActivityLog');
 
 /**
-* Return json of full log for a given Project (passed in req body) 
+* Return json of full log for a Project (passed in req body) 
 */
-exports.getProjectLog = function(req, res) {
-	var project_id = req.body._id;
+exports.getProject = function(req, res) {
 	ActivityLog
-	  .find({'project_id': project_id})
+	  .find({'project_id': req.body._id})
 	  .sort('timestamp')
-	  .exec(function(err, log) {
+	  .exec(function(err, projectLog) {
 		if (err) return res.status(400).json(err); 
-		return res.json(log);
+		else return res.json(projectLog);
 	  });
-	return res.status(400).json({error: 'getLog Query failed: ' + req.body.name});
+	return res.status(400).json({error: 'getProject Query failed: ' + req.body.name});
+};
+
+/**
+* Clears the database of all activity logs for a Project
+*/
+exports.clearProject = function(req, res) {
+	ActivityLog
+	  .find({'project_id': req.body._id})
+	  .remove()
+	  .exec(function(err) {
+	  	if (err) return res.status(400).json(err);
+	  	else return res.status(200);
+	  });
+	return res.status(400).json({error: 'clearDatabase Query failed: ' + req.body.name});
 };
 
 /**
 * Return a json of full log for a given User
 */
-//exports.getUserLog = function(req, res ) {};
+exports.getUser = function(req, res ) {
+	ActivityLog
+	  .find({'user_id': req.body._id})
+	  .sort('timestamp')
+	  .exec(function(err, userLog) {
+	  	if (err) return res.status(400).json(err);
+	  	else return res.json(userLog);
+	  });
+	return res.status(400).json({error: 'getUser Query failed: ' + req.body.name});
+};
 
 /**
 * Log a Task creation for a given User
@@ -36,7 +54,7 @@ exports.getProjectLog = function(req, res) {
 exports.createTask = function(req, res) {
 	try {
 		var logEntry = new ActivityLog();
-		logEntry.name = req.body.name;
+		logEntry.userName = req.body.name;
 		logEntry.user_id = req.body._id;
 		// logEntry.project_id = req.body.project_id;
 		logEntry.description.type = 'Task';
@@ -105,4 +123,8 @@ exports.postMessage = function(req, res) {
 		return res.status(400).json(err);
 	}
 };
- 
+
+/** 
+* Populate an example ActivityLog for testing purposes
+*/
+// exports.populateTest = function(req, res) { };
