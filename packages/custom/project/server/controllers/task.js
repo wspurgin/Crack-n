@@ -6,7 +6,7 @@
 
 var mongoose = require('mongoose'),
 	Task = mongoose.model('task'),
-	Project=mongoose.model('project');
+	Project=mongoose.model('Project');
 
 //exports.all=function(req,res) {
 //	project.findOne
