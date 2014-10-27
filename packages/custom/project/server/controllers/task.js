@@ -1,10 +1,10 @@
-//'use strict';
+'use strict';
 
 /**
 * Module dependencies
 */
 
-/*var mongoose = require('mongoose'),
+var mongoose = require('mongoose'),
 	Task = mongoose.model('task'),
 	Project=mongoose.model('project');
 
@@ -80,7 +80,7 @@ exports.edit=function(req, res) {
 	var task_id=req.params.task_id;
 	Project.findOne( {'_id':project_id} ). exec(function(err, result) {
 		if (!err) {
-			Task.findOne ( {'_id':task_id} ).exec(function(err, resultsk_ta) {
+			Task.findOne ( {'_id':task_id} ).exec(function(err, result_task) {
 				if (!err) {
 					if (req.body.name) result_task.name=req.body.name;
 					if (req.body.completed) result_task.completed=req.body.completed;
@@ -103,4 +103,4 @@ exports.edit=function(req, res) {
 
 //exports.delete=function(req,res) {
 
-//};*/
+//};
