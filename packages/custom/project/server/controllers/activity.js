@@ -4,7 +4,9 @@
 * Module dependencies
 */
 var mongoose = require('mongoose'),
-	ActivityLog = mongoose.model('ActivityLog');
+	ActivityLog = mongoose.model('ActivityLog'),
+	fs = require('fs'),
+	path = require('path');
 
 /**
 * Return json of full log for a Project (passed in req body) 
@@ -13,11 +15,11 @@ exports.getProject = function(req, res) {
 	ActivityLog
 	  .find({'project_id': req.body._id})
 	  .sort('timestamp')
-	  .exec(function(err, projectLog) {
-		if (err) return res.status(400).json(err); 
-		else return res.json(projectLog);
+	  .exec(function(err, log) {
+		if (err) return res.status(400).send(err); 
+		else return res.json(log);
 	  });
-	return res.status(400).json({error: 'getProject Query failed: ' + req.body.name});
+	return res.status(400).send();
 };
 
 /**
@@ -28,10 +30,10 @@ exports.clearProject = function(req, res) {
 	  .find({'project_id': req.body._id})
 	  .remove()
 	  .exec(function(err) {
-	  	if (err) return res.status(400).json(err);
+	  	if (err) return res.status(400).send(err);
 	  	else return res.status(200);
 	  });
-	return res.status(400).json({error: 'clearDatabase Query failed: ' + req.body.name});
+	return res.status(400).send();
 };
 
 /**
@@ -41,12 +43,14 @@ exports.getUser = function(req, res ) {
 	ActivityLog
 	  .find({'user_id': req.body._id})
 	  .sort('timestamp')
-	  .exec(function(err, userLog) {
-	  	if (err) return res.status(400).json(err);
-	  	else return res.json(userLog);
+	  .exec(function(err, log) {
+	  	if (err) return res.status(400).send(err);
+	  	else return res.json(log);
 	  });
-	return res.status(400).json({error: 'getUser Query failed: ' + req.body.name});
+	return res.status(400).send();
 };
+
+// [!] The logging api (completeTask, createTask, etc.) is not finalized.
 
 /**
 * Log a Task creation for a given User
@@ -63,7 +67,7 @@ exports.createTask = function(req, res) {
 		logEntry.save();
 		return res.status(201); 
 	} catch(err) {
-		return res.status(400).json(err);
+		return res.status(400).send(err);
 	}
 }; 
 
@@ -82,7 +86,7 @@ exports.completeTask = function(req, res) {
 		logEntry.save();
 		return res.status(201); 
 	} catch(err) {
-		return res.status(400).json(err);
+		return res.status(400).send(err);
 	}
 };
 
@@ -101,7 +105,7 @@ exports.createPhase = function(req, res) {
 		logEntry.save();
 		return res.status(201); 
 	} catch(err) {
-		return res.status(400).json(err);
+		return res.status(400).send(err);
 	}
 };
 /**
@@ -118,13 +122,30 @@ exports.postMessage = function(req, res) {
 		logEntry.body = 'posted a message';
 		logEntry.save();
 		return res.status(201); 
-	} 
-	catch(err) {
-		return res.status(400).json(err);
+	} catch(err) {
+		return res.status(400).send(err);
 	}
 };
 
 /** 
 * Populate an example ActivityLog for testing purposes
 */
-// exports.populateTest = function(req, res) { };
+exports.populate = function(req, res) {
+	fs.readFile(path.join(__dirname, '../../activity.json'),
+    function(err, data) {
+      if (err) res.send(400).json(err);
+      var json = JSON.parse(data.toString());
+      for (var i = 0; i < json.users.length; i+=1)
+      {
+      	var logEntry = new ActivityLog();
+        logEntry.userName = json.users[i].userName;
+        logEntry.body = json.users[i].body;
+        logEntry.user_id = json.users[i].user_id;
+        logEntry.project_id = json.users[i].project_id;
+        logEntry.description.type = json.users[i].description.type;
+        logEntry.description.action = json.users[i].description.action;
+        logEntry.save();
+      }
+      return res.status(201).send();
+	});
+};

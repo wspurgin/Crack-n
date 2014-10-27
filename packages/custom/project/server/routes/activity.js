@@ -4,27 +4,28 @@ var ActivityLog = require('../controllers/activity');
 
 module.exports = function(MeanUser, app, auth, database, passport) {
 
-  app.route('/project')
+  app.route('/activity/project')
   	.get(ActivityLog.getProject);
 
- app.route('/project')
+  app.route('/activity/project')
     .post(ActivityLog.clearProject);
-     
-  /*
-  app.route('/activityLog')
-    .get(ActivityLog.getUserLog);
-  */
 
-  app.route('/activityLog')
+  app.route('/activity/user')
+    .get(ActivityLog.getUser);
+
+  app.route('/activity/populate')
+    .post(ActivityLog.populate);
+
+  app.route('/activity/task/create')
   	.post(ActivityLog.createTask);
 
-   app.route('/activityLog')
+   app.route('/activity/task/complete')
   	.post(ActivityLog.completeTask);
 
-   app.route('/activityLog')
+   app.route('/activity/phase/create')
   	.post(ActivityLog.createPhase);
 
-   app.route('/activityLog')
+   app.route('activity/message/create')
   	.post(ActivityLog.postMessage);
 
 };
