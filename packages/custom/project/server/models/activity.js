@@ -33,9 +33,4 @@ var logEntrySchema = new Schema ({
 	}
 });
 
-/**
-* Virtuals
-*/
-// activityLog.virtual('.example').get( function() { };
-
 mongoose.model('ActivityLog', logEntrySchema);
