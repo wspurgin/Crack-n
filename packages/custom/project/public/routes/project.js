@@ -5,7 +5,7 @@ angular.module('mean.project').config(['$stateProvider', '$urlRouterProvider',
     $stateProvider
       .state('project', {
         url: '/project',
-        templateUrl: 'project/views/index.html'
+        templateUrl: 'project/views/project.html'
       })
       .state('project_create', {
         url: '/project/create',
