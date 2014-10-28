@@ -5,7 +5,9 @@ module.exports = function(Project, app, auth, database) {
 
 var project = require('../controllers/project');
 
+
 ///////////////////////////////////////////////////////////////////
+
   app.get('/project/example/anyone', function(req, res, next) {
     res.send('Anyone can access this');
   });
@@ -26,6 +28,7 @@ var project = require('../controllers/project');
       res.send(html);
     });
   });
+
 /////////////////////////////////////////////////////////////
 
 
