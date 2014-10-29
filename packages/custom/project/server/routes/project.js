@@ -5,6 +5,14 @@ module.exports = function(Project, app, auth, database) {
 
 var project = require('../controllers/project');
 
+app.use('/project*', function(req, res, next){
+  if (req.user !== undefined){
+    next();
+  }
+  else {
+    res.status(401).json('You best log in first, homie').send();
+  }
+});
 
 ///////////////////////////////////////////////////////////////////
 
