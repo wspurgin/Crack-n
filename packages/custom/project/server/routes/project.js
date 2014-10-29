@@ -10,7 +10,7 @@ app.use('/project*', function(req, res, next){
     next();
   }
   else {
-    res.status(401).send();
+    res.status(401).json('You best log in first, homie').send();
   }
 });
 
