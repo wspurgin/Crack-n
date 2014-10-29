@@ -12,10 +12,22 @@ body {
 }
 
 .content {
-    background-color: #e3e3e3;
-    color: #111;
+  /**  background-color: #e3e3e3;
+    color: #111; **/
+    width: 90%;
+    margin-left: 5%;
 }
-
+.homelogo {
+	padding-top: 200px;
+	font-size: 30px;
+	text-align: center;
+	text-decoration: none;
+	text-transform: 
+}
+section div div img {
+	width: auto;
+	height: 280px;
+}
 header img {
 	margin: 1px;
 	height:50px;
@@ -24,17 +36,20 @@ header img {
 }
 .login{
 	float:right;
-	height: 56px;
+	height: 45px;
+	width: auto;
 }
 .signup{
 	float: right;
 	text-decoration: none;
-	height: 56px;
+	height: 45px;
+	width: auto;
 }
 .form_group{
 	float: right;
 }
 .logging {
-	height: 50px;
+	height: 40px;
 	font-size: 15px;
 }
+
