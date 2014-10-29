@@ -17,6 +17,7 @@ var taskSchema = new Schema ({
 	},
 	completed: {
 		type: Boolean,
+		default: false,
 		required: true
 	},
 	description: {
@@ -25,12 +26,13 @@ var taskSchema = new Schema ({
 	},
 	assignedMembers: {
 		type: Array,
-		required: true
+		required: false
 	},
 	dueDates: {
 		type: Date,
+		default:Date.now,
 		required: true
 	}
 });
 
-mongoose.model('task',taskSchema);
+mongoose.model('Task',taskSchema);

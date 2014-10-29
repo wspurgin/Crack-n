@@ -5,7 +5,7 @@
 */
 
 var mongoose = require('mongoose'),
-	Task = mongoose.model('task'),
+	Task = mongoose.model('Task'),
 	Project=mongoose.model('Project');
 
 exports.all=function(req,res) {
