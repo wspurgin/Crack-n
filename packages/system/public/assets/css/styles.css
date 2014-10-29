@@ -17,17 +17,24 @@ body {
 }
 
 header img {
-	margin-left: 45%;
-
+	margin: 1px;
+	height:50px;
+	width: 50px;
+	position: relative;
 }
 .login{
 	float:right;
-	display: inline;
+	height: 56px;
 }
 .signup{
 	float: right;
 	text-decoration: none;
+	height: 56px;
 }
 .form_group{
 	float: right;
+}
+.logging {
+	height: 50px;
+	font-size: 15px;
 }
