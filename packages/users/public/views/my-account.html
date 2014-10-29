@@ -37,12 +37,13 @@
         </div>
 
         <div class="edit-wrapper">
-          <button id="edit_button" name="edit_button" value="Edit" ng-click="edit()" />
+          <input type="button" id="edit_button" name="edit_button" value="Edit" ng-click="edit()" />
         </div>
 
         <div ng-show="editing">
         <div class="password-wrapper">
           <div class="input-wrapper">
+              <label for="password_block">Password:</label>
               <input required id="password_block" name="password" type="{{input.type}}"
                       placeholder="{{input.placeholder}}" ng-model="user.password">
 
@@ -54,6 +55,7 @@
               </span>
           </div>
           <div class="input-wrapper">
+              <label for="confirm_password">Confirm Password:</label>
               <input required id="confirm_password" name="confirm_password" type="{{input.type}}"
                      placeholder="{{input.placeholderConfirmPass}}" ng-model="user.confirmPassword">
 
