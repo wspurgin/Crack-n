@@ -4,20 +4,21 @@
     <div class="loginMenu" ng-controller="LoginController"> 
       <form id="loginForm" ng-submit="login()">
           <div class="form_group">
-              <label for="loginEmail">Email:</label>
+              <label for="loginEmail"></label>
               <input type="email" name="loginEmail" placeholder="Email" ng-model="user.email">
           </div>
           <div class="form_group">
-              <label for="loginPassword">Password:</label>
+              <label for="loginPassword"></label>
               <input type="password" name="loginPassword" placeholder="Password" ng-model="user.password">
           </div>
           <button type="submit" class="login">Login</button> 
+          <button class="signup"><a href="#!/auth/signup">Sign Up</a></button>
       </form>
     </div>
   </div>
   <div data-ng-show="global.authenticated">
     <div class="loggedInMenu">
-        <div class="greeting">Hi, {{global.user.name}}</div>
+        <div class="greeting">Hi, <a href="#!/my-account">{{global.user.name}}</a></div>
         <button class="loggout"><a href="/logout">Log Out</a></button>
     </div>
   </div>

@@ -5,7 +5,17 @@ module.exports = function(Project, app, auth, database) {
 
 var project = require('../controllers/project');
 
+app.use('/project*', function(req, res, next){
+  if (req.user !== undefined){
+    next();
+  }
+  else {
+    res.status(401).json('You best log in first, homie').send();
+  }
+});
+
 ///////////////////////////////////////////////////////////////////
+
   app.get('/project/example/anyone', function(req, res, next) {
     res.send('Anyone can access this');
   });
@@ -26,6 +36,7 @@ var project = require('../controllers/project');
       res.send(html);
     });
   });
+
 /////////////////////////////////////////////////////////////
 
 

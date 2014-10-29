@@ -38,7 +38,7 @@ angular.module('mean.users').config(['$stateProvider',
         }
       })
       .state('auth.register', {
-        url: '/register',
+        url: '/signup',
         templateUrl: 'users/views/register.html',
         resolve: {
           loggedin: checkLoggedOut
@@ -57,6 +57,10 @@ angular.module('mean.users').config(['$stateProvider',
         resolve: {
           loggedin: checkLoggedOut
         }
+      })
+      .state('my-account', {
+        url: '/my-account',
+        templateUrl: 'users/views/my-account.html',
       });
   }
 ]);
