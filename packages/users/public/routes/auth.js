@@ -57,6 +57,10 @@ angular.module('mean.users').config(['$stateProvider',
         resolve: {
           loggedin: checkLoggedOut
         }
+      })
+      .state('my-account', {
+        url: '/my-account',
+        templateUrl: 'users/views/my-account.html',
       });
   }
 ]);
