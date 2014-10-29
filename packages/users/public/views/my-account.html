@@ -6,33 +6,38 @@
     <div class="alert alert-danger animated fadeIn" ng-show="emailError">{{emailError}}</div>
     <form id="register_form" ng-submit="register()">
         <h2>Sign Up</h2>
-
+        <div class="info_pull_error">
+            <p>{{info_error}}</p>
+        </div>
         <div class="input-wrapper">
+            <label for="name">Full Name:</label>
             <input required id="name" type="text" name="name" placeholder="Full Name"
-                   ng-model="user.name" readonly>
+                   ng-model="user.name" readonly >
 
             <div class="error_message">Please enter a correct info #</div>
             <span class="pic user"></span>
         </div>
 
         <div class="input-wrapper">
+            <label for="email_block">Email:</label>
             <input required id="email_block" type="email" name="email" placeholder="Email Address"
-                   ng-model="user.email" readonly>
+                   ng-model="user.email" readonly >
 
             <div class="error_message">Please enter a correct info #</div>
             <span class="pic email"></span>
         </div>
 
         <div class="input-wrapper">
+            <label for="username">Username:</label>
             <input required id="username" type="text" name="username" placeholder="Username"
-                   ng-model="user.username" readonly>
+                   ng-model="user.username" readonly > 
 
             <div class="error_message">Please enter a correct info #</div>
             <span class="pic username"></span>
         </div>
 
         <div class="edit-wrapper">
-          <input id="edit_button" name="edit_button" type="button" value="Edit" >
+          <button id="edit_button" name="edit_button" value="Edit" ng-click="edit()" />
         </div>
 
         <div ng-show="editing">
@@ -64,15 +69,6 @@
           </div>
 
         </div>
-        </div>
-
-        <div class="button_register">
-            <button type="submit" class="submit_button">Sign up</button>
-            <p>Already have an account?</p>
-            <a ui-sref='auth.login'>Log in</a>
-        </div>
-        <div class="woman_ninja_bottom">
-            <img src="/theme/assets/img/woman_ninja.png" alt="#">
         </div>
     </form>
 </div>

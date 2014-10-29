@@ -180,9 +180,21 @@ angular.module('mean.users')
   .controller('MyAccountCtrl', ['$scope', '$rootScope', '$http', '$location', 'Global',
     function($scope, $rootScope, $http, $location, Global) {
       $scope.global = Global;
-
+      $scope.user = {};
+      $http.get('/users/me')
+        .success(function(response) {
+          $scope.user.name = response.name;
+          $scope.user.email = response.email;
+          $scope.user.username = response.username;
+        })
+        .error(function(error) {
+          if(error === 'null')
+            $scope.info_error = 'Could not pull user information';
+        });
       // just to stay consistent with other user controllers
       $scope.global.registerForm = false;
 
-      // more to come here
+      $scope.edit = function() {
+          $('input').removeAttr('readonly');
+      };
   }]);
