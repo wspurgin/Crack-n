@@ -5,126 +5,112 @@
 */
 var mongoose = require('mongoose'),
 	ActivityLog = mongoose.model('ActivityLog'),
-	fs = require('fs'),
-	path = require('path');
+	path = require('path'),
+	fs = require('fs');
+ 
+/**
+* String formatting 
+*/
+String.prototype.entryFormat = function() {
+     return this.charAt(0).toUpperCase() + this.slice(1).toLowerCase();
+};
 
 /**
-* Return json of full log for a Project (passed in req body) 
+* Type validation
 */
-exports.getProject = function(req, res) {
+var valid = function(type) {
+	switch (type) {
+		case 'Message':
+			return true;
+		case 'Phase':
+			return true;
+		case 'Member':
+			return true;
+		case 'Task':
+			return true;
+	} 
+	console.log('Invalid type (controllers/activity.js:32:5)');
+	return false;
+};
+
+/**
+* Action validation 
+*/
+var valid = function(action, type) {
+	switch (type) {
+		case 'Message':
+			if (action === 'Created' || action === 'Removed')
+				return true;
+			break;
+		case 'Phase':
+			if (action === 'Created' || action === 'Completed' || action === 'Removed')
+				return true;
+			break;
+		case 'Member':
+			if (action === 'Added' || action === 'Removed')
+				return true;
+			break;
+		case 'Task':
+			if (action === 'Created' || action === 'Completed' || action === 'Removed')
+				return true;
+			break;
+	} 
+	console.log('Invalid action (controllers/activity.js:54:5)');
+	return false;
+};
+
+/**
+* Produce a body message
+*/
+var concatBody = function(type, action) {
+	type.toLowerCase();
+	action.toLowerCase();
+	if (type === 'message' && action === 'created')
+		action = 'posted';
+	return type + ' a ' + action;
+};
+
+/**
+* Create an ActivityLog entry
+*
+*   API (not case sensitive):
+*  ////////////////////////////////////////////////////////
+*  //	 type	: Message, Phase, Member, Task 			 //
+*  //	 action : Created, Completed, Added, Removed 	 //
+*  //		      (only Members can be added)			 //
+*  ////////////////////////////////////////////////////////
+*/
+exports.createEntry = function(type, action, user, project) {
+	try {
+		var entry = new ActivityLog();
+		entry.userName = user.userName;
+		entry.user_id = user._id;
+		entry.project_id = project._id;
+		type.entryFormat();
+		action.entryFormat();
+		if (valid(type)) 
+			entry.description.type = type;
+		if (valid(action, type))
+			entry.description.action = action;
+		entry.body = concatBody(type, action);
+		entry.save();
+	} catch(err) {
+		console.log('createEntry error, check API @ (controllers/activity.js:82:0): ' + err);
+	}
+};
+
+/**
+* Pass a log of all Project Activity to callback parameter
+*/
+exports.getProject = function(project_id, callback) {
 	ActivityLog
-	  .find({'project_id': req.body._id})
-	  .sort('timestamp')
-	  .exec(function(err, log) {
-		if (err) return res.status(400).send(err); 
-		else return res.json(log);
-	  });
-	return res.status(400).send();
-};
-
-/**
-* Clears the database of all activity logs for a Project
-*/
-exports.clearProject = function(req, res) {
-	ActivityLog
-	  .find({'project_id': req.body._id})
-	  .remove()
-	  .exec(function(err) {
-	  	if (err) return res.status(400).send(err);
-	  	else return res.status(200);
-	  });
-	return res.status(400).send();
-};
-
-/**
-* Return a json of full log for a given User
-*/
-exports.getUser = function(req, res ) {
-	ActivityLog
-	  .find({'user_id': req.body._id})
-	  .sort('timestamp')
-	  .exec(function(err, log) {
-	  	if (err) return res.status(400).send(err);
-	  	else return res.json(log);
-	  });
-	return res.status(400).send();
-};
-
-// [!] The logging api (completeTask, createTask, etc.) is not finalized.
-
-/**
-* Log a Task creation for a given User
-*/
-exports.createTask = function(req, res) {
-	try {
-		var logEntry = new ActivityLog();
-		logEntry.userName = req.body.name;
-		logEntry.user_id = req.body._id;
-		// logEntry.project_id = req.body.project_id;
-		logEntry.description.type = 'Task';
-		logEntry.description.action = 'Created';
-		logEntry.body = 'created a Task';
-		logEntry.save();
-		return res.status(201); 
-	} catch(err) {
-		return res.status(400).send(err);
-	}
-}; 
-
-/**
-* Log a Task completion for a given User
-*/
-exports.completeTask = function(req, res) {
-	try {
-		var logEntry = new ActivityLog();
-		logEntry.userName = req.body.name;
-		logEntry.user_id = req.body._id;
-		// logEntry.project_id = req.body.project_id;
-		logEntry.description.type = 'Task';
-		logEntry.description.action = 'Completed';
-		logEntry.body = 'completed a Task';
-		logEntry.save();
-		return res.status(201); 
-	} catch(err) {
-		return res.status(400).send(err);
-	}
-};
-
-/**
-* Log a Phase creation for a given User
-*/
-exports.createPhase = function(req, res) {
-	try {
-		var logEntry = new ActivityLog();
-		logEntry.userName = req.body.name;
-		logEntry.user_id = req.body._id;
-		// logEntry.project_id = req.body.project_id;
-		logEntry.description.type = 'Phase';
-		logEntry.description.action = 'Created';
-		logEntry.body = 'created a Phase';
-		logEntry.save();
-		return res.status(201); 
-	} catch(err) {
-		return res.status(400).send(err);
-	}
-};
-/**
-* Log a message post for a given User
-*/
-exports.postMessage = function(req, res) {
-	try {
-		var logEntry = new ActivityLog();
-		logEntry.userName = req.body.name;
-		logEntry.user_id = req.body._id;
-		// logEntry.project_id = req.body.project_id;
-		logEntry.description.type = 'Message';
-		logEntry.description.action = 'Posted';
-		logEntry.body = 'posted a message';
-		logEntry.save();
-		return res.status(201); 
-	} catch(err) {
-		return res.status(400).send(err);
-	}
+    .find({'project_id': project_id})
+	.sort('timestamp')
+	.lean()
+	.exec(function(err, log) {
+		if (err) console.log('Query error (controllers/activity.js:22:15): ' + err);
+	    callback(log);
+	});
 };
 
 /** 
@@ -133,7 +119,7 @@ exports.postMessage = function(req, res) {
 exports.populate = function(req, res) {
 	fs.readFile(path.join(__dirname, '../../activity.json'),
     function(err, data) {
-      if (err) res.send(400).json(err);
+      if (err) res.status(400).send(err);
       var json = JSON.parse(data.toString());
       for (var i = 0; i < json.users.length; i+=1)
       {
@@ -146,6 +132,32 @@ exports.populate = function(req, res) {
         logEntry.description.action = json.users[i].description.action;
         logEntry.save();
       }
-      return res.status(201).send();
+      return res.status(201).json('Test database populated.');
+	});
+};
+
+/**
+* Clears the database of all activity logs for testing purposes
+*/
+exports.clearProject = function(req, res) {
+	ActivityLog
+	  .remove()
+	  .exec(function(err) {
+	  	if (err) return res.status(400).send(err);
+	  	else return res.status(200).send('Test database cleaered.');
+	  });
+};
+
+/**
+* Example getProject query using callback 
+*/
+exports.testGetProject = function(req , res) {
+	var test_id = '111111111111111111111111';
+	exports.getProject(test_id, function(log) {
+		// Example log array traversal:  
+		for (var key in log) {
+			console.log(log[key]);
+		}
+		return res.status(200).json(log); 
 	});
 };

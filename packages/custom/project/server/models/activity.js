@@ -7,15 +7,22 @@ Schema = mongoose.Schema;
 * Activity log-entry Schema
 */
 var logEntrySchema = new Schema ({
-	userName		: String,
-	body 		 	: String,
+	userName : {
+		type 		: String,
+		require		: true
+	},
+	body : {
+		type 		: String,
+		require 	: true
+	},
 	user_id	: {
 		type 		: Schema.Types.ObjectId,
 		ref			: 'User'
 	},
 	project_id : { 
 		type 		: Schema.Types.ObjectId, 
-		ref 		: 'Project'
+		ref 		: 'Project',
+		require		: true
 	},
 	description : { 
 		type : {
