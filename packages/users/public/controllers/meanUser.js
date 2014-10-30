@@ -218,5 +218,5 @@ angular.module('mean.users')
 
       $scope.save = function() {
 
-      }
+      };
   }]);
