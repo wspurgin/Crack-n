@@ -117,5 +117,26 @@ margin-left:0;
 padding-top: 15px;
 }
 
+#messageBoard{
+	width: 300px;
+	text-align: center;
+	border: 1px solid black;
+	margin-top: 30px;
+}
 
+#postMessage{
+		padding-top: 10px;
+		padding-bottom: 10px;
+}
+
+#messageBoard input[type="text"]{
+	height: 30px;
+}
+
+#displayMessage{
+	width: 300px;
+	height: 150px;
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+}
 /*end of project page */
