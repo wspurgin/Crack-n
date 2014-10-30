@@ -37,6 +37,15 @@ angular.module('mean.project').controller('ProjectController', ['$scope', '$http
     $scope.searchText = '';
     $scope.searchUsersResults = [];
 
+    function arrayObjectIndexOf(arr, obj){
+    for(var i = 0; i < arr.length; i+=1){
+        if(angular.equals(arr[i], obj)){
+            return i;
+        }
+    }
+      return false;
+    }
+
     // temp results
     $scope.searchUsersResults = [
       {
@@ -55,13 +64,15 @@ angular.module('mean.project').controller('ProjectController', ['$scope', '$http
         return;
     };
 
-    $scope.addTeamMember = function(index) {
+    $scope.addTeamMember = function(member) {
+      event.preventDefault();
       $scope.project.teamMembers.push({
-        _id: $scope.searchUsersResults[index]._id,
-        name: $scope.searchUsersResults[index].name,
+        _id: member._id,
+        name: member.name,
         permission: $scope.permissionLevels[$scope.permissionLevels.indexOf('general')]
       });
-      $scope.searchUsersResults.splice(index, 1);
+      $scope.searchUsersResults.splice(arrayObjectIndexOf($scope.searchUsersResults, member), 1);
+      console.log($scope.project.teamMembers);
     };
 }])
 .directive('crnTeamModifer', function(){
