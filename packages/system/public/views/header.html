@@ -2,9 +2,7 @@
    <div data-ng-hide="global.authenticated">
     <div class="alert alert-danger animated fadeIn" ng-show="loginerror">{{loginerror}}</div>
     <div class="loginMenu" ng-controller="LoginController"> 
-      <form id="loginForm" ng-submit="login()">
-          <button class="signup"><a href="#!/auth/signup">Sign Up</a></button>
-          <button type="submit" class="login">Login</button> 
+      <form id="loginForm" class="login-form" ng-submit="login()">
           <div class="form_group">
               <label for="loginPassword"></label>
               <input type="password" name="loginPassword" placeholder="Password" class="logging" ng-model="user.password">
@@ -13,6 +11,8 @@
               <label for="loginEmail"></label>
               <input type="email" name="loginEmail" placeholder="Email" class="logging" ng-model="user.email">
           </div>
+          <button type="submit" class="login">Login</button> 
+          <button class="signup"><a href="#!/auth/signup">Sign Up</a></button>
       </form>
     </div>
   </div>

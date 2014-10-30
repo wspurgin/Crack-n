@@ -66,4 +66,11 @@ angular.module('mean.project').controller('ProjectController', ['$scope', '$http
       console.log('searchng with ' + $scope.searchText);
       return;
     };
-}]);
+}])
+.directive('crnTeamModifer', function(){
+  // Runs during compile
+  return {
+    restrict: 'A',
+    templateUrl: 'project/views/team-finder.html'
+  };
+});

@@ -33,19 +33,23 @@ header img {
 	width: 50px;
 	position: relative;
 }
-.login{
-	float:right;
+
+form.login-form {
+	float: right;
+}
+
+.login, .signup {
 	height: 45px;
 	width: auto;
 }
+
 .signup{
-	float: right;
 	text-decoration: none;
 	height: 45px;
 	width: auto;
 }
 .form_group{
-	float: right;
+	display: inline;
 }
 .logging {
 	height: 40px;
