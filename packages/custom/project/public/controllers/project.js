@@ -29,19 +29,10 @@ angular.module('mean.project').controller('ProjectController', ['$scope', '$http
             permission: $scope.permissionLevels[0]
         }
     ];
-
-    // add starting current user as first admin user
-    $scope.project.teamMembers = [
-        {
-            _id: $scope.global.user._id, 
-            name: $scope.global.user.name,
-            permission: $scope.permissionLevels[0]
-        }
-    ];
   }
 ])
 .controller('TeamMemberCtrl', ['$scope', '$rootScope', '$http', 'Global',
-  function($scope, $rootScope, $http, $location, Global){
+  function($scope, $rootScope, $http, $parent, Global){
     $scope.global = Global;
     $scope.searchText = '';
     $scope.searchUsersResults = [];
@@ -58,13 +49,19 @@ angular.module('mean.project').controller('ProjectController', ['$scope', '$http
         name: 'Will Spurgin',
         _id: '5441c2526c46e2320714233b'
       }];
-
-      // This will be the object filled in by the form data
-      $scope.project = {};
       
     $scope.searchForTeamMembers = function() {
       console.log('searchng with ' + $scope.searchText);
-      return;
+        return;
+    };
+
+    $scope.addTeamMember = function(index) {
+      $scope.project.teamMembers.push({
+        _id: $scope.searchUsersResults[index]._id,
+        name: $scope.searchUsersResults[index].name,
+        permission: $scope.permissionLevels[$scope.permissionLevels.indexOf('general')]
+      });
+      $scope.searchUsersResults.splice(index, 1);
     };
 }])
 .directive('crnTeamModifer', function(){

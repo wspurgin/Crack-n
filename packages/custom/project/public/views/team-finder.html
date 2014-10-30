@@ -4,9 +4,9 @@
     <input type="search" ng-model="searchText" data-ng-change="searchForTeamMembers()">
     <div class="searchResults" data-ng-show="searchText">
         <div ng-repeat="member in searchUsersResults | filter:searchText">
-            <span data-crn-member>
-                <p data-crn-member-name>{{member.name}}</p>
-                <p data-crn-member-email>{{member.email}}</p>
+            <span data-crn-member ng-click="addTeamMember($index)">
+                <span data-crn-member-name>{{member.name}}</span>
+                <span data-crn-member-email>{{member.email}}</span>
             </span>
         </div>
     </div>
