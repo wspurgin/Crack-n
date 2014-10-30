@@ -1,11 +1,11 @@
 <div data-ng-controller="MyAccountCtrl">
-    <div ng-repeat="error in registerError">
+    <div ng-repeat="error in updateError">
         <div class="alert alert-danger animated fadeIn">{{error.msg}}</div>
     </div>
     <div class="alert alert-danger animated fadeIn" ng-show="usernameError">{{usernameError}}</div>
     <div class="alert alert-danger animated fadeIn" ng-show="emailError">{{emailError}}</div>
     <form id="register_form" ng-submit="register()">
-        <h2>Sign Up</h2>
+        <h2>My Account</h2>
         <div class="info_pull_error">
             <p>{{info_error}}</p>
         </div>
@@ -36,42 +36,38 @@
             <span class="pic username"></span>
         </div>
 
-        <div class="edit-wrapper">
-          <input type="button" id="edit_button" name="edit_button" value="Edit" ng-click="edit()" ng-hide="editing" />
-          <input type="button" id="change_pass" name="change_pass" value="Change Password" ng-show="editing" ng-click="changePassword()" />
-        </div>
-
         <div ng-show="editing">
-        <div class="password-wrapper">
-          <div class="input-wrapper">
-              <label for="password_block">Password:</label>
-              <input required id="password_block" name="password" type="{{input.type}}"
+          <div class="password-wrapper" ng-show="changing_pass">
+            <div class="input-wrapper">
+                <label for="password_block">Password:</label>
+                <input required id="password_block" name="password" type="{{input.type}}"
                       placeholder="{{input.placeholder}}" ng-model="user.password">
 
-              <div class="error_message">Please enter a correct info #</div>
-              <span class="pic password {{input.iconClass}}" ng-click="togglePasswordVisible()">
-                <div class="hide_text_password">
+                <div class="error_message">Please enter a correct info #</div>
+                <span class="pic password {{input.iconClass}}" ng-click="togglePasswordVisible()">
+                  <div class="hide_text_password">
                     {{input.tooltipText}}
-                </div>
-              </span>
-          </div>
-          <div class="input-wrapper">
-              <label for="confirm_password">Confirm Password:</label>
-              <input required id="confirm_password" name="confirm_password" type="{{input.type}}"
+                  </div>
+                </span>
+            </div>
+            <div class="input-wrapper">
+                <label for="confirm_password">Confirm Password:</label>
+                <input required id="confirm_password" name="confirm_password" type="{{input.type}}"
                      placeholder="{{input.placeholderConfirmPass}}" ng-model="user.confirmPassword">
 
-              <div class="error_message">Please enter a correct info #</div>
-              <span class="pic password {{input.iconClassConfirmPass}}" ng-click="togglePasswordConfirmVisible()">
-                <div class="hide_text_password">
+                <div class="error_message">Please enter a correct info #</div>
+                <span class="pic password {{input.iconClassConfirmPass}}" ng-click="togglePasswordConfirmVisible()">
+                  <div class="hide_text_password">
                     {{input.tooltipTextConfirmPass}}
-                </div>
-              </span>
+                  </div>
+                </span>
+            </div>
           </div>
-          <div class="save-wrapper">
-            <input id="save_button" name="save_button" type="button" value="Save" >
-          </div>
-
         </div>
+        <div class="edit-wrapper">
+          <input type="button" id="edit_button" name="edit_button" value="Edit" ng-click="edit()" ng-hide="editing" />
+          <input type="button" id="change_pass" name="change_pass" value="Change Password" ng-show="editing && !changing_pass" ng-click="changePassword()" />
+          <input id="save_button" name="save_button" type="button" value="Save" ng-click="save()" ng-show="editing" />
         </div>
     </form>
 </div>

@@ -51,12 +51,21 @@ exports.edit = function (req, res) {
 exports.addProject = function (req, res) {
     var project = new Project();
     project.name = req.body.name;
-    project.startDate = req.body.startDate;
+    if (req.body.startDate) project.startDate = req.body.startDate;
     project.endDate = req.body.endDate;
     project.phases = [];
-    project.admin = req.body.name;
+    project.admin = req.body.user;
     project.members = [];
     project.messages = [];
     project.save();
     return res.json(201);
+};
+
+exports.remove = function (req, res) {
+	Project
+	  .remove()
+	  .exec(function(err) {
+	  	if (err) return res.status(400).send(err);
+	  	else return res.status(200).send('Test database cleared.');
+	  });
 };

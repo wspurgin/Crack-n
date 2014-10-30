@@ -27,9 +27,9 @@ exports.show = function (req, res) {
 	var project_id = req.params.project_id;
 	var phase_id = req.params.phase_id;
 	Project.findOne( {'_id': project_id} ).exec(function(err, result) {
-		if (!err) {
+		if (!err && result) {
 			Phase.findOne( {'_id': phase_id} ).exec(function(err, result_phase){
-				if (!err) {
+				if (!err && result_phase) {
 					return res.json(200, result_phase);
 				}
 				else {

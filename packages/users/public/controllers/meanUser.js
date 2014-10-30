@@ -211,4 +211,12 @@ angular.module('mean.users')
           $('input').removeAttr('readonly');
           $scope.editing = true;
       };
+
+      $scope.changePassword = function() {
+          $scope.changing_pass = true;
+      };
+
+      $scope.save = function() {
+
+      };
   }]);

@@ -51,4 +51,7 @@ app.use('/project*', function(req, res, next){
 
   app.route('/projects')
     .post(project.addProject);
+
+  app.route('/projects/:project_id')
+    .delete(project.remove);
 };

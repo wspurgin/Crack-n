@@ -1,10 +1,55 @@
 <section class="phase-wrapper" id="{{phase.name|underscore}}" data-ng-repeat = "phase in phases">
 	
-	<div class = "phase">
-	Phase 1
-		<div class = "task">
-		Task 1
-<!--need more work this is just initial -->
-		</div>
+<div class="midSection">
+		<section id="projectTitle" >
+			<span > <h1>Project 1</h1> </span>
+		</section>
+
+		<section id="afterPT">
+
+			<div class="teamDetails">
+				<div class="teamHead"> <h3>Team Members</h3></div>
+				<div class="teamMemberNames">
+					<span> Al Aloqla</span> <br>
+					<span> Tyler George : Admin</span> <br>
+					<span> Will Spoyin</span> <br>
+				</div>
+				<div class="editButton"> <input type="button" value="Edit" ></div>
+
+
+
+
+				<div id="messageBoard">
+					<div> <h3>Message Board</h3></div>
+					<div id="displayMessage">  </div>
+					<div id="postMessage"><input type="text"> <input type="button" value="Post"></div>
+				</div>
+			</div>
+
+
+			<div id="dropDown">
+				<select>
+				  <option value="volvo">Phase 1</option>
+				</select>				
+				<input type="button" value="+">
+				<input type="button" value="*">
+				<input type="button" value="&times;">
+			</div>
+
+ 			<div id="dropDown">
+				<select>
+				  <option value="volvo">Task 1</option>
+				</select>
+				
+				<input type="button" value="+">
+				<input type="button" value="*">
+				<input type="button" value="&times;">
+
+			</div>
+
+		</section>
+		
+
 	</div>
+</div>
 </section>
