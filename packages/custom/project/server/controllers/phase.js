@@ -8,6 +8,8 @@ var mongoose = require('mongoose'),
   Phase = mongoose.model('Phase'),
   Project = mongoose.model('Project');
 
+var activity = require('../controllers/activity');
+
 exports.all = function (req, res) {
 	var project_id = req.params.project_id;
 	Project.findOne( {'_id': project_id} ).exec(function(err, result) {
@@ -79,6 +81,7 @@ exports.addPhase = function (req, res) {
 		    phase.save();
 		    result.phases.push(phase);
 		    result.save();
+		    activity.createEntry('Phase', 'Created', req.user, project_id);
 		    return res.json(201);
 		}
 		else {

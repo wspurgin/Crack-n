@@ -7,7 +7,6 @@
 var mongoose = require('mongoose'),
   Project = mongoose.model('Project');
 
-
 exports.all = function (req, res) {
 	Project.find().exec(function(err, result) {
 		if (!err) {

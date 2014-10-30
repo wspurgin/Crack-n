@@ -101,7 +101,7 @@ angular.module('mean.users')
       $scope.register = function() {
         $scope.usernameError = null;
         $scope.registerError = null;
-        $http.post('/register', {
+        $http.post('/signup', {
           email: $scope.user.email,
           password: $scope.user.password,
           confirmPassword: $scope.user.confirmPassword,

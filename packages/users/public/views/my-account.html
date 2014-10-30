@@ -37,7 +37,8 @@
         </div>
 
         <div class="edit-wrapper">
-          <input type="button" id="edit_button" name="edit_button" value="Edit" ng-click="edit()" />
+          <input type="button" id="edit_button" name="edit_button" value="Edit" ng-click="edit()" ng-hide="editing" />
+          <input type="button" id="change_pass" name="change_pass" value="Change Password" ng-show="editing" ng-click="changePassword()" />
         </div>
 
         <div ng-show="editing">
