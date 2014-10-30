@@ -58,7 +58,7 @@ form.login-form {
 /* end of header*/
 
 /*project page*/
-#phase-wrapper{
+.phase-wrapper{
 	width: 100%;
 	height: 100%;
 }
@@ -75,13 +75,13 @@ background-color: beige;
 	position: relative;
 }
 
-#projectTitle{
+.projectTitle{
 
 	width: 200px;
 	margin: 0 auto;
 }
 
-#afterPT{
+.afterPT{
 	width: 100%;
 }
 
@@ -92,21 +92,21 @@ background-color: beige;
 	float: left;
 }
 
-#dropDown{
+.dropDown{
 	
 	float: right;
 margin-right: 300px;
 padding-top: 20px;
 }
 
-#dropDown select{
+.dropDown select{
 
 width: 300px;
 height: 35px;
 font-size: 25px;
 }
 
-#dropDown input[type="button"]{
+.dropDown input[type="button"]{
 font-size: 25px;
 height: 35px;
 background-color: beige;
@@ -117,23 +117,23 @@ margin-left:0;
 padding-top: 15px;
 }
 
-#messageBoard{
+.messageBoard{
 	width: 300px;
 	text-align: center;
 	border: 1px solid black;
 	margin-top: 30px;
 }
 
-#postMessage{
+.postMessage{
 		padding-top: 10px;
 		padding-bottom: 10px;
 }
 
-#messageBoard input[type="text"]{
+.messageBoard input[type="text"]{
 	height: 30px;
 }
 
-#displayMessage{
+.displayMessage{
 	width: 300px;
 	height: 150px;
 	border-top: 1px solid black;
