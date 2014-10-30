@@ -4,14 +4,17 @@
     <input type="search" ng-model="searchText" data-ng-change="searchForTeamMembers()">
     <div class="searchResults" data-ng-show="searchText">
         <div ng-repeat="member in searchUsersResults | filter:searchText">
-            <p>{{member.name}}, {{member.email}}</p>
+            <span data-crn-member>
+                <p data-crn-member-name>{{member.name}}</p>
+                <p data-crn-member-email>{{member.email}}</p>
+            </span>
         </div>
     </div>
     <div class="current-team">
         <div data-ng-repeat="member in $parent.project.teamMembers">
             <span>{{member.name}}:
                 <span data-ng-repeat="permission in $parent.permissionLevels">
-                    {{permission}}<input name="{{permission}}" type="radio" data-ng-model="member.permission" value="{{permission}}">
+                    <label>{{permission}}</label><input name="{{permission}}" type="radio" data-ng-model="member.permission" value="{{permission}}">
                 </span>
             </span>
         </div>
