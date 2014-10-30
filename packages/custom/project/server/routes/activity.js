@@ -7,7 +7,7 @@ module.exports = function(MeanUser, app, auth, database, passport) {
   app.route('/activity/test')
   	.get(ActivityLog.testGetProject);
 
-  app.route('/project/:project_id/activity')
+  app.route('/projects/:project_id/activity')
     .get(ActivityLog.getActivity);
 
   /*

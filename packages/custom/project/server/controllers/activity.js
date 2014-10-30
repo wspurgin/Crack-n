@@ -94,6 +94,7 @@ exports.createEntry = function(type, action, user, project_id) {
 			entry.description.action = action;
 		entry.body = concatBody(type, action);
 		entry.save();
+		console.log("Created activity");
 	} catch(err) {
 		console.log('createEntry error, check API @ (controllers/activity.js:82:0): ' + err);
 	}
