@@ -216,7 +216,29 @@ angular.module('mean.users')
           $scope.changing_pass = true;
       };
 
+      
       $scope.save = function() {
-
+        $scope.usernameError = null;
+        $scope.updateError = null;
+        $http.put('/users/me', {
+          email: $scope.user.email,
+          username: $scope.user.username,
+          name: $scope.user.name
+        })
+          .success(function() {
+            // authentication OK
+            $scope.updateError = 0;
+            $rootScope.user = $scope.user;
+            //$rootScope.$emit('loggedin');
+            $location.url('/#!/my-account');
+          })
+          .error(function(error) {
+            // Error: authentication failed
+            if (error === 'Username already taken') {
+              $scope.usernameError = error;
+            } else if (error === 'Email already taken') {
+              $scope.emailError = error;
+            } else $scope.updateError = error;
+          });
       };
   }]);
