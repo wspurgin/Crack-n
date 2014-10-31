@@ -62,6 +62,10 @@ exports.addProject = function (req, res) {
 };
 
 exports.remove = function (req, res) {
+//var project = Project.findOne({'id': req.params.project_id});
+//var admin = project.admin
+//if rec.user.id === admin
+// else res.json('You do not have permission";
 	Project
 	  .remove()
 	  .exec(function(err) {
