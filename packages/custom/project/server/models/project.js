@@ -12,7 +12,6 @@ Schema = mongoose.Schema;
 var projectSchema = new Schema({
 	name: {
 		type: String,
-		default: "Project_1"
 		required: true
 	},
 	startDate: {

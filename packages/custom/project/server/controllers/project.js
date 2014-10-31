@@ -54,7 +54,7 @@ exports.addProject = function (req, res) {
     if (req.body.startDate) project.startDate = req.body.startDate;
     project.endDate = req.body.endDate;
     project.phases = [];
-    project.admin = req.body.user;
+    project.admin = req.body.admin;
     project.members = [];
     project.messages = [];
     project.save();
@@ -66,7 +66,7 @@ exports.remove = function (req, res) {
 //var admin = project.admin
 //if rec.user.id === admin
 // else res.json('You do not have permission";
-	Project
+	project
 	  .remove()
 	  .exec(function(err) {
 	  	if (err) return res.status(400).send(err);
