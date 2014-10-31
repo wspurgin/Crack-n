@@ -12,6 +12,7 @@ Schema = mongoose.Schema;
 var projectSchema = new Schema({
 	name: {
 		type: String,
+		default: "Project_1"
 		required: true
 	},
 	startDate: {
@@ -29,7 +30,7 @@ var projectSchema = new Schema({
 	admin: {
 		type: Schema.ObjectId,
 		ref: 'User',
-		required: true
+		//required: true
 	},
 	members: {
 		type: Array
