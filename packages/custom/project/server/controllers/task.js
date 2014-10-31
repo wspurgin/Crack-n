@@ -6,16 +6,25 @@
 
 var mongoose = require('mongoose'),
 	Task = mongoose.model('Task'),
+	Phase = mongoose.model('Phase'),
 	Project=mongoose.model('Project');
 
 exports.all=function(req,res) {
 	var project_id = req.params.project_id;
+	var phase_id = req.params.phase_id;
 	Project.findOne( {'_id':project_id}).exec(function(err, result) {
 		if (!err) {
-			return res.json(200, result.task);
+			Phase.findOne( {'_id':phase_id}).exec(function(err, result_phase) {
+				if (!err) {
+					return res.json(200,result_phase.tasks);
+				}
+				else {
+					return res.json('Phase does not exist!');
+				}
+			});
 		}
 		else {
-			return res.json('Task does not exist!');
+			return res.json('Project does not exist!');
 		}
 		console.log('project' + result.task );
 	});
@@ -66,20 +75,28 @@ exports.complete=function(req, res) {
 
 exports.create=function(req, res) {
 	var project_id = req.params.project_id;
+	var phase_id=req.params.phase_id;
 	Project.findOne( {'_id':project_id} ).exec(function(err,result) {
 		if (!err) {
-			var task=new Task();
-			task.name=req.body.name;
-			task.description=req.body.description;
-			task.assignedMembers=req.body.assignedMembers;
-			task.dueDates=req.body.dueDates;
-			task.save();
-			result.task.push(task);
-			result.save();
-			return res.json(201);
+			Phase.findOne({'_id':phase_id}).exec(function(err, result_task) {
+				if (!err) {
+					var task=new Task();
+					task.name=req.body.name;
+					task.description=req.body.description;
+					task.assignedMembers=req.body.assignedMembers;
+					task.dueDates=req.body.dueDates;
+					task.save();
+					result_task.tasks.push(task);
+					result_task.save();
+					return res.json(201);
+				}
+				else {
+					return res.json('Phase does not exist!');
+				}
+			});
 		}
 		else {
-			return res.json('Project does not exist!');
+			return res.json ('Project does not exist');
 		}
 		console.log('project '+result.task);
 	});
