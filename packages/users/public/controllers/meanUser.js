@@ -181,6 +181,9 @@ angular.module('mean.users')
     function($scope, $rootScope, $http, $location, Global) {
       $scope.global = Global;
       $scope.user = {};
+      $scope.editing = false;
+      $scope.changing_pass = false;
+
       $http.get('/users/me')
         .success(function(response) {
           $scope.user.name = response.name;
@@ -195,7 +198,7 @@ angular.module('mean.users')
       $scope.global.registerForm = false;
 
 
-      $scope.togglePasswordVisible = function() {
+      /*$scope.togglePasswordVisible = function() {
         $scope.input.type = $scope.input.type === 'text' ? 'password' : 'text';
         $scope.input.placeholder = $scope.input.placeholder === 'Password' ? 'Visible Password' : 'Password';
         $scope.input.iconClass = $scope.input.iconClass === 'icon_hide_password' ? '' : 'icon_hide_password';
@@ -206,7 +209,7 @@ angular.module('mean.users')
         $scope.input.placeholderConfirmPass = $scope.input.placeholderConfirmPass === 'Repeat Password' ? 'Visible Password' : 'Repeat Password';
         $scope.input.iconClassConfirmPass = $scope.input.iconClassConfirmPass === 'icon_hide_password' ? '' : 'icon_hide_password';
         $scope.input.tooltipTextConfirmPass = $scope.input.tooltipTextConfirmPass === 'Show password' ? 'Hide password' : 'Show password';
-      };
+      };*/
       $scope.edit = function() {
           $('input').removeAttr('readonly');
           $scope.editing = true;
@@ -219,7 +222,9 @@ angular.module('mean.users')
       
       $scope.save = function() {
         $scope.usernameError = null;
+        $scope.emailError = null;
         $scope.updateError = null;
+        $scope.passwordError = null;
         $http.put('/users/me', {
           email: $scope.user.email,
           username: $scope.user.username,
@@ -230,7 +235,9 @@ angular.module('mean.users')
             $scope.updateError = 0;
             $rootScope.user = $scope.user;
             //$rootScope.$emit('loggedin');
-            $location.url('/#!/my-account');
+            // $location.url('my-account');
+            if($scope.changing_pass === false)
+              location.reload();
           })
           .error(function(error) {
             // Error: authentication failed
@@ -240,5 +247,26 @@ angular.module('mean.users')
               $scope.emailError = error;
             } else $scope.updateError = error;
           });
+
+        if($scope.changing_pass === true) {
+          $scope.passwordError = null;
+          $http.post('/change', {
+            email: $scope.user.email,
+            password: $scope.user.password,
+            newPassword: $scope.user.newPassword,
+            confirmNewPassword: $scope.user.confirmNewPassword
+          })
+            .success(function() {
+              $scope.passwordError = 0;
+              // $location.url('my-account');
+              console.log('YAY');
+              location.reload();
+            })
+            .error(function(error) {
+              if(error === 'Your password is incorrect') {
+                $scope.passwordError = error;
+              } else $scope.updateError = error;
+            });
+        }
       };
   }]);

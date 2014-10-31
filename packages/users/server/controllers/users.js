@@ -219,6 +219,44 @@ exports.resetpassword = function(req, res, next) {
   });
 };
 
+/*
+ * Change password
+ */
+exports.changepassword = function(req, res, next) {
+  User.findOne({
+          email: req.body.email
+        }, function(err, user) {
+          if (err) {
+              return res.status(400).json({
+              msg: err
+            });
+          }
+          else if (!user) {
+              return res.status(400).json({
+              msg: 'User not found with that email'
+            });
+          }
+          else if(!user.authenticate(req.body.password)) {
+            return res.status(400).send([{
+                    msg: 'Your password is incorrect',
+                    param: 'password'
+                  }]);
+          } else {
+            req.assert('newPassword', 'Password must be between 8-20 characters long').len(8, 20);
+            req.assert('confirmNewPassword', 'Passwords do not match').equals(req.body.newPassword);
+           
+            var errors = req.validationErrors();
+            if (errors) {
+              return res.status(400).send(errors);
+            }
+
+            user.password = req.body.confirmNewPassword;
+            user.save();
+            return res.status(200).send();
+          }
+  });
+};
+
 /**
  * Send reset password email
  */
