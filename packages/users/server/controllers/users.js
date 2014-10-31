@@ -37,6 +37,19 @@ exports.signout = function(req, res) {
 };
 
 /**
+* Update
+*/
+
+exports.update = function(req, res) {
+  var user = req.user;
+  if (req.body.name) user.name = req.body.name;
+  if (req.body.username) user.username = req.body.username;
+  if (req.body.email) user.email = req.body.email;
+  user.save();
+  res.json(200, 'Successfully updated user', user);
+};
+
+/**
  * Session
  */
 exports.session = function(req, res) {
