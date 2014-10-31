@@ -4,7 +4,8 @@
     </div>
     <div class="alert alert-danger animated fadeIn" ng-show="usernameError">{{usernameError}}</div>
     <div class="alert alert-danger animated fadeIn" ng-show="emailError">{{emailError}}</div>
-    <form id="register_form" ng-submit="register()">
+    <div class="alert alert-danger animated fadeIn" ng-show="passwordError">{{passwordError}}</div>
+    <form id="my_account_form">
         <h2>My Account</h2>
         <div class="info_pull_error">
             <p>{{info_error}}</p>
@@ -38,29 +39,41 @@
 
         <div ng-show="editing">
           <div class="password-wrapper" ng-show="changing_pass">
-            <div class="input-wrapper">
-                <label for="password_block">Password:</label>
-                <input required id="password_block" name="password" type="{{input.type}}"
+          <div class="input-wrapper">
+                <label for="current_password">Current Password:</label>
+                <input required id="current_password" name="current_password" type="password"
                       placeholder="{{input.placeholder}}" ng-model="user.password">
 
                 <div class="error_message">Please enter a correct info #</div>
-                <span class="pic password {{input.iconClass}}" ng-click="togglePasswordVisible()">
+                <!-- <span class="pic password {{input.iconClass}}" ng-click="togglePasswordVisible()">
                   <div class="hide_text_password">
                     {{input.tooltipText}}
                   </div>
-                </span>
+                </span> -->
             </div>
             <div class="input-wrapper">
-                <label for="confirm_password">Confirm Password:</label>
-                <input required id="confirm_password" name="confirm_password" type="{{input.type}}"
-                     placeholder="{{input.placeholderConfirmPass}}" ng-model="user.confirmPassword">
+                <label for="new_password">New Password:</label>
+                <input required id="new_password" name="new_password" type="password"
+                      placeholder="{{input.placeholder}}" ng-model="user.newPassword">
 
                 <div class="error_message">Please enter a correct info #</div>
-                <span class="pic password {{input.iconClassConfirmPass}}" ng-click="togglePasswordConfirmVisible()">
+                <!-- <span class="pic password {{input.iconClass}}" ng-click="togglePasswordVisible()">
+                  <div class="hide_text_password">
+                    {{input.tooltipText}}
+                  </div>
+                </span> -->
+            </div>
+            <div class="input-wrapper">
+                <label for="confirm_password">Confirm New Password:</label>
+                <input required id="confirm_password" name="confirm_password" type="password"
+                     placeholder="{{input.placeholderConfirmPass}}" ng-model="user.confirmNewPassword">
+
+                <div class="error_message">Please enter a correct info #</div>
+                <!-- <span class="pic password {{input.iconClassConfirmPass}}" ng-click="togglePasswordConfirmVisible()">
                   <div class="hide_text_password">
                     {{input.tooltipTextConfirmPass}}
                   </div>
-                </span>
+                </span> -->
             </div>
           </div>
         </div>

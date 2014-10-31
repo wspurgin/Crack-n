@@ -37,6 +37,60 @@ exports.signout = function(req, res) {
 };
 
 /**
+* Update
+*/
+
+exports.update = function(req, res) {
+  var user = req.user;
+
+  req.assert('name', 'You must enter a name').notEmpty();
+  req.assert('email', 'You must enter a valid email address').isEmail();
+  req.assert('username', 'Username cannot be more than 20 characters').len(1, 20);
+
+  var errors = req.validationErrors();
+  if (errors) {
+    return res.status(400).send(errors);
+  }
+
+  if (req.body.name) user.name = req.body.name;
+  if (req.body.username) user.username = req.body.username;
+  if (req.body.email) user.email = req.body.email;
+  user.save(function(err) {
+    if (err) {
+      switch (err.code) {
+        case 11000:
+        case 11001:
+          res.status(400).send([{
+            msg: 'Username already taken',
+            param: 'username'
+          }]);
+          break;
+        default:
+          var modelErrors = [];
+
+          if (err.errors) {
+
+            for (var x in err.errors) {
+              modelErrors.push({
+                param: x,
+                msg: err.errors[x].message,
+                value: err.errors[x].value
+              });
+            }
+
+            res.status(400).send(modelErrors);
+          }
+      }
+
+      return res.status(400);
+    }
+    else {
+      res.json(200, 'Successfully updated user', user);
+    }
+  });
+};
+
+/**
  * Session
  */
 exports.session = function(req, res) {
@@ -162,6 +216,44 @@ exports.resetpassword = function(req, res, next) {
         });
       });
     });
+  });
+};
+
+/*
+ * Change password
+ */
+exports.changepassword = function(req, res, next) {
+  User.findOne({
+          email: req.body.email
+        }, function(err, user) {
+          if (err) {
+              return res.status(400).json({
+              msg: err
+            });
+          }
+          else if (!user) {
+              return res.status(400).json({
+              msg: 'User not found with that email'
+            });
+          }
+          else if(!user.authenticate(req.body.password)) {
+            return res.status(400).send([{
+                    msg: 'Your password is incorrect',
+                    param: 'password'
+                  }]);
+          } else {
+            req.assert('newPassword', 'Password must be between 8-20 characters long').len(8, 20);
+            req.assert('confirmNewPassword', 'Passwords do not match').equals(req.body.newPassword);
+           
+            var errors = req.validationErrors();
+            if (errors) {
+              return res.status(400).send(errors);
+            }
+
+            user.password = req.body.confirmNewPassword;
+            user.save();
+            return res.status(200).send();
+          }
   });
 };
 
