@@ -4,11 +4,15 @@
       <h3>Project Info</h3>
       <div class="field-group">
         <label for="projectName">Project Name</label>
-        <input type="text" maxlength="32" min="1" ng-required />
+        <input type="text" ng-model="project.name" maxlength="32" min="1" ng-required />
       </div>
       <div class="field-group">
         <label for="projectDescription">Project Description</label>
-        <textarea name="projectDescription"></textarea>
+        <textarea ng-model="project.description" name="projectDescription"></textarea>
+      </div>
+      <div class="field-group">
+        <label for="projectEndDate">Project End Date</label>
+        <input type="date" ng-model="project.endDate" name="projectEndDate" />
       </div>
     </fieldset>
     <fieldset data-crn-team-modifer></fieldset>
