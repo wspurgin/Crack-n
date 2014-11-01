@@ -94,34 +94,36 @@ exports.createEntry = function(type, action, user, project_id) {
 			entry.description.action = action;
 		entry.body = concatBody(type, action);
 		entry.save();
-		console.log('Created activity');
 	} catch(err) {
 		console.log('createEntry error, check API @ (controllers/activity.js:82:0): ' + err);
 	}
 };
 
 /**
-* Pass a log of all Project Activity to callback parameter
-* Req can be a request object, or a string (as in the case of call in testGetProject)
+* Return activity log json of project id passed in req parameters  
 */
-exports.getActivity = function(req, callback) {
-	var project_id;
-	if (typeof(req) === 'string')
-		project_id = req;
-	else 
-		project_id = req.params.project_id;
+exports.getProjectActivity = function(req , res) {
+	exports.activityProjQuery(req.params.project_id, function(log) {
+		return res.status(200).json(log); 
+	});
+};
+
+/**
+* Pass an object containing all Activity associated with project_id to callback parameter
+*/
+exports.activityProjQuery = function(project_id, callback) {
 	ActivityLog
       .find({'project_id': project_id})
 	  .sort('timestamp')
 	  .lean()
 	  .exec(function(err, log) {
-		if (err) console.log('Query error (controllers/activity.js:22:15): ' + err);
+		if (err) console.log('Query error (controllers/activity.js:116:0): ' + err);
 	    callback(log);
 	});
 };
 
-/** 
-* Populate an example ActivityLog for testing purposes
+/**
+* Populate an example ActivityLog
 */
 exports.populate = function(req, res) {
 	fs.readFile(path.join(__dirname, '../../activity.json'),
@@ -143,7 +145,7 @@ exports.populate = function(req, res) {
 };
 
 /**
-* Clears the database of all activity logs for testing purposes
+* Clears the database of all activity logs
 */
 exports.clearProject = function(req, res) {
 	ActivityLog
@@ -155,24 +157,8 @@ exports.clearProject = function(req, res) {
 };
 
 /**
-* Test getProject query using callback
-*/
-exports.testGetProject = function(req , res) {
-	var test_id = '111111111111111111111111';
-	exports.getActivity(test_id, function(log) {
-		// Example log array traversal:  
-		for (var key in log) {
-			console.log(log[key]);
-		}
-		// Example json response 
-		return res.status(200).json(log); 
-	});
-};
-
-/**
 * Example log entry creation
 */
-/*
 exports.testCreateEntry = function(req, res) {
 	try {
 		exports.createEntry('Message', 'Posted', req.user, req.params.project_id);
@@ -180,5 +166,3 @@ exports.testCreateEntry = function(req, res) {
 		return res.status(400).send('testCreateEntry() failed (controllers/activity.js:22:15): ' + err);
 	}
 };
-*/
-

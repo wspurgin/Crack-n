@@ -18,7 +18,6 @@ var taskSchema = new Schema ({
 	completed: {
 		type: Boolean,
 		default: false,
-		required: true
 	},
 	description: {
 		type: String, 
@@ -30,8 +29,8 @@ var taskSchema = new Schema ({
 	},
 	dueDates: {
 		type: Date,
+		required:true,
 		default:Date.now,
-		required: true
 	}
 });
 

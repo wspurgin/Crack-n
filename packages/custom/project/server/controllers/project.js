@@ -54,18 +54,21 @@ exports.addProject = function (req, res) {
     if (req.body.startDate) project.startDate = req.body.startDate;
     project.endDate = req.body.endDate;
     project.phases = [];
-    project.admin = req.body.user;
-    project.members = [];
+    project.owner = req.body.owner;
+    project.members = req.body.members;
     project.messages = [];
     project.save();
-    return res.json(201);
+    return res.status(201).json(project);
 };
 
 exports.remove = function (req, res) {
-	Project
-	  .remove()
+    var project = Project.findOne({'id': req.params.project_id});
+    	if (req.user.id === project.owner)
+	  project.remove()
 	  .exec(function(err) {
 	  	if (err) return res.status(400).send(err);
 	  	else return res.status(200).send('Test database cleared.');
 	  });
 };
+
+

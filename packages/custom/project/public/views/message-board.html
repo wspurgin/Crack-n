@@ -1,5 +1,16 @@
-<div class="team-finder" data-ng-controller="TeamMemberCtrl">
-    <h3>Team Members</h3>
+<div class="messageBoard" data-ng-controller="MessageBoardCtrl">
+    <div class="title-wrapper">
+        <h3>Message Board</h3>
+    </div>
+    <div class="displayMessage">
+        
+    </div>
+    <div class="postMessage">
+        <input type="text" name="message_post/> 
+        <input type="button" value="Post" />
+    </div>
+
+
     <label for="memberSearch">{{'Search for Members'|lowercase}}</label>
     <input type="search" ng-model="searchText" data-ng-change="searchForTeamMembers()">
     <div class="searchResults" data-ng-show="searchText">
@@ -11,7 +22,7 @@
         </div>
     </div>
     <div class="current-team">
-        <div data-ng-repeat="member in $parent.project.members">
+        <div data-ng-repeat="member in $parent.project.teamMembers">
             <span>{{member.name}}:
                 <span data-ng-repeat="permission in $parent.permissionLevels">
                     <label>{{permission}}</label><input name="{{member}}-{{permission}}" type="radio" data-ng-model="member.permission" value="{{permission}}">
