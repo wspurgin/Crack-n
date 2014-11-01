@@ -28,8 +28,8 @@ var projectSchema = new Schema({
 	},
 	admin: {
 		type: Schema.ObjectId,
-		ref: 'User',
-		//required: true
+		ref: 'User', 
+		required: true
 	},
 	members: {
 		type: Array

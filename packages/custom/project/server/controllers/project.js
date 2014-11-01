@@ -62,14 +62,14 @@ exports.addProject = function (req, res) {
 };
 
 exports.remove = function (req, res) {
-//var project = Project.findOne({'id': req.params.project_id});
-//var admin = project.admin
-//if rec.user.id === admin
-// else res.json('You do not have permission";
-	project
-	  .remove()
+    var project = Project.findOne({'id': req.params.project_id});
+    var admin = project.admin;
+    	if (req.user.id === admin)
+	  project.remove()
 	  .exec(function(err) {
 	  	if (err) return res.status(400).send(err);
 	  	else return res.status(200).send('Test database cleared.');
 	  });
 };
+
+
