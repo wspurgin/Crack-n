@@ -142,5 +142,74 @@ padding-top: 15px;
 /*end of project page */
 
 /*phases and tasks */
+.phase1{
+	width: 300px;
+	height: 35px;
+	border: 1px solid black;
+	padding-left: 20px;
+	font-size: 25px;
+}
 
+.Phase1_sub{
+	width: 260px;
+	height: 30px;
+	border: 1px solid black;
+	padding-left: 6px;
+	font-size: 20px;	
+	margin-left: 20px;
+}
+
+.add_button{
+	width: 35px;
+	position: absolute;
+	top: 20px;
+	right: -40px;
+}
+
+.edit_button{
+	width: 35px;
+	position: absolute;
+	top: 20px;
+	right: -80px;
+}
+
+.delete_button{
+	width: 35px;
+	position: absolute;
+	top: 20px;
+	right: -120px;
+}
+
+
+.check_button{
+
+	width: 30px;
+	position: absolute;
+	top: 57px;
+	right: 2px;
+	border: 1px solid black;
+}
+
+
+
+.add_button2{
+	width: 30px;
+	position: absolute;
+	top: 59px;
+	right: -40px;
+}
+
+.edit_button2{
+	width: 30px;
+	position: absolute;
+	top: 59px;
+	right: -80px;
+}
+
+.delete_button2{
+	width: 30px;
+	position: absolute;
+	top: 59px;
+	right: -120px;
+}
 /*end of phases and tasks*/
