@@ -6,7 +6,10 @@ module.exports = function(MeanUser, app, auth, database, passport) {
 
   app.route('/projects/:project_id/activity')
     .get(ActivityLog.getProjectActivity);
-    
+
+   app.route('/activity/test')
+     .post(ActivityLog.testCreateEntry);
+
   app.route('/activity/populate')
     .post(ActivityLog.populate);
 

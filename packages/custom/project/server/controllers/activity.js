@@ -5,6 +5,8 @@
 */
 var mongoose = require('mongoose'),
 	ActivityLog = mongoose.model('ActivityLog'),
+	User = mongoose.model('User'),
+	async = require('async'),
 	path = require('path'),
 	fs = require('fs');
  
@@ -16,87 +18,79 @@ String.prototype.entryFormat = function() {
 };
 
 /**
-* Type validation
-*/
-var valid = function(type) {
-	switch (type) {
-		case 'Message':
-			return true;
-		case 'Phase':
-			return true;
-		case 'Member':
-			return true;
-		case 'Task':
-			return true;
-	} 
-	console.log('Invalid type (controllers/activity.js:21:1)');
-	return false;
-};
-
-/**
-* Action validation 
-*/
-var valid = function(action, type) {
-	switch (type) {
-		case 'Message':
-			if (action === 'Created' || action === 'Removed')
-				return true;
-			break;
-		case 'Phase':
-			if (action === 'Created' || action === 'Completed' || action === 'Removed')
-				return true;
-			break;
-		case 'Member':
-			if (action === 'Added' || action === 'Removed')
-				return true;
-			break;
-		case 'Task':
-			if (action === 'Created' || action === 'Completed' || action === 'Removed')
-				return true;
-			break;
-	} 
-	console.log('Invalid action (controllers/activity.js:39:1)');
-	return false;
-};
-
-/**
-* Produce a body message
-*/
-var concatBody = function(type, action) {
-	type.toLowerCase();
-	action.toLowerCase();
-	if (type === 'message' && action === 'created')
-		action = 'posted';
-	return type + ' a ' + action;
-};
-
-/**
 * Create an ActivityLog entry
 *
 *   API (not case sensitive):
-*  ////////////////////////////////////////////////////////
-*  //	 type	: Message, Phase, Member, Task, Project  //
-*  //	 action : Created, Completed, Added, Removed 	 //
-*  //		      (only Members can be added)			 //
-*  ////////////////////////////////////////////////////////
+*  ///////////////////////////////////////////////////////////////////////
+*  //	 type	: Message, Phase, Member, Task, Project  		  		//
+*  //	 action : Created, Completed, Added, Removed, Posted  	  		//
+*  //	 usage  : Only Members are Added, only Messages are Posted)		//
+*  ///////////////////////////////////////////////////////////////////////
 */
-exports.createEntry = function(type, action, user, project_id) {
-	try {
-		var entry = new ActivityLog();
-		entry.userName = user.userName;
+exports.createEntry = function(type, action, user, project_id, cb) {
+	var entry = new ActivityLog();
+	async.waterfall([
+	  // Validate type and action
+	  function(callback) {
+	  	type.entryFormat();
+		action.entryFormat();
+	  	console.log(type);
+	  	console.log(action);
+		switch (type) {
+		  case 'Message':
+		    if (action === 'Created' || action === 'Removed' || action === 'Posted') {	
+		  	  callback();
+		  	  break;
+		  	}
+		  /* falls through */
+		  case 'Phase':
+		    if (action === 'Created' || action === 'Completed' || action === 'Removed') {
+		  	  callback();
+		  	  break;
+		  	}
+		  /* falls through */
+	 	  case 'Member':
+		    if (action === 'Added' || action === 'Removed') {
+		  	  callback();
+		  	  break;
+		  	}
+		  /* falls through */
+		  case 'Task':
+		    if (action === 'Created' || action === 'Completed' || action === 'Removed') {
+		 	  callback();
+		 	  break;
+		 	}
+		  /* falls through */
+		  default:
+		    callback('invalid type / action');
+	  	    break;
+	     }
+	  },
+	  // Add the basic members
+	  function(callback) {
+	  	entry.description.type = type;
+	  	entry.description.action = action;
+	  	entry.userName = user.name;
 		entry.user_id = user._id;
 		entry.project_id = project_id;
-		type.entryFormat();
-		action.entryFormat();
-		if (valid(type)) 
-			entry.description.type = type;
-		if (valid(action, type))
-			entry.description.action = action;
-		entry.body = concatBody(type, action);
+	  	callback();
+	  },
+	  // Concatinate the log body and save
+	  function(callback) {
+	    type.toLowerCase();
+		action.toLowerCase();
+		if (type === 'message' && action === 'created')
+		  action = ' posted';
+		entry.body = action + ' a ' + type;
 		entry.save();
-	} catch(err) {
-		console.log('createEntry error, check API @ (controllers/activity.js:82:0): ' + err);
-	}
+		console.log('created');
+		callback();
+	  }
+	], function(err) {
+  	  if (err) console.log(err);
+  	  console.log('its done');
+  	  cb();
+	});
 };
 
 /**
@@ -104,7 +98,7 @@ exports.createEntry = function(type, action, user, project_id) {
 */
 exports.getProjectActivity = function(req , res) {
 	exports.activityProjQuery(req.params.project_id, function(log) {
-		return res.status(200).json(log); 
+	  return res.status(200).json(log); 
 	});
 };
 
@@ -160,9 +154,11 @@ exports.clearProject = function(req, res) {
 * Example log entry creation
 */
 exports.testCreateEntry = function(req, res) {
-	try {
-		exports.createEntry('Message', 'Posted', req.user, req.params.project_id);
-	} catch (err) {
-		return res.status(400).send('testCreateEntry() failed (controllers/activity.js:22:15): ' + err);
-	}
+		var user = new User();
+		user.name = 'Dildo Dildo-son';
+		user.email = 'didlo@gmail.com';
+		user.username = '360noscope23x420';
+		exports.createEntry('Message', 'Posted', user, '111111111111111111111111', function() {
+		  return res.status(201).send('test went well');
+		});
 };
