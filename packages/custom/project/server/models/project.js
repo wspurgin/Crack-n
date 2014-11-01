@@ -26,7 +26,7 @@ var projectSchema = new Schema({
 	phases: {
 		type: Array
 	},
-	admin: {
+	owner: {
 		type: Schema.ObjectId,
 		ref: 'User', 
 		required: true

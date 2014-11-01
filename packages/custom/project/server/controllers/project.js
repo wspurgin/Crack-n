@@ -54,8 +54,8 @@ exports.addProject = function (req, res) {
     if (req.body.startDate) project.startDate = req.body.startDate;
     project.endDate = req.body.endDate;
     project.phases = [];
-    project.admin = req.body.admin;
-    project.members = [];
+    project.owner = req.body.owner;
+    project.members = req.body.members;
     project.messages = [];
     project.save();
     return res.json(201);
@@ -63,8 +63,7 @@ exports.addProject = function (req, res) {
 
 exports.remove = function (req, res) {
     var project = Project.findOne({'id': req.params.project_id});
-    var admin = project.admin;
-    	if (req.user.id === admin)
+    	if (req.user.id === project.owner)
 	  project.remove()
 	  .exec(function(err) {
 	  	if (err) return res.status(400).send(err);
