@@ -173,7 +173,7 @@ exports.show=function(req,res) {
 			return ('Project does not exist!');
 		}
 	});
-}
+};
 
 exports.delete=function(req,res) {
 	var project_id=req.params.project_id;
