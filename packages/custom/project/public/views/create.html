@@ -1,21 +1,21 @@
 <div class="view-content" data-ng-controller="CreateProjectCtrl">
-  <form name="createProjectForm" ng-submit="console.log('submiting')">
+  <form name="createProjectForm" ng-submit="createProject()">
     <fieldset>
       <h3>Project Info</h3>
       <div class="field-group">
         <label for="projectName">Project Name</label>
-        <input type="text" ng-model="project.name" maxlength="32" min="1" ng-required />
+        <input type="text" placeholder="My Project" ng-model="project.name" maxlength="32" min="1" ng-required="true" />
       </div>
       <div class="field-group">
         <label for="projectDescription">Project Description</label>
-        <textarea ng-model="project.description" name="projectDescription"></textarea>
+        <textarea placeholder="A Short and helpful description" ng-model="project.description" name="projectDescription" ng-required="true"></textarea>
       </div>
       <div class="field-group">
         <label for="projectEndDate">Project End Date</label>
-        <input type="date" ng-model="project.endDate" name="projectEndDate" />
+        <input type="date" ng-model="project.endDate" name="projectEndDate" placeholder="Optional"/>
       </div>
     </fieldset>
     <fieldset data-crn-team-modifer></fieldset>
-    <button class="submit-button" type="submit">Create</button>
+    <button class="submit-button" type="submit" >Create</button>
   </form>
 </div>

@@ -32,6 +32,18 @@ angular.module('mean.project').controller('ProjectController', ['$scope', '$http
             permission: $scope.permissionLevels[0]
         }
     ];
+
+    $scope.createProject = function() {
+      $http.post('/projects', $scope.project)
+        .success(function(res) {
+          console.log(res);
+          $location.url('/project/'+res._id);
+        })
+        .error(function() {
+          alert('Could not create your project. Check network connection and try again');
+        });
+    };
+
     // if the browser isn't chrome, use jquery-ui for input type date
     if (!window.chrome) {
       if($('input[type=date]')) {

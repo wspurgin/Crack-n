@@ -11,7 +11,7 @@
         </div>
     </div>
     <div class="current-team">
-        <div data-ng-repeat="member in $parent.project.teamMembers">
+        <div data-ng-repeat="member in $parent.project.members">
             <span>{{member.name}}:
                 <span data-ng-repeat="permission in $parent.permissionLevels">
                     <label>{{permission}}</label><input name="{{member}}-{{permission}}" type="radio" data-ng-model="member.permission" value="{{permission}}">

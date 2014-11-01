@@ -58,7 +58,7 @@ exports.addProject = function (req, res) {
     project.members = req.body.members;
     project.messages = [];
     project.save();
-    return res.json(201);
+    return res.status(201).json(project);
 };
 
 exports.remove = function (req, res) {
