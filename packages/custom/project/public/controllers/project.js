@@ -32,6 +32,14 @@ angular.module('mean.project').controller('ProjectController', ['$scope', '$http
             permission: $scope.permissionLevels[0]
         }
     ];
+    // if the browser isn't chrome, use jquery-ui for input type date
+    if (!window.chrome) {
+      if($('input[type=date]')) {
+        $('input[type=date]').each(function() {
+          $(this).datepicker();
+        });
+      }
+    }
   }
 ])
 .controller('TeamMemberCtrl', ['$scope', '$rootScope', '$http', 'Global',
