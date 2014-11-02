@@ -83,5 +83,20 @@ exports.addMembers = function (req, res) {
     	project.members.addToSet(req.user.id);
 };
 
+//Shows Group Members of a Project
+exports.members = function (req, res) {
+	var project_id = req.params.project_id;
+	console.log('project_id ' + project_id);
+	Project.findOne( {'_id': project_id} ).exec(function(err, result) {
+		if (!err) {
+			return res.json(200, result);
+			// Put Code for Showing Members here
+		}
+		else {
+			return res.json('Get real bro');
+		}
+		console.log('project ' + result);
+	});
+}; 	
 
 
