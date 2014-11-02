@@ -63,7 +63,7 @@ exports.addProject = function (req, res) {
 
 exports.remove = function (req, res) {
     var project = Project.findOne({'id': req.params.project_id});
-    var owner = Project.owner
+    var owner = project.owner;
     	if (req.user.id === owner)
 	  project.remove()
 	  .exec(function(err) {
