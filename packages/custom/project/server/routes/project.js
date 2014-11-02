@@ -49,4 +49,7 @@ app.use('/project*', auth.requiresLogin, function(req, res, next){
 
   app.route('/projects/:project_id')
     .delete(project.remove);
+
+  app.route('/projects/:project_id/members')
+    .post(project.addMembers);
 };
