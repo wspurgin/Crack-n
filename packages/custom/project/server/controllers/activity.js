@@ -20,14 +20,14 @@ String.prototype.entryFormat = function() {
 /**
 * Create an ActivityLog entry
 *
-*   API (not case sensitive):
-*  ///////////////////////////////////////////////////////////////////////
-*  //	 type	: Message, Phase, Member, Task, Project  		  		//
-*  //	 action : Created, Completed, Added, Removed, Posted  	  		//
-*  //	 usage  : Only Members are Added, only Messages are Posted)		//
-*  ///////////////////////////////////////////////////////////////////////
+*  API (not case sensitive):
+* ////////////////////////////////////////////////////////////////////////
+* //	 type	: Message, Phase, Member, Task, Project  		  		//
+* //	 action : Created, Completed, Added, Removed, Posted  	  		//
+* //	 usage  : Only Members are Added, only Messages are Posted)		//
+* ////////////////////////////////////////////////////////////////////////
 */
-exports.createEntry = function(type, action, user, project_id, cb) {
+exports.createEntry = function(type, action, user, project_id) {
 	var entry = new ActivityLog();
 	async.waterfall([
 	  // Validate type and action
@@ -62,7 +62,7 @@ exports.createEntry = function(type, action, user, project_id, cb) {
 		 	}
 		  /* falls through */
 		  default:
-		    callback('invalid type / action');
+		    callback('Error: invalid type / action (check API @ controllers/activity.js:23:0');
 	  	    break;
 	     }
 	  },
@@ -88,7 +88,6 @@ exports.createEntry = function(type, action, user, project_id, cb) {
 	], function(err) {
   	  if (err) console.log(err);
   	  console.log('Message added.');
-  	  cb();
 	});
 };
 
@@ -124,14 +123,14 @@ exports.populate = function(req, res) {
     	if (err) res.status(400).send(err);
       	var json = JSON.parse(data.toString());
       	for (var i = 0; i < json.users.length; i+=1) {
-      		var logEntry = new ActivityLog();
-        	logEntry.userName = json.users[i].userName;
-        	logEntry.body = json.users[i].body;
-        	logEntry.user_id = json.users[i].user_id;
-        	logEntry.project_id = json.users[i].project_id;
-        	logEntry.description.type = json.users[i].description.type;
-        	logEntry.description.action = json.users[i].description.action;
-        	logEntry.save();
+      	  var logEntry = new ActivityLog();
+          logEntry.userName = json.users[i].userName;
+          logEntry.body = json.users[i].body;
+          logEntry.user_id = json.users[i].user_id;
+          logEntry.project_id = json.users[i].project_id;
+          logEntry.description.type = json.users[i].description.type;
+          logEntry.description.action = json.users[i].description.action;
+          logEntry.save();
       	}
       	return res.status(201).json('Test database populated.');
 	});
@@ -154,14 +153,13 @@ exports.clearProject = function(req, res) {
 */
 exports.testCreateEntry = function(req, res) {
 	try {
-		var user = new User();
-		user.name = 'Matt Damon';
-		user.email = 'mattd@gmail.com';
-		user.username = '360noscope23x420';
-		exports.createEntry('Message', 'Posted', user, '111111111111111111111111', function() {
-		  return res.status(201).send('Test successful.');
-		});
-	catch(err) {
-		return res.status(400).send(err);
-	}
+	  var user = new User();
+	  user.name = 'Matt Damon';
+	  user.email = 'mattd@gmail.com';
+	  user.username = '360noscope23x420';
+ 	  exports.createEntry('Message', 'Posted', user, '111111111111111111111111');
+ 	  return res.status(201).send('Test successful.');
+ 	} catch(err) {
+ 		return res.status(400).send(err);
+ 	}
 };
