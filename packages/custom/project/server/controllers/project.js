@@ -83,27 +83,15 @@ exports.addMembers = function (req, res) {
 	Project
 	  .update(
    		{ _id: req.params.project_id },
-  		{ $addToSet: { members: req.body.user } }
+  		{ $addToSet: { members:{$each: req.body.user }} }
   	  )
   	  .exec(function(err, result) {
   	  	if (err) return res.status(400).send(err);
+		else
   	  	return res.status(201).send('Members added successfully');
   	  });
   	  
-	 //.find({'_id': project_id})
-	 /*
-	 .exec(function(err, result) {
-    	if (!err && result){
-    		var members = result.members;
-    		members.addToSet(req.body.user);
-    		result.save();
-		    return res.json(201);
-    	}
-    	else{
-		    return res.status(400).json('Nah bro, there aint no project');
-    	}
-    });
-	*/
+
 };
 
 //Shows Group Members of a Project
