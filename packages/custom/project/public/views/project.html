@@ -1,52 +1,39 @@
-<section class="phase-wrapper" id="test" data-ng-repeat="phase in phases">
-	
-<div class="midSection">
-		<section class="projectTitle" >
-			<span > <h1>Project 1</h1> </span>
+<section class="project-wrapper">
+<div class="mid-section">
+		<section class="project-title" >
+			<h1>Project 1</h1>
 		</section>
-
-		<section class="afterPT">
-
-			<div class="teamDetails">
-				<div class="teamHead"> <h3>Team Members</h3></div>
+		<section class="project">
+			<div class="team-details">
+				<h3>Team Members</h3>
 				<div class="teamMemberNames">
-					<span> Al Aloqla</span> <br>
-					<span> Tyler George : Admin</span> <br>
-					<span> Will Spoyin</span> <br>
+					<span> Al Aloqla</span> <br/>
+					<span> Tyler George : Admin</span> <br/>
+					<span> Will Spoyin</span> <br/>
 				</div>
 				<div class="editButton"> <input type="button" value="Edit" ></div>
-
-
-
-
 				<div class="messageBoard">
 					<div> <h3>Message Board</h3></div>
 					<div class="displayMessage">  </div>
 					<div class="postMessage"><input type="text"> <input type="button" value="Post"></div>
 				</div>
 			</div>
-
 			<div class="dropDown">
-				<div class="phase1">Phase 1</div>
-					<img src="img/add.png" class="add_button" onclick="add()" >
-					<img src="img/edit.png" class="edit_button" onclick="edit()">
-					<img src="img/delete.png" class="delete_button" onclick="delet()" >
-
-
-				<div class="Phase1_sub"> Create Task !</div>
-					<img src="img/checkmark.png" class="check_button" onclick="check()">
-					<img src="img/add.png" class="add_button2" onclick="add()" >
-					<img src="img/edit.png" class="edit_button2" onclick="edit()" >
-					<img src="img/delete.png" class="delete_button2" onclick="delet()">
-
-
-
+				<div class="phase-wrapper">
+					<span class="phase">Phase 1</span>
+					<img src="img/add.png" class="add-button" onclick="addPhase()" >
+					<img src="img/edit.png" class="edit-button" onclick="editPhase()">
+					<img src="img/delete.png" class="delete-button" onclick="deletePhase()" >
+					<div class="task-wrapper">
+						<span class="task">Create Task !</span>
+						<img src="img/check.png" class="check-button" onclick="completeTask()">
+						<img src="img/add.png" class="add-button" onclick="addTask()" >
+						<img src="img/edit.png" class="edit-button" onclick="editTask()" >
+						<img src="img/delete.png" class="delete-button" onclick="deleteTask()">
+					</div>
+				</div>
 			</div>
-
-
 		</section>
-		
-
 	</div>
 </div>
 </section>

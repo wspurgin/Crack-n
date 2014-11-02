@@ -6,23 +6,45 @@ html {
 body {
 	height: 100%;
 	margin: 0;
-	/*font-family: 'Indie Flower', cursive;*/
     color: #e3e3e3;
 	background: url("/img/green-fibers.png");
 }
 
 .content {
-  /**  background-color: #e3e3e3;
-    color: #111; **/
-    width: 90%;
-    margin-left: 5%;
+	width: 100%;
+	height: 100%;
 }
+
+.container {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  position: relative;
+}
+@media (min-width: 768px) {
+  .container {
+    width: 750px;
+  }
+}
+@media (min-width: 992px) {
+  .container {
+    width: 970px;
+  }
+}
+@media (min-width: 1200px) {
+  .container {
+    width: 1170px;
+  }
+}
+
 .homelogo {
 	padding-top: 200px;
 	font-size: 30px;
 	text-align: center;
 	text-decoration: none;
 }
+
 section div div img {
 	width: auto;
 	height: 280px;
@@ -58,34 +80,38 @@ form.login-form {
 /* end of header*/
 
 /*project page*/
-.phase-wrapper{
+.project-wrapper{
 	width: 100%;
 	height: 100%;
 }
 
 input[type="button"]{
 	font-size: 18px;
-margin-left: 20px;
-background-color: beige;
+	margin-left: 20px;
+	background-color: beige;
 }
 
-.midSection{
+.mid-section{
 	width: 100%;
 	height: 80%;
-	position: relative;
 }
 
-.projectTitle{
-
+.project-title{
 	width: 200px;
 	margin: 0 auto;
 }
 
-.afterPT{
+.project-title h1 {
+	/* Fix for Safari bug*/
+	font-size: 2em;
+	margin: 0;
+}
+
+.project{
 	width: 100%;
 }
 
-.teamDetails{
+.team-details{
 	width: 300px;
 	padding-left: 20px;
 	padding-bottom: 30px;
@@ -93,28 +119,24 @@ background-color: beige;
 }
 
 .dropDown{
-	
-	float: right;
-margin-right: 300px;
-padding-top: 20px;
+	padding-top: 20px;
 }
 
 .dropDown select{
-
-width: 300px;
-height: 35px;
-font-size: 25px;
+	width: 300px;
+	height: 35px;
+	font-size: 25px;
 }
 
 .dropDown input[type="button"]{
-font-size: 25px;
-height: 35px;
-background-color: beige;
-margin-left:0;
+	font-size: 25px;
+	height: 35px;
+	background-color: beige;
+	margin-left:0;
 }
 
 .editButton {
-padding-top: 15px;
+	padding-top: 15px;
 }
 
 .messageBoard{
@@ -125,8 +147,8 @@ padding-top: 15px;
 }
 
 .postMessage{
-		padding-top: 10px;
-		padding-bottom: 10px;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 
 .messageBoard input[type="text"]{
@@ -142,74 +164,63 @@ padding-top: 15px;
 /*end of project page */
 
 /*phases and tasks */
-.phase1{
+.phase-wrapper {
+	margin-left: auto;
+	margin-right: auto;
+	width: 75%;
+	text-align: center;
+}
+
+.task-wrapper {
+	height: 100%;
+	width: 100%;
+}
+
+.phase {
+	color: beige;
 	width: 300px;
 	height: 35px;
 	border: 1px solid black;
+	font-size: 2.2em;
 	padding-left: 20px;
-	font-size: 25px;
+	padding-right: 20px;
 }
 
-.Phase1_sub{
+.task {
+	color: beige;
 	width: 260px;
 	height: 30px;
 	border: 1px solid black;
 	padding-left: 6px;
-	font-size: 20px;	
-	margin-left: 20px;
+	padding-right: 6px;
+	font-size: 1.4em;
+	margin-left: 30px;
 }
 
-.add_button{
-	width: 35px;
-	position: absolute;
-	top: 20px;
-	right: -40px;
+.add-button {
+	width: 20px;
+	height: 20px;
+	margin-left: 3px;
 }
 
-.edit_button{
-	width: 35px;
-	position: absolute;
-	top: 20px;
-	right: -80px;
+.edit-button {
+	width: 20px;
+	height: 20px;
+	margin-left: 3px;
 }
 
-.delete_button{
-	width: 35px;
-	position: absolute;
-	top: 20px;
-	right: -120px;
+.delete-button {
+	width: 20px;
+	height: 20px;
+	margin-left: 3px;
 }
 
 
-.check_button{
-
-	width: 30px;
-	position: absolute;
-	top: 57px;
-	right: 2px;
+.check-button {
+	width: 20px;
+	height: 20px;
 	border: 1px solid black;
+	margin-left: 3px;
 }
 
-
-
-.add_button2{
-	width: 30px;
-	position: absolute;
-	top: 59px;
-	right: -40px;
-}
-
-.edit_button2{
-	width: 30px;
-	position: absolute;
-	top: 59px;
-	right: -80px;
-}
-
-.delete_button2{
-	width: 30px;
-	position: absolute;
-	top: 59px;
-	right: -120px;
-}
 /*end of phases and tasks*/
