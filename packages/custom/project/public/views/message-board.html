@@ -1,4 +1,5 @@
 <div class="messageBoard" data-ng-controller="MessageBoardCtrl">
+    <div class="error-message" data-ng-show="messageError">{{messageError}}</div>
     <div class="title-wrapper">
         <h3>Message Board</h3>
     </div>
@@ -6,7 +7,7 @@
         
     </div>
     <div class="postMessage">
-        <input type="text" name="post_message" /> 
-        <input type="button" value="Post" name="post_button" />
+        <input type="text" name="post_message" data-ng-model="message.body" /> 
+        <input type="button" value="Post" name="post_button" onclick="addMessage()" />
     </div>
 </div>

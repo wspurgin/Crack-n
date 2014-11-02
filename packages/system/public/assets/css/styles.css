@@ -51,18 +51,22 @@ section div div img {
 }
 
 /*header*/
+div .page-header{
+	border-width: 1px;
+	border-color: black;
+}
+
 header img {
 	margin: 1px;
 	height:50px;
 	width: 50px;
-	position: relative;
 }
 
-form.login-form {
+form.login-form{
 	float: right;
 }
 
-.login, .signup {
+.login, .signup, .loggout {
 	height: 45px;
 	width: auto;
 }
@@ -73,9 +77,21 @@ form.login-form {
 .form_group{
 	display: inline;
 }
-.logging {
+.logging{
 	height: 40px;
 	font-size: 15px;
+}
+.loggedInMenu{
+	float: right;
+	margin-right: 1px;
+}
+.greeting{
+	font-size: 1.5em;
+	text-decoration: none !important;
+}
+.create-project{
+	text-align: center;
+	font-size: 1.5em;
 }
 /* end of header*/
 
