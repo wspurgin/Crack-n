@@ -7,13 +7,28 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope', '$rootScope'
       return $location.url('/');
     $scope.project = {};
 
+    function findCurrentMember() {
+      for (var i = $scope.project.members.length - 1; i >= 0; i-=1) {
+        if($scope.project.members[i]._id === $scope.global.user._id)
+          return $scope.project.members[i];
+      }
+      return false;
+    }
+
     function getProject() {
       $http.get('/projects/' + $stateParams.projectId)
         .success(function (res) {
           $scope.project = res;
+
           // test for empty response
           if (!Object.keys($scope.project).length)
             // for now reroute to home but we should reroute to a custom 404
+            $location.url('/');
+
+          // determine the current user's membership on project.
+          $scope.currentMember = findCurrentMember();
+          if ($scope.currentMember === false)
+            // they aren't allowed to see this project
             $location.url('/');
         })
         .error(function () {
@@ -162,5 +177,17 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope', '$rootScope'
   return {
     restrict: 'A',
     templateUrl: 'project/views/team-finder.html'
+  };
+})
+.directive('crnPhase', function(){
+  return {
+    restrict: 'A',
+    templateUrl: 'project/views/phase.html'
+  };
+})
+.directive('crnTask', function(){
+  return {
+    restrict: 'A',
+    templateUrl: 'project/views/task.html'
   };
 });

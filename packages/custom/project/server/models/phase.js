@@ -22,7 +22,7 @@ var phaseSchema = new Schema ({
 	},
 	endDate: {
 		type: Date,
-		required: true
+		required: false
 	},
 	tasks: {
 		type: Array,

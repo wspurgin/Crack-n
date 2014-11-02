@@ -1,18 +1,7 @@
-<section class="phase-wrapper" id="{{phase.name}}" data-ng-repeat="phase in phases">
-    <div class="dropDown">
-        <span class="phase-title">{{phase.name}}</span>
-
-        <div class="phase1">Phase 1</div>
-            <img src="img/add.png" class="add_button" onclick="add()" > 
-            <img src="img/edit.png" class="edit_button" onclick="edit()"> 
-            <img src="img/delete.png" class="delete_button" onclick="delet()" > 
-
-
-        <div class="Phase1_sub"> Create Task !</div> 
-            <img src="img/checkmark.png" class="check_button" onclick="check()"> 
-            <img src="img/add.png" class="add_button2" onclick="add()" > 
-            <img src="img/edit.png" class="edit_button2" onclick="edit()" > 
-            <img src="img/delete.png" class="delete_button2" onclick="delet()"> 
-
-    </div>
-</section>
+<span class="phase">{{phase.name}}</span>
+<img src="img/add.png" class="add-button" onclick="addPhase()" >
+<img src="img/edit.png" class="edit-button" onclick="editPhase()">
+<img src="img/delete.png" class="delete-button" onclick="deletePhase()" >
+<!-- Task directive -->
+<div class="task-wrapper" data-crn-task data-ng-repeat="task in phase.tasks"></div>
+<div class="add-phase-wrapper" data-ng-include="'project/views/add-task.html'"></div>
