@@ -325,7 +325,7 @@ exports.forgotpassword = function(req, res, next) {
 *searchUser function (takes a substring and callback function)
 */
 exports.searchUsers = function(substring, cb) {
-  var exp = new RegExp('^' + substring + '.*', 'i');
+  var exp = new RegExp('^' + substring, 'i');
   async.waterfall([
     // Make query
     function(callback) {
@@ -347,13 +347,12 @@ exports.searchUsers = function(substring, cb) {
     // Remove duplicates (O(n), figured it was fine)
     function(users, callback) {
       console.log(users);
-      if (!!users) {
+      if (!!users.length) {
         var cur = users[0]._id.toString();
         var cleanedQuery = [];
         cleanedQuery.push(users[0]);
         for (var i = 1; i < users.length; i+=1) {
-          /*jslint eqeq: true*/
-          if (cur != users[i]._id.toString()) {
+          if (cur !== users[i]._id.toString()) {
             cur = users[i]._id.toString();
             cleanedQuery.push(users[i]);
           }
