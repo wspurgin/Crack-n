@@ -83,12 +83,11 @@ exports.createEntry = function(type, action, user, project_id, cb) {
 		  action = ' posted';
 		entry.body = action + ' a ' + type;
 		entry.save();
-		console.log('created');
 		callback();
 	  }
 	], function(err) {
   	  if (err) console.log(err);
-  	  console.log('its done');
+  	  console.log('Message added.');
   	  cb();
 	});
 };
@@ -139,7 +138,7 @@ exports.populate = function(req, res) {
 };
 
 /**
-* Clears the database of all activity logs
+* Clears the whole database of all activity logs
 */
 exports.clearProject = function(req, res) {
 	ActivityLog
@@ -154,11 +153,15 @@ exports.clearProject = function(req, res) {
 * Example log entry creation
 */
 exports.testCreateEntry = function(req, res) {
+	try {
 		var user = new User();
-		user.name = 'Dildo Dildo-son';
-		user.email = 'didlo@gmail.com';
+		user.name = 'Matt Damon';
+		user.email = 'mattd@gmail.com';
 		user.username = '360noscope23x420';
 		exports.createEntry('Message', 'Posted', user, '111111111111111111111111', function() {
-		  return res.status(201).send('test went well');
+		  return res.status(201).send('Test successful.');
 		});
+	catch(err) {
+		return res.status(400).send(err);
+	}
 };
