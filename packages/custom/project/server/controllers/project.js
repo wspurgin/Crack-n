@@ -7,6 +7,7 @@
 var mongoose = require('mongoose'),
   Project = mongoose.model('Project');
 
+// Shows All Projects
 exports.all = function (req, res) {
 	Project.find().exec(function(err, result) {
 		if (!err) {
@@ -19,6 +20,7 @@ exports.all = function (req, res) {
 	});
 };
 
+// Shows a Single Project depending on given Project_Id
 exports.show = function (req, res) {
 	var project_id = req.params.project_id;
 	console.log('project_id ' + project_id);
@@ -34,6 +36,7 @@ exports.show = function (req, res) {
 	
 };
 
+// Edit a Project
 exports.edit = function (req, res) {
 	var project_id = req.params.project_id;
 	Project.findOne( {'_id': project_id} ).exec(function(err, result) {
@@ -48,6 +51,7 @@ exports.edit = function (req, res) {
 
 };
 
+// Create a Project
 exports.addProject = function (req, res) {
   var project = new Project();
   project.name = req.body.name;
@@ -61,14 +65,38 @@ exports.addProject = function (req, res) {
   return res.status(201).json(project);
 };
 
+// Delete a Project from User's Project List
 exports.remove = function (req, res) {
     var project = Project.findOne({'id': req.params.project_id});
-    	if (req.user.id === project.owner)
+    var owner = project.owner;
+    	if (req.user.id === owner)
 	  project.remove()
 	  .exec(function(err) {
 	  	if (err) return res.status(400).send(err);
 	  	else return res.status(200).send('Test database cleared.');
 	  });
 };
+
+// Add Group Members to Project
+exports.addMembers = function (req, res) {
+    var project = Project.findOne({'id': req.params.project_id});
+    	project.members.addToSet(req.user.id);
+};
+
+//Shows Group Members of a Project
+exports.members = function (req, res) {
+	var project_id = req.params.project_id;
+	console.log('project_id ' + project_id);
+	Project.findOne( {'_id': project_id} ).exec(function(err, result) {
+		if (!err) {
+			return res.json(200, result);
+			// Put Code for Showing Members here
+		}
+		else {
+			return res.json('Get real bro');
+		}
+		console.log('project ' + result);
+	});
+}; 	
 
 
