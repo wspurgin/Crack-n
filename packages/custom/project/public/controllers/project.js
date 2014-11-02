@@ -164,7 +164,7 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope', '$rootScope'
 
       $http.post('/projects/' + $scope.project._id + '/messages', $scope.message)
         .success(function (res) {
-          console.log("Message added successfully");
+          console.log('Message added successfully');
         })
         .error(function (error) {
           $scope.messageError = error;
