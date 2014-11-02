@@ -129,12 +129,19 @@ angular.module('mean.project').controller('ProjectController', ['$scope', '$http
       $scope.searchUsersResults.splice(arrayObjectIndexOf($scope.searchUsersResults, member), 1);
     };
 }])
+.controller('TeamMemberCtrl', ['$scope', '$rootScope', '$http', 'Global',
+  function($scope, $rootScope, $http, $parent, Global) {
+    $scope.global = Global;
+    console.log($scope.project);
+
+
+}])
 .directive('crnMessageBoard', function () {
   return {
     restrict: 'A',
     templateUrl: 'project/views/message-board.html'
   };
-}
+})
 .directive('crnTeamModifer', function(){
   // Runs during compile
   return {
