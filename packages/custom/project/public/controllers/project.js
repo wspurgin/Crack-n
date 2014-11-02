@@ -1,11 +1,26 @@
 'use strict';
 
-angular.module('mean.project').controller('ProjectController', ['$scope', '$http', 'Users', 'Global', 'Project',
-  function($scope, $http, Users, Global, Project) {
+angular.module('mean.project').controller('ProjectCtrl', ['$scope', '$rootScope', '$http', '$location', '$stateParams', 'Global', 
+  function($scope,  $rootScope, $http, $location, $stateParams, Global) {
     $scope.global = Global;
-    $scope.package = {
-      name: 'project'
-    };
+    if (!$scope.global.authenticated)
+      return $location.url('/');
+    $scope.project = {};
+
+    function getProject() {
+      $http.get('/projects/' + $stateParams.projectId)
+        .success(function (res) {
+          $scope.project = res;
+          // test for empty response
+          if (!Object.keys($scope.project).length)
+            // for now reroute to home but we should reroute to a custom 404
+            $location.url('/');
+        })
+        .error(function () {
+          alert('Could not retrieve project :(');
+        });
+    }
+    getProject();
   }
 ])
 .controller('CreateProjectCtrl', ['$scope', '$rootScope', '$http', '$location', 'Global', 'Users',
