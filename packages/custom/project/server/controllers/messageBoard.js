@@ -8,6 +8,8 @@ var mongoose = require('mongoose'),
   Message = mongoose.model('Message'),
   Project = mongoose.model('Project');
 
+var activity = require('../controllers/activity');
+
 exports.projectMessages = function (req, res) {
 	var project_id = req.params.project_id;
 	Project.findOne( {'_id': project_id} ).exec(function(err, result) {
@@ -32,6 +34,7 @@ exports.addMessage = function (req, res) {
 		    console.log('<: ' + message);
 		    result.messages.push(message);
 		    result.save();
+		    activity.createEntry('Message', 'Created', req.user, project_id);
 			return res.json(200, result);
 		}
 		else {

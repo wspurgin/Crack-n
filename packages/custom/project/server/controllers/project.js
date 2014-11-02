@@ -79,15 +79,25 @@ exports.remove = function (req, res) {
 
 // Add Group Members to Project
 exports.addMembers = function (req, res) {
-    var project = Project.findOne({'id': req.params.project_id});
-    	project.members.addToSet(req.user.id);
+	var project_id = req.params.project_id;
+	Project.find({'_id': project_id}).exec(function(err, result) {
+    	if (!err && result){
+    		var members = result.members;
+    		members.addToSet(req.body.user);
+    		result.save();
+		    return res.json(201);
+    	}
+    	else{
+		    return res.status(400).json('Nah bro, there aint no project');
+    	}
+    });
 };
 
 //Shows Group Members of a Project
 exports.members = function (req, res) {
 	var project_id = req.params.project_id;
 	console.log('project_id ' + project_id);
-	Project.findOne( {'_id': project_id} ).exec(function(err, result) {
+	Project.find( {'_id': project_id} ).exec(function(err, result) {
 		if (!err) {
 			return res.json(200, result);
 			// Put Code for Showing Members here

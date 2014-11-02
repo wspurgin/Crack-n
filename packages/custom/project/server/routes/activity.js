@@ -10,6 +10,7 @@ module.exports = function(MeanUser, app, auth, database, passport) {
    app.route('/activity/test')
      .post(ActivityLog.testCreateEntry);
 
+   // Testing functions. Delete two last routes before final push
   app.route('/activity/populate')
     .post(ActivityLog.populate);
 
