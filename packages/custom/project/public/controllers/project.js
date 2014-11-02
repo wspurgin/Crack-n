@@ -16,7 +16,8 @@ angular.module('mean.project').controller('ProjectController', ['$scope', '$http
 
     // This will be the object filled in by the form data
     $scope.project = {};
-    
+    $scope.createError = false;
+
     /* Extra initialization */
     // TODO: should not hard code permissions (they'll be used else-where)
     $scope.permissionLevels = ['admin', 'general', 'view_only'];
@@ -33,22 +34,34 @@ angular.module('mean.project').controller('ProjectController', ['$scope', '$http
         }
     ];
 
+    function validProject() {
+      $scope.createError = false;
+      if ($scope.project.name === undefined) {
+        $scope.createError = 'Project must have a name';
+        return false;
+      }
+      return true;
+    }
+
     $scope.createProject = function() {
-      $http.post('/projects', $scope.project)
-        .success(function(res) {
-          console.log(res);
-          $location.url('/project/'+res._id);
-        })
-        .error(function() {
-          alert('Could not create your project. Check network connection and try again');
-        });
+      event.preventDefault();
+      if(validProject()) {
+        $http.post('/projects', $scope.project)
+          .success(function(res) {
+            console.log(res);
+            $location.url('/project/'+res._id);
+          })
+          .error(function() {
+            alert('Could not create your project. Check network connection and try again');
+          });
+      }
     };
 
     // if the browser isn't chrome, use jquery-ui for input type date
     if (!window.chrome) {
       if($('input[type=date]')) {
         $('input[type=date]').each(function() {
-          $(this).datepicker();
+          $(this).datepicker().datepicker('option', 'dateFormat', 'yy-mm-dd');
         });
       }
     }
@@ -58,33 +71,52 @@ angular.module('mean.project').controller('ProjectController', ['$scope', '$http
   function($scope, $rootScope, $http, $parent, Global){
     $scope.global = Global;
     $scope.searchText = '';
+    $scope.searchError = false;
     $scope.searchUsersResults = [];
 
     function arrayObjectIndexOf(arr, obj){
-    for(var i = 0; i < arr.length; i+=1){
-        if(angular.equals(arr[i], obj)){
-            return i;
-        }
-    }
+      for(var i = 0; i < arr.length; i+=1){
+          if(arr[i]._id === obj._id){
+              return i;
+          }
+      }
       return false;
     }
 
-    // temp results
-    $scope.searchUsersResults = [
-      {
-        email: 'tyler@me.com',
-        name: 'Tyler George',
-        _id: '5441c2346c46e2320714233a'
-      },
-      {
-        email: 'will.spurgin@gmail.com',
-        name: 'Will Spurgin',
-        _id: '5441c2526c46e2320714233b'
-      }];
-      
+    function filterResults() {
+      $scope.project.members.forEach(function (member) {
+        var index = arrayObjectIndexOf($scope.searchUsersResults, member);
+        if (index !== false) {
+          // remove existing members from results
+          $scope.searchUsersResults.splice(index, 1);
+        }
+      });
+    }
+
     $scope.searchForTeamMembers = function() {
-      console.log('searchng with ' + $scope.searchText);
-        return;
+      if(!!$scope.searchText) {
+        $http({
+          url: '/users',
+          method: 'GET',
+          params: {q: $scope.searchText}
+        })
+          .success(function(res) {
+            $scope.searchError = false;
+            $scope.searchUsersResults = res;
+            if (!res.length) {
+              $scope.searchError = 'No results found';
+            } else {
+              filterResults();
+            }
+          })
+          .error(function() {
+            $scope.searchError = 'Errors occured making your request :(';
+          });
+      }
+    };
+
+    $scope.removeTeamMember = function(member) {
+      $scope.project.members.splice(member, 1);
     };
 
     $scope.addTeamMember = function(member) {

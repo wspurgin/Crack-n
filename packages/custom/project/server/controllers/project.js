@@ -49,16 +49,16 @@ exports.edit = function (req, res) {
 };
 
 exports.addProject = function (req, res) {
-    var project = new Project();
-    project.name = req.body.name;
-    if (req.body.startDate) project.startDate = req.body.startDate;
-    project.endDate = req.body.endDate;
-    project.phases = [];
-    project.owner = req.body.owner;
-    project.members = req.body.members;
-    project.messages = [];
-    project.save();
-    return res.status(201).json(project);
+  var project = new Project();
+  project.name = req.body.name;
+  if (req.body.startDate) project.startDate = req.body.startDate;
+  project.endDate = req.body.endDate;
+  project.phases = [];
+  project.owner = req.body.owner;
+  project.members = req.body.members;
+  project.messages = [];
+  project.save();
+  return res.status(201).json(project);
 };
 
 exports.remove = function (req, res) {

@@ -1,4 +1,5 @@
 <div class="view-content" data-ng-controller="CreateProjectCtrl">
+  <div class="error-message" data-ng-show="createError">{{createError}}</div>
   <form name="createProjectForm" ng-submit="createProject()">
     <fieldset>
       <h3>Project Info</h3>

@@ -346,7 +346,6 @@ exports.searchUsers = function(substring, cb) {
       },
     // Remove duplicates (O(n), figured it was fine)
     function(users, callback) {
-      console.log(users);
       if (!!users.length) {
         var cur = users[0]._id.toString();
         var cleanedQuery = [];
