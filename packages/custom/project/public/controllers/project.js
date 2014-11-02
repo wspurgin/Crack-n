@@ -38,8 +38,8 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope', '$rootScope'
     getProject();
   }
 ])
-.controller('CreateProjectCtrl', ['$scope', '$rootScope', '$http', '$location', 'Global', 'Users',
-  function($scope,  $rootScope, $http, $location, Global, Users) {
+.controller('CreateProjectCtrl', ['$scope', '$rootScope', '$http', '$location', 'Global',
+  function($scope,  $rootScope, $http, $location, Global) {
     $scope.global = Global;
     if (!$scope.global.authenticated)
       return $location.url('/');
