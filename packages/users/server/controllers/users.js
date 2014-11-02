@@ -39,7 +39,6 @@ exports.signout = function(req, res) {
 /**
 * Update
 */
-
 exports.update = function(req, res) {
   var user = req.user;
 
@@ -181,7 +180,6 @@ exports.user = function(req, res, next, id) {
 /**
  * Resets the password
  */
-
 exports.resetpassword = function(req, res, next) {
   User.findOne({
     resetPasswordToken: req.params.token,
@@ -321,4 +319,48 @@ exports.forgotpassword = function(req, res, next) {
       res.json(response);
     }
   );
+};
+
+/*
+*searchUser function (takes a substring and callback function)
+*/
+exports.searchUsers = function(substring, cb) {
+  var exp = new RegExp('^' + substring + '.*', 'i');
+  async.waterfall([
+    // Make query
+    function(callback) {
+      User
+        .find()
+        .or([
+          {'username' : {$regex: exp}},
+          {'email '   : {$regex: exp}},
+        ])
+        .lean()
+        .select('username email name')
+        .sort('_id')
+        .limit(1000)
+        .exec(function(err, query) {
+          if (err) callback(err, query);
+          callback(null, query);
+        });
+      },
+    // Remove duplicates (O(n), figured its fine for <1000 results)
+    function(users, callback) {
+      var cur = users[0]._id.toString();
+      var cleanedQuery = [];
+      cleanedQuery.push(users[0]);
+      for (var i = 1; i < users.length; i+=1) {
+        /*jslint eqeq: true*/
+        if (cur != users[i]._id.toString()) {
+          cur = users[i]._id.toString();
+          cleanedQuery.push(users[i]);
+        }
+      }
+      callback(null, cleanedQuery);
+    }
+    // Send results to callback function 
+  ], function(err, results) {
+    if (err) console.log(err);
+    cb(results);
+  });
 };
