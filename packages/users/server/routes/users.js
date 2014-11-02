@@ -52,6 +52,15 @@ module.exports = function(MeanUser, app, auth, database, passport) {
       res.send(config);
     });
 
+  // search user route
+  app.route('/users')
+    .get(auth.requiresLogin, function(req, res) {
+      console.log(req.query.q);
+      users.searchUsers(req.query.q, function(users) {
+        res.status(200).json(users);
+      });
+    });
+
   // Setting the facebook oauth routes
   app.route('/auth/facebook')
     .get(passport.authenticate('facebook', {

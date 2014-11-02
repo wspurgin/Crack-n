@@ -332,13 +332,13 @@ exports.searchUsers = function(substring, cb) {
       User
         .find()
         .or([
-          {'username' : {$regex: exp}},
-          {'email '   : {$regex: exp}},
+          {username: {$regex: exp}},
+          {email: {$regex: exp}}
         ])
         .lean()
-        .select('username email name')
+        .select({ _id: 1, username: 1, email: 1, name: 1 })
         .sort('_id')
-        .limit(1000)
+        .limit(100)
         .exec(function(err, query) {
           if (err) callback(err, query);
           callback(null, query);
@@ -346,17 +346,22 @@ exports.searchUsers = function(substring, cb) {
       },
     // Remove duplicates (O(n), figured it was fine)
     function(users, callback) {
-      var cur = users[0]._id.toString();
-      var cleanedQuery = [];
-      cleanedQuery.push(users[0]);
-      for (var i = 1; i < users.length; i+=1) {
-        /*jslint eqeq: true*/
-        if (cur != users[i]._id.toString()) {
-          cur = users[i]._id.toString();
-          cleanedQuery.push(users[i]);
+      console.log(users);
+      if (!!users) {
+        var cur = users[0]._id.toString();
+        var cleanedQuery = [];
+        cleanedQuery.push(users[0]);
+        for (var i = 1; i < users.length; i+=1) {
+          /*jslint eqeq: true*/
+          if (cur != users[i]._id.toString()) {
+            cur = users[i]._id.toString();
+            cleanedQuery.push(users[i]);
+          }
         }
+        callback(null, cleanedQuery);
+      } else {
+        callback('No users found', []);
       }
-      callback(null, cleanedQuery);
     }
     // Send results to callback function 
   ], function(err, results) {
