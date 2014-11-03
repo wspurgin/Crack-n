@@ -176,7 +176,7 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope', '$rootScope'
           user = response;
           })
         .error(function (error) {
-          messageError = error;
+          $scope.messageError = error;
         });
 
         console.log($scope);
