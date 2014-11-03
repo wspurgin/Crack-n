@@ -9,6 +9,7 @@ var mongoose = require('mongoose'),
 
 // Shows All Projects
 exports.all = function (req, res) {
+	//Add user info here to pull up only projects designed for user
 	Project.find().exec(function(err, result) {
 		if (!err) {
 			return res.json(200, result);
@@ -95,7 +96,7 @@ exports.addMembers = function (req, res) {
 	Project
 	  .update(
    		{ _id: req.params.project_id },
-  		{ $addToSet: { members:{$each: req.body.user }} }
+  		{ $push: { members: req.body } }
   	  )
   	  .exec(function(err, result) {
   	  	if (err) return res.status(400).send(err);

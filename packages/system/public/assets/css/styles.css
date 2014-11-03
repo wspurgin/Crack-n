@@ -51,11 +51,11 @@ section div div img {
 }
 
 /*header*/
-div .page-header{
-	border-bottom: 1px solid lightgreen;
-	display: inline;
-	position: static;
+
+.header-logo {
+	border-bottom: 2px solid lightgreen;
 }
+
 
 .header-logo img {
 	margin: 1px;
@@ -88,10 +88,12 @@ form.login-form{
 }
 .greeting{
 	font-size: 1.5em;
+	display: inline;
 }
 .create-project{
-	text-align: center;
 	font-size: 1.5em;
+	margin-left: 45%;
+	position: absolute;
 }
 
 a{ 
