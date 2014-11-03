@@ -9,6 +9,7 @@ var mongoose = require('mongoose'),
 
 // Shows All Projects
 exports.all = function (req, res) {
+	//Add user info here to pull up only projects designed for user
 	Project.find().exec(function(err, result) {
 		if (!err) {
 			return res.json(200, result);
