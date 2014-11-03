@@ -53,27 +53,27 @@ exports.edit = function (req, res) {
 
 // Create a Project
 exports.addProject = function (req, res) {
-  var project = new Project();
-  project.name = req.body.name;
-  if (req.body.startDate) project.startDate = req.body.startDate;
-  project.endDate = req.body.endDate;
-  project.phases = [];
-  project.owner = req.body.owner;
-  project.members = req.body.members;
-  project.messages = [];
-  project.save();
-  return res.status(201).json(project);
+	var project = new Project();
+  	project.name = req.body.name;
+ 	if (req.body.startDate) project.startDate = req.body.startDate;
+  	project.endDate = req.body.endDate;
+ 	project.phases = [];
+ 	project.owner = req.body.owner;
+ 	project.members = req.body.members;
+ 	project.messages = [];
+  	project.save();
+  	return res.status(201).json(project);
 };
 
 // Delete a Project from User's Project List
 exports.remove = function (req, res) {
-    var project = Project.findOne({'id': req.params.project_id});
-    var owner = project.owner;
-    	if (req.user.id === owner)
-	  project.remove()
-	  .exec(function(err) {
-	  	if (err) return res.status(400).send(err);
-	  	else return res.status(200).send('Test database cleared.');
+    	var project = req.params.project_id;
+	Project.findOne({'_id': project}).exec(function(err, result){
+		if(!err) {
+			project.remove();
+			return res.status(200).send('Test database cleared.');
+		}
+	  	else return res.json('Error'); 
 	  });
 };
 
