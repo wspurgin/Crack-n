@@ -72,7 +72,7 @@ exports.complete=function(req, res) {
 		if (!err) {
 			Task.findOne( {'_id':task_id} ).exec(function(err, result_task) {
 				if (!err) {
-					if(req.body.completed===false){
+					if(!req.body.completed){
 						result_task.completed=true;
 						result_task.save();
 						return res.json(200, 'Successfully completed task!');
