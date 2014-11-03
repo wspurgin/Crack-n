@@ -125,4 +125,6 @@ exports.members = function (req, res) {
 	});
 }; 	
 
+exports.removeMember = function (req, res) {
+};
 
