@@ -82,7 +82,7 @@ exports.addPhase = function (req, res) {
 		    result.phases.push(phase);
 		    result.save();
 		    activity.createEntry('Phase', 'Created', req.user, project_id);
-		    return res.json(201);
+		    return res.status(201).json(phase);
 		}
 		else {
 			return res.json('Nah bro, there aint no project');

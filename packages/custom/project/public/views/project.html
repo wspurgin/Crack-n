@@ -19,19 +19,8 @@
 					</div>
 				</div>
 				<div class="dropDown">
-					<div class="phase-wrapper">
-						<span class="phase">Phase 1</span>
-						<img src="img/add.png" class="add-button" onclick="addPhase()" >
-						<img src="img/edit.png" class="edit-button" onclick="editPhase()">
-						<img src="img/delete.png" class="delete-button" onclick="deletePhase()" >
-						<div class="task-wrapper">
-							<span class="task">Create Task !</span>
-							<img src="img/check.png" class="check-button" onclick="completeTask()">
-							<img src="img/add.png" class="add-button" onclick="addTask()" >
-							<img src="img/edit.png" class="edit-button" onclick="editTask()" >
-							<img src="img/delete.png" class="delete-button" onclick="deleteTask()">
-						</div>
-					</div>
+					<div class="phase-wrapper" data-crn-phase data-ng-repeat="phase in project.phases"></div>
+					<div class="add-phase-wrapper" data-ng-include="'project/views/add-phase.html'"></div>
 				</div>
 			</section>
 		</div>

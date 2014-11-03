@@ -1,0 +1,7 @@
+<form name="addTask" data-ng-controller="CreateTaskCtrl">
+    <input type="text" ng-model="task.name" class="task" />
+    <select name="task.assignedMember">
+        <option data-ng-repeat="member in project.members" value="member">{{member.name}}</option>
+    </select>
+    <input type="submit" class="add-button" value="+" />
+</form>
