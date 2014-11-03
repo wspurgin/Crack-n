@@ -7,6 +7,8 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope', '$rootScope'
       return $location.url('/');
     $scope.project = {};
 
+    $scope.permissionLevels = ['admin', 'general', 'view_only'];
+
     function findCurrentMember() {
       for (var i = $scope.project.members.length - 1; i >= 0; i-=1) {
         if($scope.project.members[i]._id === $scope.global.user._id)

@@ -6,12 +6,14 @@
 			<section class="project">
 				<div class="team-details">
 					<h3>Team Members</h3>
-					<div class="teamMemberNames">
-						<span> Al Aloqla</span> <br/>
-						<span> Tyler George : Admin</span> <br/>
-						<span> Will Spoyin</span> <br/>
+					<div class="teamMemberNames" data-ng-hide="editingMembers">
+						<span class="member" data-ng-repeat="member in project.members">
+							{{member.name}} : {{member.permission}}
+						</span>
 					</div>
-					<div class="editButton"> <input type="button" value="Edit" ></div>
+					<div class="editButton" data-ng-hide="editingMembers"> <input type="button" value="Edit" data-ng-click="editingMembers=true" /></div>
+					<div class="teamMemberModifer" data-ng-show"editingMembers" data-crn-team-modifer></div>
+					<div class="doneButton" data-ng-show="editingMembers"> <input type="button" value="Done" data-ng-click="editingMembers=false" /></div>
 					<div class="messageBoard" data-crn-message-board></div>
 				</div>
 				<div class="dropDown">
