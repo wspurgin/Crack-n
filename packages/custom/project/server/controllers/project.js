@@ -1,13 +1,14 @@
 'use strict';
 
 /**
-  * Module depedencies.
-  */
-
+ * Module depedencies.
+ */
 var mongoose = require('mongoose'),
   Project = mongoose.model('Project');
 
-// Shows All Projects
+/**
+/* Shows All Projects
+*/
 exports.all = function (req, res) {
 	//Add user info here to pull up only projects designed for user
 	Project.find().exec(function(err, result) {
@@ -21,7 +22,9 @@ exports.all = function (req, res) {
 	});
 };
 
-// Shows a Single Project depending on given Project_Id
+/**
+ * Shows a Single Project depending on given Project_Id
+ */
 exports.show = function (req, res) {
 	var project_id = req.params.project_id;
 	console.log('project_id ' + project_id);
@@ -92,7 +95,6 @@ exports.remove = function (req, res) {
 
 // Add Group Members to Project
 exports.addMembers = function (req, res) {
-	// var project_id = req.params.project_id;
 	Project
 	  .update(
    		{ _id: req.params.project_id },
@@ -100,7 +102,6 @@ exports.addMembers = function (req, res) {
   	  )
   	  .exec(function(err, result) {
   	  	if (err) return res.status(400).send(err);
-		else
   	  	return res.status(201).send('Members added successfully');
   	  });
   	  
@@ -125,6 +126,18 @@ exports.members = function (req, res) {
 	});
 }; 	
 
+/**
+* Remove a user from the project using a passed user._id
+*/
 exports.removeMember = function (req, res) {
+	Project
+	  .update(
+	  	{ _id: req.params.project_id },
+	  	{ $pull: {'members._id'} : req.body }
+	  )
+	  .exec(function(err, result) {
+  	    if (err) return res.status(400).send(err);
+  	  	return res.status(201).send('Member removed successfully');
+  	  });
 };
 
