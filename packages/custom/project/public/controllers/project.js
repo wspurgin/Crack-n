@@ -206,16 +206,4 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope', '$rootScope'
     restrict: 'A',
     templateUrl: 'project/views/team-finder.html'
   };
-})
-.directive('crnPhase', function(){
-  return {
-    restrict: 'A',
-    templateUrl: 'project/views/phase.html'
-  };
-})
-.directive('crnTask', function(){
-  return {
-    restrict: 'A',
-    templateUrl: 'project/views/task.html'
-  };
 });

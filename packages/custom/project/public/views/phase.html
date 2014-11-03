@@ -1,7 +1,7 @@
 <span class="phase">{{phase.name}}</span>
-<img src="img/add.png" class="add-button" onclick="addPhase()" >
-<img src="img/edit.png" class="edit-button" onclick="editPhase()">
-<img src="img/delete.png" class="delete-button" onclick="deletePhase()" >
+<img src="img/add.png" class="add-button" data-ng-click="addPhase()" >
+<img src="img/edit.png" class="edit-button" data-ng-show="currentMember.permission === 'admin' && false" data-ng-click="editPhase(phase)">
+<img src="img/delete.png" class="delete-button" data-ng-show="currentMember.permission === 'admin' && false" data-ng-click="deletePhase(phase)" >
 <!-- Task directive -->
-<div class="task-wrapper" data-crn-task data-ng-repeat="task in phase.tasks"></div>
+<div class="task-wrapper" data-ng-controller="TaskCtrl" data-crn-task data-ng-repeat="task in phase.tasks" data-ng-if="!task.completed"></div>
 <div class="add-phase-wrapper" data-ng-include="'project/views/add-task.html'"></div>

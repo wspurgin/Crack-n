@@ -22,4 +22,29 @@ angular.module('mean.project').controller('CreateTaskCtrl', ['$scope', '$rootSco
           });
       }
     };
-}]);
+}])
+.controller('TaskCtrl', ['$scope', '$rootScope', '$http', 'Global', 
+  function($scope, $rootScope, $http, Global) {
+    $scope.global = Global;
+
+    $scope.addTask = function() {
+      $('#addTaskForm input:first-child').focus();
+    };
+
+    $scope.completeTask = function(task) {
+      $http.post('/projects/'+ $scope.project._id + '/phases/' + $scope.phase._id + '/tasks/' + task._id)
+      .success(function(res) {
+        task.completed = true;
+      })
+      .error(function() {
+        alert('Could not mark task as complete :(');
+      });
+
+    };
+}])
+.directive('crnTask', function(){
+  return {
+    restrict: 'A',
+    templateUrl: 'project/views/task.html'
+  };
+});

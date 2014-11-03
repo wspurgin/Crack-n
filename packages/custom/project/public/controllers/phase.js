@@ -21,4 +21,18 @@ angular.module('mean.project').controller('CreatePhaseCtrl', ['$scope', '$rootSc
           });
       }
     };
-}]);
+}])
+.controller('PhaseCtrl', ['$scope', '$rootScope', '$http', 'Global', 
+  function($scope, $rootScope, $http, Global) {
+    $scope.global = Global;
+    
+    $scope.addPhase = function() {
+      $('#addPhaseForm input:first-child').focus();
+    };
+}])
+.directive('crnPhase', function(){
+  return {
+    restrict: 'A',
+    templateUrl: 'project/views/phase.html'
+  };
+});

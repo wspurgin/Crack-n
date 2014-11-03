@@ -15,7 +15,7 @@
 					<div class="messageBoard" data-crn-message-board></div>
 				</div>
 				<div class="dropDown">
-					<div class="phase-wrapper" data-crn-phase data-ng-repeat="phase in project.phases"></div>
+					<div class="phase-wrapper" data-crn-phase data-ng-controller="PhaseCtrl" data-ng-repeat="phase in project.phases"></div>
 					<div class="add-phase-wrapper" data-ng-include="'project/views/add-phase.html'"></div>
 				</div>
 			</section>

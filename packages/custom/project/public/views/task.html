@@ -1,5 +1,5 @@
 <span class="task">{{task.name}}</span>
-<img src="img/check.png" class="check-button" onclick="completeTask()">
-<img src="img/add.png" class="add-button" onclick="addTask()" >
-<img src="img/edit.png" class="edit-button" onclick="editTask()" >
-<img src="img/delete.png" class="delete-button" onclick="deleteTask()">
+<img src="img/check.png" class="check-button" data-ng-click="completeTask(task)">
+<img src="img/add.png" class="add-button" data-ng-click="addTask()" >
+<img src="img/edit.png" class="edit-button" data-ng-show="currentMember.permission === 'admin' && false" data-ng-click="editTask(task)" >
+<img src="img/delete.png" class="delete-button" data-ng-show="currentMember.permission === 'admin' && false" data-ng-click="deleteTask(task)">
