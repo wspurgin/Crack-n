@@ -96,7 +96,7 @@ exports.addMembers = function (req, res) {
 	Project
 	  .update(
    		{ _id: req.params.project_id },
-  		{ $addToSet: { members:{$each: req.body.user }} }
+  		{ $push: { members: req.body } }
   	  )
   	  .exec(function(err, result) {
   	  	if (err) return res.status(400).send(err);
