@@ -67,14 +67,12 @@ form.login-form{
 	float: right;
 }
 
-.login, .signup, .loggout {
+.login, .loggout {
 	height: 45px;
 	width: auto;
 }
 
-.signup{
-	text-decoration: none;
-}
+
 .form_group{
 	display: inline;
 }
