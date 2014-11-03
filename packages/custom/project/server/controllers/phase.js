@@ -76,10 +76,10 @@ exports.addPhase = function (req, res) {
 		if (!err) {
 			var phase = new Phase();
 		    phase.name = req.body.name;
-		    phase.startDate = req.body.startDate;
+		    if(req.body.startDate) phase.startDate = req.body.startDate;
 		    phase.endDate = req.body.endDate;
 		    phase.save();
-		    result.phases.push(phase);
+		    result.phases.push(phase._id);
 		    result.save();
 		    activity.createEntry('Phase', 'Created', req.user, project_id);
 		    return res.status(201).json(phase);

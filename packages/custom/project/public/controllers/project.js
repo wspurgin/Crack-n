@@ -119,6 +119,10 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope', '$rootScope'
         if (index !== false) {
           // remove existing members from results
           $scope.searchUsersResults.splice(index, 1);
+
+          // if the results are now empty
+          if (!$scope.searchUsersResults.length)
+              $scope.searchError = 'No results found';
         }
       });
     }

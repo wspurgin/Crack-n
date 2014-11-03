@@ -6,15 +6,18 @@ angular.module('mean.project').controller('CreatePhaseCtrl', ['$scope', '$rootSc
     // will be filled out by form.
     $scope.phase = {};
 
-    $scope.createProject = function() {
+    $scope.createPhase = function() {
       if($scope.phase.name === undefined) {
         alert('Phase needs a name');
       } else {
-
-        $http.post('/projects/' + $scope.project._id + '/phases')
+        console.log($scope.phase);
+        $http.post('/projects/' + $scope.project._id + '/phases', $scope.phase)
           .success(function (res) {
-            $scope.project.push(res);
+            $scope.project.phases.push(res);
             $scope.phase = {};
+          })
+          .error(function() {
+            alert('Could not create phase :(');
           });
       }
     };

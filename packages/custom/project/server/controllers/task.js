@@ -104,11 +104,11 @@ exports.create=function(req, res) {
 					task.name=req.body.name;
 					task.description=req.body.description;
 					task.assignedMembers=req.body.assignedMembers;
-					task.dueDates=req.body.dueDates;
+					if(req.body.dueDates) task.dueDates=req.body.dueDates;
 					task.save();
-					result_task.tasks.push(task);
+					result_task.tasks.push(task._id);
 					result_task.save();
-					return res.json(201);
+					return res.status(201).json(task);
 				}
 				else {
 					return res.json('Phase does not exist!');

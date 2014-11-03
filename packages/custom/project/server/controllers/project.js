@@ -24,14 +24,25 @@ exports.all = function (req, res) {
 exports.show = function (req, res) {
 	var project_id = req.params.project_id;
 	console.log('project_id ' + project_id);
-	Project.findOne( {'_id': project_id} ).exec(function(err, result) {
-		if (!err) {
-			return res.json(200, result);
-		}
-		else {
-			return res.json('Get real bro');
-		}
-		console.log('project ' + result);
+	Project.findOne( {'_id': project_id} )
+    .lean()
+    .populate('phases')
+    .exec(function(err, result) {
+  		if (!err) {
+        var options = {
+          path: 'phases.tasks',
+          model: 'Task'
+        };
+        Project.populate(result, options, function (err, project) {
+          if (err) console.log(err);
+          return res.status(200).json(project);
+        });
+  			
+  		}
+  		else {
+  			return res.json('Get real bro');
+  		}
+  		console.log('project ' + result);
 	}); //MONGODB
 	
 };

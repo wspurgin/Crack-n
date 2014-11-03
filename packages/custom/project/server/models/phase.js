@@ -25,8 +25,7 @@ var phaseSchema = new Schema ({
 		required: false
 	},
 	tasks: {
-		type: Array,
-		default: []
+		type: [{type: Schema.ObjectId, ref: 'Task'}],
 	},
 	portionCompleted: {
 		type: Number,
