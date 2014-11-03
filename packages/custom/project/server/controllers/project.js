@@ -129,15 +129,17 @@ exports.members = function (req, res) {
 /**
 * Remove a user from the project using a passed user._id
 */
+/*
 exports.removeMember = function (req, res) {
 	Project
 	  .update(
 	  	{ _id: req.params.project_id },
-	  	{ $pull: {'members._id'} : req.body }
+	  	{ $pull {'members._id'} : req.body }
 	  )
 	  .exec(function(err, result) {
   	    if (err) return res.status(400).send(err);
   	  	return res.status(201).send('Member removed successfully');
   	  });
 };
+*/
 
