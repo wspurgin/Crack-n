@@ -32,7 +32,7 @@ angular.module('mean.project').controller('CreateTaskCtrl', ['$scope', '$rootSco
     };
 
     $scope.completeTask = function(task) {
-      $http.post('/projects/'+ $scope.project._id + '/phases/' + $scope.phase._id + '/tasks/' + task._id)
+      $http.put('/projects/'+ $scope.project._id + '/phases/' + $scope.phase._id + '/tasks/' + task._id +'/complete')
       .success(function(res) {
         task.completed = true;
       })

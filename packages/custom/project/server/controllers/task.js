@@ -72,23 +72,23 @@ exports.complete=function(req, res) {
 		if (!err) {
 			Task.findOne( {'_id':task_id} ).exec(function(err, result_task) {
 				if (!err) {
-					if(!req.body.completed){
+					if(!result_task.completed){
 						result_task.completed=true;
 						result_task.save();
-						return res.json(200, 'Successfully completed task!', result_task);
+						return res.status(200).json(result_task);
 					}
 					else
 					{
-						return res.json('Task is already completed!');
+						return res.status(204).send();
 					}  
 				}
 				else {
-					return res.json('Task does not exist!');
+					return res.status(404).send();
 				}
 			});
 		}
 		else {
-			return res.json('Project does not exist!');
+			return res.status(404).send();
 		}
 	});
 };
