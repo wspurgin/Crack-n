@@ -67,14 +67,15 @@ exports.addProject = function (req, res) {
 
 // Delete a Project from User's Project List
 exports.remove = function (req, res) {
-    	var project = req.params.project_id;
-	Project.findOne({'_id': project}).exec(function(err, result){
-		if(!err) {
-			project.remove();
-			return res.status(200).send('Test database cleared.');
-		}
-	  	else return res.json('Error'); 
-	  });
+    	var project_id = req.params.project_id;
+	var owner = req.body.owner;
+	Project.findOne({'_id': project_id}).exec(function(err, result){
+	if(owner === Project.owner && !err) {
+		Project.remove();
+		return res.status(200).send('Test database cleared.');
+	}
+	else return res.json('Error'); 
+	});
 };
 
 // Add Group Members to Project
