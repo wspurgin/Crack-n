@@ -101,7 +101,9 @@ exports.members = function (req, res) {
 	console.log('project_id ' + project_id);
 	Project.find( {'_id': project_id} ).exec(function(err, result) {
 		if (!err) {
-			return res.json(200, result);
+			var project = result[0];
+			var members = project.members;
+			return res.status(200).json(members);
 			// Put Code for Showing Members here
 		}
 		else {
