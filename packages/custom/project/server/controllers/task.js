@@ -42,7 +42,7 @@ exports.assign=function (req, res) {
 			Phase.findOne({'_id':phase_id}).exec(function(err, result_phase){
 				if (!err) {
 					Task.findOne({'_id':task_id}).exec(function(err, result_task) {
-						if (!err){
+						if (!err){ 
 							task.assignedMembers=req.body.assignedMembers;
 							task.save();
 							result_task.assignedMembers.push(task.assignedMembers);
@@ -72,14 +72,14 @@ exports.complete=function(req, res) {
 		if (!err) {
 			Task.findOne( {'_id':task_id} ).exec(function(err, result_task) {
 				if (!err) {
-					if(req.body.completed===false){
+					if(!req.body.completed){
 						result_task.completed=true;
 						result_task.save();
-						return res.json(200, 'Successfully completed task!');
+						return res.json(200, 'Successfully completed task!', result_task);
 					}
 					else
 					{
-						return res.json('Task is already completed');
+						return res.json('Task is already completed!');
 					}  
 				}
 				else {
