@@ -147,7 +147,7 @@ exports.removeMember = function (req, res) {
 	  )
 	  .exec(function(err, result) {
   	    if (err) return res.status(400).send(err);
-  	  	return res.status(200).send('Member removed successfully');
+  	    return res.status(200).send('Member removed successfully');
   	  });
 };
 
