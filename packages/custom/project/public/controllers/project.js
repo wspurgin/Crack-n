@@ -163,25 +163,15 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope', '$rootScope'
       $scope.searchUsersResults.splice(arrayObjectIndexOf($scope.searchUsersResults, member), 1);
     };
 }])
-.controller('MessageBoardCtrl', ['$scope', '$rootScope', '$http', 'Global',
-  function($scope, $rootScope, $http, $parent, Global) {
+.controller('MessageBoardCtrl', ['$scope', '$rootScope', '$http', '$stateParams', 'Global',
+  function($scope, $rootScope, $http, $stateParams, Global) {
     $scope.global = Global;
     $scope.messageError = false;
     $scope.messages = [];
     $scope.message = {};
-    var user = null;
+    var user = $scope.global.user;
 
-    $http.get('/users/me')
-        .success(function(response) {
-          user = response;
-          })
-        .error(function (error) {
-          $scope.messageError = error;
-        });
-
-        console.log($scope);
-
-    $http.get('/projects/' + $scope.project._id + '/messages')
+    $http.get('/projects/' + $stateParams.projectId + '/messages')
       .success(function (res) {
         console.log(res);
         $scope.messages = res;
@@ -193,7 +183,7 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope', '$rootScope'
     $scope.addMessage = function () {
       $scope.message.user = user;
 
-      $http.post('/projects/' + $scope.project._id + '/messages', $scope.message)
+      $http.post('/projects/' + $stateParams.projectId + '/messages', $scope.message)
         .success(function (res) {
           console.log('Message added successfully');
         })
