@@ -4,10 +4,15 @@
         <h3>Message Board</h3>
     </div>
     <div class="displayMessages">
-        
+        <table>
+            <tr class="message">
+                <td class="sender" ng-repeat-start="message in messages">{{message.user.name}}</td>
+                <td class="body" ng-repeat-end>{{message.body}}</td>
+            </tr>
+        </table>
     </div>
     <div class="postMessage">
         <input type="text" name="post_message" data-ng-model="message.body" /> 
-        <input type="button" value="Post" name="post_button" onclick="addMessage()" />
+        <input type="button" value="Post" name="post_button" ng-click="addMessage()" />
     </div>
 </div>

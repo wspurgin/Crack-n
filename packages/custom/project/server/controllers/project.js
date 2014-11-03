@@ -64,44 +64,46 @@ exports.edit = function (req, res) {
 
 // Create a Project
 exports.addProject = function (req, res) {
-  var project = new Project();
-  project.name = req.body.name;
-  if (req.body.startDate) project.startDate = req.body.startDate;
-  project.endDate = req.body.endDate;
-  project.phases = [];
-  project.owner = req.body.owner;
-  project.members = req.body.members;
-  project.messages = [];
-  project.save();
-  return res.status(201).json(project);
+	var project = new Project();
+  	project.name = req.body.name;
+ 	if (req.body.startDate) project.startDate = req.body.startDate;
+  	project.endDate = req.body.endDate;
+ 	project.phases = [];
+ 	project.owner = req.body.owner;
+ 	project.members = req.body.members;
+ 	project.messages = [];
+  	project.save();
+  	return res.status(201).json(project);
 };
 
 // Delete a Project from User's Project List
 exports.remove = function (req, res) {
-    var project = Project.findOne({'id': req.params.project_id});
-    var owner = project.owner;
-    	if (req.user.id === owner)
-	  project.remove()
-	  .exec(function(err) {
-	  	if (err) return res.status(400).send(err);
-	  	else return res.status(200).send('Test database cleared.');
-	  });
+    	var project_id = req.params.project_id;
+	var owner = req.body.owner;
+	Project.findOne({'_id': project_id}).exec(function(err, result){
+	if(owner === Project.owner && !err) {
+		Project.remove();
+		return res.status(200).send('Test database cleared.');
+	}
+	else return res.json('Error'); 
+	});
 };
 
 // Add Group Members to Project
 exports.addMembers = function (req, res) {
-	var project_id = req.params.project_id;
-	Project.find({'_id': project_id}).exec(function(err, result) {
-    	if (!err && result){
-    		var members = result.members;
-    		members.addToSet(req.body.user);
-    		result.save();
-		    return res.json(201);
-    	}
-    	else{
-		    return res.status(400).json('Nah bro, there aint no project');
-    	}
-    });
+	// var project_id = req.params.project_id;
+	Project
+	  .update(
+   		{ _id: req.params.project_id },
+  		{ $addToSet: { members:{$each: req.body.user }} }
+  	  )
+  	  .exec(function(err, result) {
+  	  	if (err) return res.status(400).send(err);
+		else
+  	  	return res.status(201).send('Members added successfully');
+  	  });
+  	  
+
 };
 
 //Shows Group Members of a Project
@@ -110,7 +112,9 @@ exports.members = function (req, res) {
 	console.log('project_id ' + project_id);
 	Project.find( {'_id': project_id} ).exec(function(err, result) {
 		if (!err) {
-			return res.json(200, result);
+			var project = result[0];
+			var members = project.members;
+			return res.status(200).json(members);
 			// Put Code for Showing Members here
 		}
 		else {

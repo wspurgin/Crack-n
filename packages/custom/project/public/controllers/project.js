@@ -166,12 +166,24 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope', '$rootScope'
 .controller('MessageBoardCtrl', ['$scope', '$rootScope', '$http', 'Global',
   function($scope, $rootScope, $http, $parent, Global) {
     $scope.global = Global;
-    $scope.messageError = null;
-    $scope.messages = {};
-    $scope.message = null;
+    $scope.messageError = false;
+    $scope.messages = [];
+    $scope.message = {};
+    var user = null;
+
+    $http.get('/users/me')
+        .success(function(response) {
+          user = response;
+          })
+        .error(function (error) {
+          messageError = error;
+        });
+
+        console.log($scope);
 
     $http.get('/projects/' + $scope.project._id + '/messages')
       .success(function (res) {
+        console.log(res);
         $scope.messages = res;
       })
       .error(function (error) {
@@ -179,7 +191,7 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope', '$rootScope'
       });
 
     $scope.addMessage = function () {
-      $scope.message.user = $scope.global.user;
+      $scope.message.user = user;
 
       $http.post('/projects/' + $scope.project._id + '/messages', $scope.message)
         .success(function (res) {
