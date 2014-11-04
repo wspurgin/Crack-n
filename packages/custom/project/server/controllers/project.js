@@ -10,8 +10,8 @@ var mongoose = require('mongoose'),
 /* Shows All Projects
 */
 exports.all = function (req, res) {
-	//Add user info here to pull up only projects designed for user
-	Project.find().exec(function(err, result) {
+	var user_id = req.body.user;
+	Project.find({'user_id': user_id}).exec(function(err, result) {
 		if (!err) {
 			return res.json(200, result);
 		}
@@ -51,7 +51,9 @@ exports.show = function (req, res) {
 	
 };
 
-// Edit a Project
+/* 
+ * Edit a Project
+ */
 exports.edit = function (req, res) {
 	var project_id = req.params.project_id;
 	Project.findOne( {'_id': project_id} ).exec(function(err, result) {
@@ -66,7 +68,9 @@ exports.edit = function (req, res) {
 
 };
 
-// Create a Project
+/*
+ * Create a Project
+ */
 exports.addProject = function (req, res) {
 	var project = new Project();
   	project.name = req.body.name;
@@ -80,7 +84,9 @@ exports.addProject = function (req, res) {
   	return res.status(201).json(project);
 };
 
-// Delete a Project from User's Project List
+/*  
+ * Delete a Project from User's Project List
+ */
 exports.remove = function (req, res) {
     	var project_id = req.params.project_id;
 	var owner = req.body.owner;
@@ -93,7 +99,9 @@ exports.remove = function (req, res) {
 	});
 };
 
-// Add Group Members to Project
+/*
+ * Add Group Members to Project
+ */
 exports.addMembers = function (req, res) {
 	Project
 	  .update(
@@ -108,7 +116,9 @@ exports.addMembers = function (req, res) {
 
 };
 
-//Shows Group Members of a Project
+/*
+ * Shows Group Members of a Project
+ */ 
 exports.members = function (req, res) {
 	var project_id = req.params.project_id;
 	console.log('project_id ' + project_id);
@@ -129,17 +139,16 @@ exports.members = function (req, res) {
 /**
 * Remove a user from the project using a passed user._id
 */
-/*
 exports.removeMember = function (req, res) {
 	Project
 	  .update(
 	  	{ _id: req.params.project_id },
-	  	{ $pull {'members._id'} : req.body }
+	  	{ $pull: {'members._id' : req.body} }
 	  )
 	  .exec(function(err, result) {
   	    if (err) return res.status(400).send(err);
-  	  	return res.status(201).send('Member removed successfully');
+  	    return res.status(200).send('Member removed successfully');
   	  });
 };
-*/
+
 

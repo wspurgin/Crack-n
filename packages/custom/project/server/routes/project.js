@@ -56,7 +56,7 @@ app.use('/project*', auth.requiresLogin, function(req, res, next){
   app.route('/projects/:project_id/members')
     .get(project.members);
 
-  //app.route('/projects/:project_id/members')
-    //.delete(project.removeMember);
+  app.route('/projects/:project_id/members')
+    .delete(project.removeMember);
 
 };
