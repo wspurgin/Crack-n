@@ -6,6 +6,7 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope', '$rootScope'
     if (!$scope.global.authenticated)
       return $location.url('/');
     $scope.project = {};
+    $scope.editingMembers = false;
 
     $scope.permissionLevels = ['admin', 'general', 'view_only'];
 
