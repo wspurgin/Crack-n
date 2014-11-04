@@ -24,7 +24,7 @@ exports.projectMessages = function (req, res) {
 };
 
 exports.addMessage = function (req, res) {
-	var project_id = req.params.project_id;
+	var project_id = req.body.project_id;
 	Project.findOne( {'_id': project_id} ).exec(function(err, result) {
 		if (!err) {
 			var message = new Message();
@@ -35,10 +35,10 @@ exports.addMessage = function (req, res) {
 		    result.messages.push(message);
 		    result.save();
 		    activity.createEntry('Message', 'Created', req.user, project_id);
-			return res.json(200, result);
+			return res.status(200).send(result);
 		}
 		else {
-			return res.json('Get real bro');
+			return res.status(400).send(err);
 		}
 		console.log('project ' + result);
 	});
