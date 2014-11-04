@@ -35,7 +35,7 @@ exports.addMessage = function (req, res) {
 		    result.messages.push(message);
 		    result.save();
 		    activity.createEntry('Message', 'Created', req.user, project_id);
-			return res.status(200).send(result);
+			return res.status(200).send(message);
 		}
 		else {
 			return res.status(400).send(err);

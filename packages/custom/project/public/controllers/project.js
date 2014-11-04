@@ -188,6 +188,8 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope', '$rootScope'
 
       $http.post('/projects/' + $stateParams.projectId + '/messages', $scope.message)
         .success(function (res) {
+          $scope.messages.push(res);
+          $('[name="post_message"]').val('');
         })
         .error(function (error) {
           $scope.messageError = error;

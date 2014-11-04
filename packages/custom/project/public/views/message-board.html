@@ -5,9 +5,9 @@
     </div>
     <div class="displayMessages">
         <table>
-            <tr class="message">
-                <td class="sender" ng-repeat-start="message in messages">{{message.user.name}}</td>
-                <td class="body" ng-repeat-end>{{message.body}}</td>
+            <tr class="message" ng-repeat="message in messages">
+                <td class="sender">{{message.user}}</td>
+                <td class="body">{{message.body}}</td>
             </tr>
         </table>
     </div>
