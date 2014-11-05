@@ -5,7 +5,7 @@
     <div class="alert alert-danger animated fadeIn" ng-show="usernameError">{{usernameError}}</div>
     <div class="alert alert-danger animated fadeIn" ng-show="emailError">{{emailError}}</div>
     <div class="alert alert-danger animated fadeIn" ng-show="passwordError">{{passwordError}}</div>
-    <form id="my_account_form">
+    <form class="my_account_form">
         <h2>My Account</h2>
         <div class="info_pull_error">
             <p>{{info_error}}</p>
@@ -25,7 +25,7 @@
                    ng-model="user.email" readonly >
 
             <div class="error_message">Please enter a correct info #</div>
-            <span class="pic email"></span>
+           <!-- <span class="pic email"></span> -->
         </div>
 
         <div class="input-wrapper">

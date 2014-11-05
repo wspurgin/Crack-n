@@ -258,3 +258,11 @@ input[type="button"]{
 }
 
 /*end of phases and tasks*/
+
+/*my account page */
+.my_account_form {
+	margin-left: 40%;
+	display: inline-block;
+}
+
+/*end my account page end */
