@@ -11,8 +11,13 @@ body {
 }
 
 .content {
-	width: 100%;
+	margin: auto;
+	margin-top: 8%;
+	margin-bottom: 8%;
+	width: 80%;
 	height: 100%;
+	border-radius: 60px;
+	background-color: rgba(0, 0, 0, .5);
 }
 
 .container {
@@ -266,3 +271,4 @@ input[type="button"]{
 }
 
 /*end my account page end */
+
