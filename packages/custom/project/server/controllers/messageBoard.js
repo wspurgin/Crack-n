@@ -24,12 +24,13 @@ exports.projectMessages = function (req, res) {
 };
 
 exports.addMessage = function (req, res) {
-	var project_id = req.body.project_id;
+	var project_id = req.params.project_id;
 	Project.findOne( {'_id': project_id} ).exec(function(err, result) {
 		if (!err) {
 			var message = new Message();
 		    message.body = req.body.body;
-		    message.user = req.body.user;
+		    message.user_id = req.body.user_id;
+		    message.username = req.body.username;
 		    message.save();
 		    console.log('<: ' + message);
 		    result.messages.push(message);
