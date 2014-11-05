@@ -6,7 +6,7 @@ html {
 body {
 	height: 100%;
 	margin: 0;
-    color: #e3e3e3;
+    color: black;
 	background: url("/img/green-fibers.png");
 }
 
@@ -44,6 +44,13 @@ body {
 	text-align: center;
 	text-decoration: none;
 }
+.homelogo a{
+	color: lavenderblush;
+	border:1px groove darkolivegreen;
+	padding: 3px;
+	background-color: dimgrey;
+
+}
 
 section div div img {
 	width: auto;
@@ -53,7 +60,7 @@ section div div img {
 /*header*/
 
 .header-logo {
-	border-bottom: 2px solid lightgreen;
+	background-color: dimgrey;
 }
 
 
@@ -88,17 +95,22 @@ form.login-form{
 	font-size: 1.5em;
 	display: inline;
 }
-.create-project{
+.header-clicks{
 	font-size: 1.5em;
-	margin-left: 45%;
+	margin-left: 39%;
 	position: absolute;
+	display: flex;
 }
 
 a{ 
 	text-decoration: none;
-	color:lightgreen;
+	color:lavenderblush;
 }
-
+button{
+	font-size: 18px;
+	margin-left: 20px;
+	background-color: transparent;	
+}
 /* end of header*/
 
 /*project page*/
@@ -110,7 +122,6 @@ a{
 input[type="button"]{
 	font-size: 18px;
 	margin-left: 20px;
-	background-color: beige;
 }
 
 .mid-section{
@@ -200,7 +211,7 @@ input[type="button"]{
 }
 
 .phase {
-	color: beige;
+	color: black;
 	width: 300px;
 	height: 35px;
 	border: 1px solid black;
@@ -210,7 +221,7 @@ input[type="button"]{
 }
 
 .task {
-	color: beige;
+	color: black;
 	width: 260px;
 	height: 30px;
 	border: 1px solid black;
