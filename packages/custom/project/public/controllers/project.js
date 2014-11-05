@@ -172,15 +172,18 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope', '$rootScope'
     $scope.messageError = false;
     $scope.messages = [];
     $scope.message = {};
-
+    console.log($scope.project);
     $http.get('/projects/' + $stateParams.projectId + '/messages')
       .success(function (res) {
-        console.log(res);
         $scope.messages = res;
       })
       .error(function (error) {
         $scope.messageError = error;
       });
+
+      $('.messagesDisplay').animate({
+            scrollTop: $('.messagesDisplay').get(0).scrollHeight
+            }, 1500);
 
     $scope.addMessage = function () {
       $scope.message.user = $scope.global.user._id;
@@ -190,11 +193,31 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope', '$rootScope'
         .success(function (res) {
           $scope.messages.push(res);
           $('[name="post_message"]').val('');
+          $('.messagesDisplay').animate({
+            scrollTop: $('.messagesDisplay').get(0).scrollHeight
+            }, 1500);
         })
         .error(function (error) {
           $scope.messageError = error;
         });
     };
+
+    (function poll(){
+      setTimeout(function(){
+        
+        $http.get('/projects/' + $stateParams.projectId + '/messages')
+          .success(function (res) {
+            $scope.messages = res;
+          })
+          .error(function (error) {
+            $scope.messageError = error;
+          });
+
+          $('.messagesDisplay').animate({
+            scrollTop: $('.messagesDisplay').get(0).scrollHeight
+          }, 1500);
+      }, 1000);
+    })();
 
 
 }])
