@@ -29,7 +29,8 @@ exports.addMessage = function (req, res) {
 		if (!err) {
 			var message = new Message();
 		    message.body = req.body.body;
-		    message.user = req.body.user;
+		    message.user_id = req.body.user_id;
+		    message.username = req.body.username;
 		    message.save();
 		    console.log('<: ' + message);
 		    result.messages.push(message);

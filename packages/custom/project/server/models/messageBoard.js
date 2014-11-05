@@ -11,9 +11,13 @@ var mongoose = require('mongoose'),
 */
 
 var messageSchema = new Schema ({
-	user: {
+	user_id: {
 		type: Schema.ObjectId,
 		ref: 'User',
+		required: true
+	},
+	username: {
+		type: String,
 		required: true
 	},
 	body: {
