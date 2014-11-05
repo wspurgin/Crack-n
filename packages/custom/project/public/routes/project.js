@@ -10,10 +10,10 @@ angular.module('mean.project').config(['$stateProvider', '$urlRouterProvider',
       .state('project_create', {
         url: '/projects/create',
         templateUrl: 'project/views/create.html'
-      });
-      /*.state('projects', {
-        url: '/projects',
+      })
+      .state('projects', {
+        url: '/my-projects',
         templateUrl: 'project/views/my-projects.html'
-      });*/
+      });
   }
 ]);
