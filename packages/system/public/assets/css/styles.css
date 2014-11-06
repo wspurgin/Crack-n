@@ -27,6 +27,8 @@ body {
   margin-left: auto;
   position: relative;
 }
+
+
 @media (min-width: 768px) {
   .container {
     width: 750px;
@@ -270,5 +272,14 @@ input[type="button"]{
 	display: inline-block;
 }
 
-/*end my account page end */
+/*end my account page */
 
+/*Create a Project page*/
+fieldset{
+	border:none;
+}
+.create-project{
+	text-align: center;
+}
+
+/*end of Create a Project page*/
