@@ -19,12 +19,12 @@ exports.all=function(req,res) {
 					return res.json(200,result_phase.tasks);
 				}
 				else {
-					return res.json('Phase does not exist!');
+					return res.status(400).send('Could not find phase with id ' + req.params.phase_id);
 				}
 			});
 		}
 		else {
-			return res.json('Project does not exist!');
+			return res.status(400).send('Could not find project with id ' + req.params.project_id);
 		}
 		console.log('project' + result.task );
 	});
@@ -111,12 +111,12 @@ exports.create=function(req, res) {
 					return res.status(201).json(task);
 				}
 				else {
-					return res.json('Phase does not exist!');
+					return res.status(400).send('Could not find phase with id ' + req.params.phase_id);
 				}
 			});
 		}
 		else {
-			return res.json ('Project does not exist');
+			return res.status(400).send('Could not find project with id ' + req.params.project_id);
 		}
 		console.log('project '+result.task);
 	});
@@ -137,12 +137,12 @@ exports.edit=function(req, res) {
 					return res.json(200, 'Successfully edited task!', result_task);
 				}
 				else {
-					return res.json('Task does not exist!');
+					return res.status(400).send('Could not find task with id ' + req.params.task_id);
 				}
 			});
 		}
 		else {
-			return res.json('Project does not exist!');
+			return res.status(400).send('Could not find project with id ' + req.params.project_id);
 		}
 	});
 };
@@ -160,17 +160,17 @@ exports.show=function(req,res) {
 							return res.json(200, result_task);
 						}
 						else {
-							return ('Task does not exist!');
+							return res.status(400).send('Could not find task with id ' + req.params.task_id);
 						}
 					}); 
 				}
 				else {
-					return ('Phase does not exist!');
+					return res.status(400).send('Could not find phase with id ' + req.params.phase_id);
 				}
 			});			
 		}
 		else {
-			return ('Project does not exist!');
+			return res.status(400).send('Could not find project with id ' + req.params.project_id);
 		}
 	});
 };
@@ -186,12 +186,12 @@ exports.delete=function(req,res) {
 					return res.json (200, 'Successfully deleted task!');
 				}
 				else {
-					return res.json ('Task does not exist');
+					return res.status(400).send('Could not find task with id ' + req.params.task_id);
 				}
 			});
 		}
 		else {
-			return res.json('Project does not exist');
+			return res.status(400).send('Could not find project with id ' + req.params.project_id);
 		}
 	});
 };
