@@ -17,7 +17,7 @@ exports.all = function (req, res) {
 			return res.json(200, result.phases);
 		}
 		else {
-			return res.json('Nah bro, there aint no project');
+			return res.status(400).send('Could not find project with id ' + req.params.project_id);
 		}
 		console.log('project ' + result.phases);
 	}); //MONGODB
@@ -33,12 +33,12 @@ exports.show = function (req, res) {
 					return res.json(200, result_phase);
 				}
 				else {
-					return res.json('Nah bro, that phase aint real');
+					return res.status(400).send('Could not find phase with id ' + req.params.phase_id);
 				}
 			});	
 		}
 		else {
-			return res.json('Nah bro, there aint no project');
+			return res.status(400).send('Could not find project with id ' + req.params.project_id);
 		}
 		console.log('project ' + result.phases);
 	}); //MONGODB
@@ -58,12 +58,12 @@ exports.edit = function (req, res) {
 					return res.json(200, 'Successfully edited phase', result_phase);
 				}
 				else {
-					return res.json('Nah bro, that phase aint real');
+					return res.status(400).send('Could not find phase with id ' + req.params.phase_id);
 				}
 			});
 		}
 		else {
-			return res.json('Nah bro, there aint no project');
+			return res.status(400).send('Could not find project with id ' + req.params.project_id);
 		}
 		console.log('project ' + result.phases);
 	}); //MONGODB
@@ -85,7 +85,7 @@ exports.addPhase = function (req, res) {
 		    return res.status(201).json(phase);
 		}
 		else {
-			return res.json('Nah bro, there aint no project');
+			return res.status(400).send('Could not find project with id ' + req.params.project_id);
 		}
 		console.log('project ' + result.phases);
 	}); //MONGODB

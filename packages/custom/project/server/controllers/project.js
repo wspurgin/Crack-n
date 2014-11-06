@@ -16,7 +16,7 @@ exports.all = function (req, res) {
 			return res.json(200, result);
 		}
 		else {
-			return res.json('Get real bro');
+			return res.status(400).send('Could not find project with id ' + req.params.project_id);
 		}
 		console.log('project ' + result);
 	});
@@ -44,7 +44,7 @@ exports.show = function (req, res) {
   			
   		}
   		else {
-  			return res.json('Get real bro');
+  			return res.status(400).send('Could not find project with id ' + req.params.project_id);
   		}
   		console.log('project ' + result);
 	}); //MONGODB
@@ -61,7 +61,7 @@ exports.edit = function (req, res) {
 			return res.json(200, result, 'Successfully edited phase');
 		}
 		else {
-			return res.json('Get real bro');
+			return res.status(400).send('Could not find project with id ' + req.params.project_id);
 		}
 		console.log('project ' + result);
 	});
@@ -130,7 +130,7 @@ exports.members = function (req, res) {
 			// Put Code for Showing Members here
 		}
 		else {
-			return res.json('Get real bro');
+			return res.status(400).send('Could not find project with id ' + req.params.project_id);
 		}
 		console.log('project ' + result);
 	});

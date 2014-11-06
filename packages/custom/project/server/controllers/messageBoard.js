@@ -17,7 +17,7 @@ exports.projectMessages = function (req, res) {
 			return res.status(200).json(result.messages);
 		}
 		else {
-			return res.status(400).json(err);
+			return res.status(400).send('Could not find project with id ' + req.params.project_id + ', bruh bruh');
 		}
 		console.log('project ' + result);
 	});
@@ -39,7 +39,7 @@ exports.addMessage = function (req, res) {
 			return res.status(200).send(message);
 		}
 		else {
-			return res.status(400).send(err);
+			return res.status(400).send('Could not find project with id ' + req.params.project_id);
 		}
 		console.log('project ' + result);
 	});
