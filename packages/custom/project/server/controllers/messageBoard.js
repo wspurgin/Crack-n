@@ -13,11 +13,11 @@ var activity = require('../controllers/activity');
 exports.projectMessages = function (req, res) {
 	var project_id = req.params.project_id;
 	Project.findOne( {'_id': project_id} ).exec(function(err, result) {
-		if (!err) {
+		if (!err && result) {
 			return res.status(200).json(result.messages);
 		}
 		else {
-			return res.status(400).send('Could not find project with id ' + req.params.project_id + ', bruh bruh');
+			return res.status(404).send('Could not find project with id ' + req.params.project_id);
 		}
 		console.log('project ' + result);
 	});

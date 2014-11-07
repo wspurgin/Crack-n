@@ -32,7 +32,7 @@ exports.show = function (req, res) {
     .lean()
     .populate('phases')
     .exec(function(err, result) {
-  		if (!err) {
+  		if (!err && result) {
         var options = {
           path: 'phases.tasks',
           model: 'Task'
@@ -44,7 +44,7 @@ exports.show = function (req, res) {
   			
   		}
   		else {
-  			return res.status(400).send('Could not find project with id ' + req.params.project_id);
+  			return res.status(404).send('Could not find project with id ' + req.params.project_id);
   		}
   		console.log('project ' + result);
 	}); //MONGODB
