@@ -177,21 +177,30 @@ exports.show=function(req,res) {
 
 exports.delete=function(req,res) {
 	var project_id=req.params.project_id;
+	var phase_id=req.params.phase_id;
 	var task_id=req.params.task_id;
-	Project.findOne({'_id': project_id}).exec(function(err, result){
-		if (!err) {
-			Task.findOne( {'_id':task_id}).exec(function(err, result_task) {
-				if (!err) {
-					result_task.remove();
-					return res.json (200, 'Successfully deleted task!');
+	Project.findOne({'_id':project_id}).exec(function(err, result) {
+		if (!err && result) {
+			Phase.findOne({'_id':phase_id}).exec(function(err, result_phase){
+				if (!err && result_phase) {
+					Task.findOne({'_id':task_id}).exec(function(err, result_task) {
+						if (!err, result_task) {
+							result_task.remove();
+							result_phase.tasks.remove();
+							return res.json(200, 'Successfully removed task!');
+						}
+						else {
+							return res.status(400).send('Could not find task with id ' +req.params.task_id);
+						}
+					});
 				}
 				else {
-					return res.status(400).send('Could not find task with id ' + req.params.task_id);
+					return res.status(400).send('Could not find phase with id ' + req.params.phase_id);
 				}
 			});
 		}
 		else {
-			return res.status(400).send('Could not find project with id ' + req.params.project_id);
+			return res.status(400).send('Could not find project with id ' +req.params.project_id);
 		}
 	});
 };
