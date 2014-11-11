@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('mean.project').controller('ProjectCtrl', ['$scope', '$rootScope', '$http', '$location', '$stateParams', 'Global', 
-  function($scope,  $rootScope, $http, $location, $stateParams, Global) {
+angular.module('mean.project').controller('ProjectCtrl', ['$scope', '$rootScope', '$http', '$location', '$stateParams', '$interval', 'Global', 'Project', 
+  function($scope,  $rootScope, $http, $location, $stateParams, $interval, Global, Project) {
     $scope.global = Global;
     if (!$scope.global.authenticated)
       return $location.url('/');
@@ -19,9 +19,10 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope', '$rootScope'
     }
 
     function getProject() {
-      $http.get('/projects/' + $stateParams.projectId)
-        .success(function (res) {
-          $scope.project = res;
+      console.log('getting project');
+      Project.get({projectId: $stateParams.projectId},
+        function(project) {
+          $scope.project = project;
 
           // test for empty response
           if (!Object.keys($scope.project).length)
@@ -33,12 +34,21 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope', '$rootScope'
           if ($scope.currentMember === false)
             // they aren't allowed to see this project
             $location.url('/');
-        })
-        .error(function () {
-          alert('Could not retrieve project :(');
-        });
+      },
+      function(error) {
+        console.log(error);
+        alert('Could not retrieve project :(');
+      });
     }
     getProject();
+    var stop = $interval(getProject, 1000*20);
+
+    $scope.$on('destory', function() {
+      if (angular.isDefined(stop)) {
+        $interval.cancel(stop);
+        stop = undefined;
+      }
+    });
   }
 ])
 .controller('CreateProjectCtrl', ['$scope', '$rootScope', '$http', '$location', 'Global',
@@ -81,7 +91,6 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope', '$rootScope'
       if(validProject()) {
         $http.post('/projects', $scope.project)
           .success(function(res) {
-            console.log(res);
             $location.url('/project/'+res._id);
           })
           .error(function() {
@@ -172,7 +181,6 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope', '$rootScope'
     $scope.messageError = false;
     $scope.messages = [];
     $scope.message = {};
-    console.log($scope.global.user);
     $http.get('/projects/' + $stateParams.projectId + '/messages')
       .success(function (res) {
         $scope.messages = res;
