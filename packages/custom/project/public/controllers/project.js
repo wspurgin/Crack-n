@@ -172,7 +172,7 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope', '$rootScope'
     $scope.messageError = false;
     $scope.messages = [];
     $scope.message = {};
-    console.log($scope.project);
+    console.log($scope.global.user);
     $http.get('/projects/' + $stateParams.projectId + '/messages')
       .success(function (res) {
         $scope.messages = res;
@@ -186,7 +186,8 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope', '$rootScope'
             }, 1500);
 
     $scope.addMessage = function () {
-      $scope.message.user = $scope.global.user._id;
+      $scope.message.user_id = $scope.global.user._id;
+      $scope.message.username = $scope.global.user.username;
       $scope.message.project_id = $stateParams.projectId;
 
       $http.post('/projects/' + $stateParams.projectId + '/messages', $scope.message)
