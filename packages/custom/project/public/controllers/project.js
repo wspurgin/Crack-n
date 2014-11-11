@@ -218,8 +218,6 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope', '$rootScope'
           }, 1500);
       }, 1000);
     })();
-
-
 }])
 .directive('crnMessageBoard', function () {
   return {
