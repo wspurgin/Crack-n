@@ -75,6 +75,7 @@ exports.addProject = function (req, res) {
 	var project = new Project();
   	project.name = req.body.name;
  	if (req.body.startDate) project.startDate = req.body.startDate;
+ 	else project.startDate = Date.now();
   	project.endDate = req.body.endDate;
  	project.phases = [];
  	project.owner = req.body.owner;
@@ -103,16 +104,32 @@ exports.remove = function (req, res) {
  * Add Group Members to Project
  */
 exports.addMembers = function (req, res) {
-	Project
-	  .update(
-   		{ _id: req.params.project_id },
-  		{ $push: { members: req.body } }
-  	  )
-  	  .exec(function(err, result) {
-  	  	if (err) return res.status(400).send(err);
-  	  	return res.status(201).send('Members added successfully');
-  	  });
-  	  
+	var present = false;
+	Project.findOne({'_id': req.params.project_id}).exec(function(err, result){
+		if (!err && result) {
+			var members = result.members;
+			for (var i = 0; i < members.length; i+=1) {
+				if (members[i]._id === req.body._id || result.owner === req.body._id){
+					present = true;
+					break;
+				}
+			}
+			if (present === true) {
+				return res.status(201).send('User with that id is already a member in group');
+			}
+			else {
+				Project
+				  .update(
+			   		{ _id: req.params.project_id },
+			  		{ $push: { members: req.body } }
+			  	  )
+			  	  .exec(function(err, result) {
+			  	  	if (err) return res.status(400).send(err);
+			  	  	return res.status(201).send('Members added successfully');
+			  	  });
+			}
+		}
+	});
 
 };
 
