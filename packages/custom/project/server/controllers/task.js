@@ -13,9 +13,9 @@ exports.all=function(req,res) {
 	var project_id = req.params.project_id;
 	var phase_id = req.params.phase_id;
 	Project.findOne( {'_id':project_id}).exec(function(err, result) {
-		if (!err) {
+		if (!err && result) {
 			Phase.findOne( {'_id':phase_id}).exec(function(err, result_phase) {
-				if (!err) {
+				if (!err && result_phase) {
 					return res.json(200,result_phase.tasks);
 				}
 				else {
@@ -69,9 +69,9 @@ exports.complete=function(req, res) {
 	var project_id=req.params.project_id;
 	var task_id=req.params.task_id;
 	Project.findOne({'_id': project_id }).exec(function(err,result) {
-		if (!err) {
+		if (!err && result) {
 			Task.findOne( {'_id':task_id} ).exec(function(err, result_task) {
-				if (!err) {
+				if (!err && result_task) {
 					if(!result_task.completed){
 						result_task.completed=true;
 						result_task.save();
@@ -97,9 +97,9 @@ exports.create=function(req, res) {
 	var project_id = req.params.project_id;
 	var phase_id=req.params.phase_id;
 	Project.findOne( {'_id':project_id} ).exec(function(err,result) {
-		if (!err) {
+		if (!err && result) {
 			Phase.findOne({'_id':phase_id}).exec(function(err, result_task) {
-				if (!err) {
+				if (!err && result_task) {
 					var task=new Task();
 					task.name=req.body.name;
 					task.description=req.body.description;
@@ -125,9 +125,9 @@ exports.edit=function(req, res) {
 	var project_id=req.params.project_id;
 	var task_id=req.params.task_id;
 	Project.findOne( {'_id':project_id} ). exec(function(err, result) {
-		if (!err) {
+		if (!err && result) {
 			Task.findOne ( {'_id':task_id} ).exec(function(err, result_task) {
-				if (!err) {
+				if (!err && result_task) {
 					if (req.body.name) result_task.name=req.body.name;
 					if (req.body.completed) result_task.completed=req.body.completed;
 					if (req.body.description) result_task.description=req.body.description;
@@ -186,13 +186,15 @@ exports.delete=function(req,res) {
 					Task.findOne({'_id':task_id}).exec(function(err, result_task) {
 						if (!err, result_task) {
 							result_task.remove();
-							result_phase.tasks.remove();
+							result_task.save();
+							result_phase.save();
 							return res.json(200, 'Successfully removed task!');
 						}
 						else {
 							return res.status(400).send('Could not find task with id ' +req.params.task_id);
 						}
 					});
+				result_phase.tasks.splice(req.params.task_id);
 				}
 				else {
 					return res.status(400).send('Could not find phase with id ' + req.params.phase_id);
