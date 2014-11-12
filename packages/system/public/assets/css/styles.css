@@ -302,5 +302,21 @@ fieldset{
 .create-project{
 	text-align: center;
 }
+.field-group{
+	width:700px;
+	clear:both;
+}
+input.make_right, textarea.make_right {
+	float:right;
+	width:165px;
+}
 
+.make_left{
+	float:left;
+	margin-left:380px;
+	color:lavenderblush;
+}
+.m_r2{
+	margin-left:-410px;
+}
 /*end of Create a Project page*/

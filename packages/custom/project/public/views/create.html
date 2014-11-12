@@ -5,16 +5,16 @@
     <fieldset>
       <h3>Project Info</h3>
       <div class="field-group">
-        <label for="projectName">Project Name</label>
-        <input type="text" placeholder="My Project" ng-model="project.name" maxlength="32" min="1" ng-required="true" />
+        <label class="make_left" for="projectName">Project Name</label>
+        <input type="text" placeholder="My Project" class="make_right" ng-model="project.name" maxlength="32" min="1" ng-required="true" />
       </div>
       <div class="field-group">
-        <label for="projectDescription">Project Description</label>
-        <textarea placeholder="A Short and helpful description" ng-model="project.description" name="projectDescription" ng-required="true"></textarea>
+        <label class="make_left" for="projectDescription">Project Description</label>
+        <textarea placeholder="A Short and helpful description" class="make_right" ng-model="project.description" name="projectDescription" ng-required="true"></textarea>
       </div>
       <div class="field-group">
-        <label for="projectEndDate">Project End Date</label>
-        <input type="date" ng-model="project.endDate" name="projectEndDate" placeholder="Optional"/>
+        <label class="make_left" for="projectEndDate">Project End Date</label>
+        <input type="date" ng-model="project.endDate" class="make_right" name="projectEndDate" placeholder="Optional"/>
       </div>
     </fieldset>
     <fieldset data-crn-team-modifer></fieldset>

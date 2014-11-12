@@ -1,7 +1,7 @@
 <div class="team-finder" data-ng-controller="TeamMemberCtrl">
     <h3>Team Members</h3>
-    <label for="memberSearch">{{'Search for Members'|lowercase}}</label>
-    <input type="search" name="memberSearch" ng-model="searchText" data-ng-change="searchForTeamMembers()">
+    <label class="make_left" for="memberSearch">{{'Search for Members'|lowercase}}</label>
+    <input type="search" class="m_r2" name="memberSearch" ng-model="searchText" data-ng-change="searchForTeamMembers()">
     <div class="search-results" data-ng-show="searchText">
         <div data-ng-repeat="member in searchUsersResults | filter:searchText">
             <span data-crn-member data-ng-click="addTeamMember(member)">
