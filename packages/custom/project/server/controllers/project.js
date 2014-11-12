@@ -10,13 +10,13 @@ var mongoose = require('mongoose'),
 /* Shows All Projects
 */
 exports.all = function (req, res) {
-	var user_id = req.body.user;
-	Project.find({'user_id': user_id}).exec(function(err, result) {
-		if (!err) {
-			return res.json(200, result);
+	var user_id = req.user._id;
+	Project.find( { $or: [{ 'members' : {$elemMatch: { '_id': user_id }}}, { 'owner' : user_id } ] }).exec(function(err, result) {
+		if (result && !err) {
+			return res.status(200).json(result);
 		}
 		else {
-			return res.status(400).send('Could not find project with id ' + req.params.project_id);
+			return res.status(400).send('Could not find projects');
 		}
 		console.log('project ' + result);
 	});
