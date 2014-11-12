@@ -115,7 +115,7 @@ exports.addMembers = function (req, res) {
 				}
 			}
 			if (present === true) {
-				return res.status(201).send('User with that id is already a member in group');
+				return res.status(202).send('User with that id is already a member in group');
 			}
 			else {
 				Project
@@ -160,10 +160,10 @@ exports.removeMember = function (req, res) {
 	Project
 	  .update(
 	  	{ _id: req.params.project_id },
-	  	{ $pull: {'members._id' : req.body} }
+	  	{ $pull: { members: {_id : req.body} } }
 	  )
 	  .exec(function(err, result) {
-  	    if (err) return res.status(400).send(err);
+  	    if (err) {console.log(err); res.status(400).send();}
   	    return res.status(200).send('Member removed successfully');
   	  });
 };

@@ -10,6 +10,8 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope', '$rootScope'
 
     $scope.permissionLevels = ['admin', 'general', 'view_only'];
 
+    $scope.Project = Project;
+
     function findCurrentMember() {
       for (var i = $scope.project.members.length - 1; i >= 0; i-=1) {
         if($scope.project.members[i]._id === $scope.global.user._id)
@@ -54,6 +56,7 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope', '$rootScope'
 .controller('CreateProjectCtrl', ['$scope', '$rootScope', '$http', '$location', 'Global',
   function($scope,  $rootScope, $http, $location, Global) {
     $scope.global = Global;
+    $scope.projectCreationForm = true;
     if (!$scope.global.authenticated)
       return $location.url('/');
 
@@ -109,8 +112,8 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope', '$rootScope'
     }
   }
 ])
-.controller('TeamMemberCtrl', ['$scope', '$rootScope', '$http', 'Global',
-  function($scope, $rootScope, $http, $parent, Global){
+.controller('TeamMemberCtrl', ['$scope', '$rootScope', '$http', '$stateParams', 'Global',
+  function($scope, $rootScope, $http, $stateParams, $parent, Global){
     $scope.global = Global;
     $scope.searchText = '';
     $scope.searchError = false;
@@ -163,16 +166,22 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope', '$rootScope'
 
     $scope.removeTeamMember = function(member) {
       $scope.project.members.splice(member, 1);
+
+      // if we aren't on the project creation form
+      if(!$scope.projectCreationForm)
+        $scope.Project.removeMember({projectId: $scope.project._id ? $scope.project._id : $stateParams.projectId}, member._id);
     };
 
     $scope.addTeamMember = function(member) {
       event.preventDefault();
-      $scope.project.members.push({
+      var i = $scope.project.members.push({
         _id: member._id,
         name: member.name,
         permission: $scope.permissionLevels[$scope.permissionLevels.indexOf('general')]
       });
       $scope.searchUsersResults.splice(arrayObjectIndexOf($scope.searchUsersResults, member), 1);
+      if(!$scope.projectCreationForm)
+        $scope.Project.addMember({projectId: $scope.project._id ? $scope.project._id : $stateParams.projectId}, $scope.project.members[i-1]);
     };
 }])
 .controller('MessageBoardCtrl', ['$scope', '$rootScope', '$http', '$stateParams', 'Global',
