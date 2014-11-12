@@ -14,6 +14,7 @@ exports.projectMessages = function (req, res) {
 	var project_id = req.params.project_id;
 	Project.findOne( {'_id': project_id} ).exec(function(err, result) {
 		if (!err && result) {
+			console.log(result.messages);
 			return res.status(200).json(result.messages);
 		}
 		else {

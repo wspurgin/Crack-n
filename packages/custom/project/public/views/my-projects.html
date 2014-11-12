@@ -1,14 +1,17 @@
 <section class="my-projects-wrapper" data-ng-controller="MyProjectsCtrl">
+    <div class="error-message" data-ng-show="projectsError">{{projectsError}}</div>
 	<section class="title-wrapper" >
 		<h1>My Projects</h1>
 	</section>
 	<section class="projects">
-			<div class="myproject-wrapper" data-ng-repeat="project in projects">
-				<div class="myproject-title" data-ng-click="{{project._id}}activity=true">
-					<h3>{{project.title}}</h3>
+			<div class="myproject-wrapper" ng-repeat="project in projects">
+				<div class="myproject-title">
+					<h3>{{project.name}}</h3>
+					<a href="/#!/project/{{project._id}}">
+						<input type="button" class="project_button" value="Go" />
+					</a>
 				</div>
-				<div class="myproject-activity" data-ng-show="{{project._id}}activity=false">
-
+				<div class="myproject-activity">
 				</div>
 			</div>
 		</div>
