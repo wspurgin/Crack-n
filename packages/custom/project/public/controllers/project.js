@@ -165,11 +165,15 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope', '$rootScope'
     };
 
     $scope.removeTeamMember = function(member) {
-      $scope.project.members.splice(member, 1);
 
       // if we aren't on the project creation form
-      if(!$scope.projectCreationForm)
-        $scope.Project.removeMember({projectId: $scope.project._id ? $scope.project._id : $stateParams.projectId}, member._id);
+      if(!$scope.projectCreationForm) {
+        if(verifyRemoval(member))
+          $scope.Project.removeMember({projectId: $scope.project._id ? $scope.project._id : $stateParams.projectId}, member._id);
+        else
+          return;
+      }
+      $scope.project.members.splice(member, 1);
     };
 
     $scope.addTeamMember = function(member) {
@@ -183,6 +187,46 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope', '$rootScope'
       if(!$scope.projectCreationForm)
         $scope.Project.addMember({projectId: $scope.project._id ? $scope.project._id : $stateParams.projectId}, $scope.project.members[i-1]);
     };
+
+    function verifyRemoval(targetedMember) {
+      // when this function is called, by contract, we exprect the $scope variables to be instantiated.
+      // is the currentMember an admin?
+      if ($scope.currentMember.permission !== 'admin') {
+        return false;
+      }
+
+      if (targetedMember._id === $scope.project.owner) {
+        if($scope.currentMember._id === $scope.project.owner)
+          alert('You\'re the owner of this project! The owner cannot be removed.');
+        else
+          alert('The owner of the project cannot be removed.');
+        return false;
+      }
+
+      if ($scope.currentMember === targetedMember) {
+        // make sure you aren't the last admin standing
+        if(!isLastAdminStanding(targetedMember)) {
+          var choice = confirm('You\'re removing yourself, are you sure?');
+          if (!choice)
+            return false;
+        }
+        else {
+          alert('You are the last admin in the project, elevate someone else to \'admin\' status before removing yourself.');
+          return false;
+        }
+      }
+      return true;
+    }
+
+    function isLastAdminStanding(targetedMember) {
+      // make sure you aren't the last admin standing
+      var lastAdminStanding = true;
+      $scope.project.members.forEach(function(member) {
+        if(member !== targetedMember && member.permission === 'admin')
+          lastAdminStanding = false;
+      });
+      return lastAdminStanding;
+    }
 }])
 .controller('MessageBoardCtrl', ['$scope', '$rootScope', '$http', '$stateParams', '$interval', 'Global',
   function($scope, $rootScope, $http, $stateParams, $interval, Global) {
