@@ -184,8 +184,8 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope', '$rootScope'
         $scope.Project.addMember({projectId: $scope.project._id ? $scope.project._id : $stateParams.projectId}, $scope.project.members[i-1]);
     };
 }])
-.controller('MessageBoardCtrl', ['$scope', '$rootScope', '$http', '$stateParams', 'Global',
-  function($scope, $rootScope, $http, $stateParams, Global) {
+.controller('MessageBoardCtrl', ['$scope', '$rootScope', '$http', '$stateParams', '$interval', 'Global',
+  function($scope, $rootScope, $http, $stateParams, $interval, Global) {
     $scope.global = Global;
     $scope.messageError = false;
     $scope.messages = [];
@@ -220,7 +220,7 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope', '$rootScope'
         });
     };
 
-    (function poll(){
+    function poll(){
       setTimeout(function(){
         
         $http.get('/projects/' + $stateParams.projectId + '/messages')
@@ -235,7 +235,17 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope', '$rootScope'
             scrollTop: $('.messagesDisplay').get(0).scrollHeight
           }, 1500);
       }, 1000);
-    })();
+    }
+
+    var stop = $interval(poll, 1000*8);
+
+    $scope.$on('destory', function() {
+      if (angular.isDefined(stop)) {
+        $interval.cancel(stop);
+        stop = undefined;
+      }
+    });
+
 }])
 .directive('crnMessageBoard', function () {
   return {
