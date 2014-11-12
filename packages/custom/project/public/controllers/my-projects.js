@@ -6,6 +6,15 @@ angular.module('mean.project').controller('MyProjectsCtrl', ['$scope', '$rootSco
     if (!$scope.global.authenticated)
       return $location.url('/');
 
-  	
+  	$scope.projects = [];
+  	$scope.projectsError = null;
 
+  	$http.get('/projects', $scope.global.user)
+  	  .success(function (res) {
+        $scope.projects = res;
+      })
+      .error(function (error) {
+        $scope.projectsError = error;
+
+      });
 }]);
