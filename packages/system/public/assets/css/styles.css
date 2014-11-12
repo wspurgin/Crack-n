@@ -56,6 +56,9 @@ body {
 	color: lavenderblush;
 	padding: 3px;
 }
+.ng-binding {
+	color:lavenderblush;
+}
 
 section div div img {
 	width: auto;
@@ -65,7 +68,8 @@ section div div img {
 /*header*/
 
 .header-logo {
-	background-color: maroon;
+	background-color: gray;
+	background-color: rgba(0, 0, 0, .7);
 }
 
 
@@ -110,13 +114,31 @@ form.login-form{
 
 a{ 
 	text-decoration: none;
-	color:lavenderblush;
+	color:black;
 }
 button{
-	font-size: 18px;
+	/*-size: 18px;
 	margin-left: 20px;
-	background-color: transparent;	
+	background-color: transparent;	*/
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
 }
+
 /* end of header*/
 
 /*project page*/
