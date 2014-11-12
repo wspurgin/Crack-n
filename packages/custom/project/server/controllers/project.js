@@ -10,8 +10,10 @@ var mongoose = require('mongoose'),
 /* Shows All Projects
 */
 exports.all = function (req, res) {
-	var user_id = req.user._id;
-	Project.find( { $or: [{ 'members' : {$elemMatch: { '_id': user_id }}}, { 'owner' : user_id } ] }).exec(function(err, result) {
+	var user_id = req.user.id;  
+	console.log(user_id);
+	//'5462c842bf45a4000017b366'
+	Project.find({$or: [{ 'members': { $elemMatch: { '_id' : String(user_id)}}}, {'owner' : user_id} ]}).exec(function(err, result) {
 		if (result && !err) {
 			return res.status(200).json(result);
 		}
