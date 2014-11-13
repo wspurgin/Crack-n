@@ -301,14 +301,14 @@ clear: both;
 .input-wrapper input{
 	float:right;
 }
-form.ng-invalid{
+form.form_center{
 	margin-left:380px;
 }
-form.ng-invalid h2{
+form.form_center h2{
 	margin-left:100px;
 }
 
-form.ng-invalid input[type="button"]{
+form.form_center input[type="button"]{
 	margin-left:130px;
 }
 
