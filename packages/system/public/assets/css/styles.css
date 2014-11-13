@@ -366,10 +366,32 @@ input.make_right, textarea.make_right {
 }
 /*end of Create a Project page*/
 
+/*my projects view*/
+section.myTitle{
+	width: 550px;
+margin: 0 auto;
+text-align: center;
+font-size: 30px;
+}
 
+section.myTitle h1{
+	padding-top: 15px;
+}
 
+div.projDes{
+	width: 700px;
+margin: 0 auto;
+text-align: center;
+}
 
+table.projDet{
+	margin: 0 auto;
+}
+table.projDet , th, td{
+padding-left: 15px;
+}
 
+/*end of My projects view*/
 
 
 /* fonts */
@@ -377,7 +399,7 @@ input.make_right, textarea.make_right {
 /* bulletproof error..someone help me with this please :/ */
 
 @font-face {
-    font-family: MyFontFamily;
+    font-family: Bitter;
     src: url(http://fonts.googleapis.com/css?family=Bitter);
 } 
 
