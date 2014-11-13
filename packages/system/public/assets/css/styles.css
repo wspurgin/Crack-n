@@ -293,6 +293,51 @@ input[type="button"]{
 	display: inline-block;
 }
 
+.input-wrapper{
+	width: 350px;
+clear: both;
+}
+
+.input-wrapper input{
+	float:right;
+}
+form.ng-invalid{
+	margin-left:380px;
+}
+form.ng-invalid h2{
+	margin-left:100px;
+}
+
+form.ng-invalid input[type="button"]{
+	margin-left:130px;
+}
+
+input.changepass{
+	margin-left: 15px!important;
+}
+
+div.error4{
+	position: absolute;
+left: 470px;
+top: 230px;
+}
+div.error3{
+	position: absolute;
+left: 470px;
+top: 240px;
+}
+div.error2{
+	position: absolute;
+left: 470px;
+top: 250px;
+}
+
+div.error1{
+	position: absolute;
+left: 470px;
+top: 260px;
+}
+
 /*end my account page */
 
 /*Create a Project page*/
@@ -320,3 +365,21 @@ input.make_right, textarea.make_right {
 	margin-left:-410px;
 }
 /*end of Create a Project page*/
+
+
+
+
+
+
+
+/* fonts */
+
+/* bulletproof error..someone help me with this please :/ */
+
+/*@font-face {
+    font-family: MyFontFamily;
+    src: url(http://fonts.googleapis.com/css?family=Bitter);
+} */
+
+
+/* end of fonts */
