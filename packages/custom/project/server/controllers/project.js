@@ -7,6 +7,8 @@ var mongoose = require('mongoose'),
   Project = mongoose.model('Project'),
   activity = require('../controllers/activity');
 
+//var adminAuth = require('../controllers/adminAuth');  
+
 /**
 /* Shows All Projects
 */
