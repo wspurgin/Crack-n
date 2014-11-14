@@ -393,6 +393,24 @@ padding-left: 15px;
 
 /*end of My projects view*/
 
+/*Message Board*/
+tr.chatBoxL{
+
+	text-align: left;
+}
+.sender{
+	color: darkblue;
+}
+.body{
+	color:white;
+}
+.messagesDisplay{
+	background-color: darkgray;
+}
+
+
+/*end of Message Board*/
+
 
 /* fonts */
 
