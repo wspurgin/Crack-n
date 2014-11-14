@@ -14,8 +14,9 @@
 					<div class="editButton" data-ng-hide="editingMembers || currentMember.permission !== 'admin'"> <input type="button" value="Edit" data-ng-click="editingMembers=true" /></div>
 					<div class="teamMemberModifer" data-ng-show="editingMembers && currentMember.permission === 'admin'" data-crn-team-modifer></div>
 					<div class="doneButton" data-ng-show="editingMembers && currentMember.permission === 'admin'"> <input type="button" value="Done" data-ng-click="editingMembers=false" /></div>
-					<div class="messageBoardWrapper" data-crn-message-board></div>
 				</div>
+				<div class="messageBoardWrapper" data-crn-message-board></div>
+
 				<div class="dropDown">
 					<div class="phase-wrapper" data-crn-phase data-ng-controller="PhaseCtrl" data-ng-repeat="phase in project.phases"></div>
 					<div class="add-phase-wrapper" data-ng-include="'project/views/add-phase.html'"></div>

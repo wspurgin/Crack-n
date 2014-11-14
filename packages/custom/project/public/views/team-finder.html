@@ -3,9 +3,9 @@
     <label class="make_left" for="memberSearch">{{'Search for Members'|lowercase}}</label>
     <input type="search" class="m_r2" name="memberSearch" ng-model="searchText" data-ng-change="searchForTeamMembers()">
     <div class="search-results" data-ng-show="searchText">
-        <div data-ng-repeat="member in searchUsersResults | filter:searchText">
-            <span data-crn-member data-ng-click="addTeamMember(member)">
-                <span data-crn-member-name>{{member.name}}</span>
+        <div data-ng-repeat="member in searchUsersResults | filter:searchText" class="dropWin" data-ng-click="addTeamMember(member)">
+            <span class="member-name" data-crn-member>
+                <span data-crn-member-name>{{member.name}}:</span>
                 <span data-crn-member-email>{{member.email}}</span>
             </span>
         </div>
