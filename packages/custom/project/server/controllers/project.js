@@ -4,7 +4,8 @@
  * Module depedencies.
  */
 var mongoose = require('mongoose'),
-  Project = mongoose.model('Project');
+  Project = mongoose.model('Project'),
+  activity = require('../controllers/activity');
 
 /**
 /* Shows All Projects
@@ -127,6 +128,7 @@ exports.addMembers = function (req, res) {
 			  	  )
 			  	  .exec(function(err, result) {
 			  	  	if (err) return res.status(400).send(err);
+			  	  	activity.createEntry('Member', 'Added', req.body, req.params.project_id);
 			  	  	return res.status(201).send('Members added successfully');
 			  	  });
 			}
@@ -166,6 +168,10 @@ exports.removeMember = function (req, res) {
 	  )
 	  .exec(function(err, result) {
   	    if (err) {console.log(err); res.status(400).send();}
+  	    if (req.body === result.owner._id) {
+  	    	res.status(400).send('Project owners cannot remove themselves');
+  	    }
+  	    activity.createEntry('Member', 'Removed', req.body, req.params.project_id);
   	    return res.status(200).send('Member removed successfully');
   	  });
 };
