@@ -201,6 +201,12 @@ text-align: -webkit-auto;
 	background-color:cornflowerblue;
 }
 
+td.mBody {
+	word-wrap: break-word;
+	max-width: 225px;
+	border: 1px groove lightgray;
+}
+
 div.search-results{
 	width: 400px;
 margin: 0 auto;
