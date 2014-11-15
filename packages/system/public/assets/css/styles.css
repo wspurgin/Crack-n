@@ -158,8 +158,9 @@ input[type="button"]{
 }
 
 .project-title{
-	width: 200px;
+	width: 100%; 
 	margin: 0 auto;
+	text-align: center;
 }
 
 .project-title h1 {
@@ -180,6 +181,9 @@ input[type="button"]{
 
 .dropDown{
 	padding-top: 20px;
+	position: absolute;
+	left: 500px;
+	top: 200px;
 }
 
 .dropDown input[type="button"]{
@@ -251,7 +255,6 @@ margin: 0 auto;
 .phase-wrapper {
 	margin-left: auto;
 	margin-right: auto;
-	width: 75%;
 	text-align: center;
 }
 
@@ -429,6 +432,7 @@ tr.chatBoxL{
 .messagesDisplay{
 	background-color: darkgray;
 }
+
 
 
 /*end of Message Board*/
