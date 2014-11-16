@@ -1,10 +1,10 @@
-<div data-ng-controller="RegisterCtrl">
+<div class="mainForm" data-ng-controller="RegisterCtrl">
     <div ng-repeat="error in registerError">
         <div class="alert alert-danger animated fadeIn">{{error.msg}}</div>
     </div>
     <div class="alert alert-danger animated fadeIn" ng-show="usernameError">{{usernameError}}</div>
     <div class="alert alert-danger animated fadeIn" ng-show="emailError">{{emailError}}</div>
-    <form id="register_form" ng-submit="register()">
+    <form id="register_form" class="sForm" ng-submit="register()">
         <h2>Sign Up</h2>
 
         <div class="input-wrapper">

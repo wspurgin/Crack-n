@@ -433,10 +433,23 @@ tr.chatBoxL{
 	background-color: darkgray;
 }
 
-
-
 /*end of Message Board*/
 
+/* signup form */
+
+.sForm{
+margin: 0 auto;
+width: 280px;
+margin-left: 200px;
+text-align: center;
+}
+
+.form{
+	background:none!important;
+	box-shadow: none!important;
+}
+
+/* end of signup form*/
 
 /* fonts */
 
