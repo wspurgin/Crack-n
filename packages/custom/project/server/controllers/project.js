@@ -56,7 +56,7 @@ exports.show = function (req, res) {
 	
 };
 
-/* 
+/** 
  * Edit a Project
  */
 exports.edit = function (req, res) {
@@ -73,7 +73,7 @@ exports.edit = function (req, res) {
 
 };
 
-/*
+/**
  * Create a Project
  */
 exports.addProject = function (req, res) {
@@ -90,7 +90,7 @@ exports.addProject = function (req, res) {
   	return res.status(201).json(project);
 };
 
-/*  
+/**
  * Delete a Project from User's Project List
  */
 exports.remove = function (req, res) {
@@ -105,8 +105,16 @@ exports.remove = function (req, res) {
 	});
 };
 
-/*
+/**
  * Add Group Members to Project
+ *
+ * Members storage format:
+ * ///////////////////////////////////////
+ * // _id : String,						//
+ * // name : String,					//
+ * // permission : String				//
+ * ///////////////////////////////////////
+ *
  */
 exports.addMembers = function (req, res) {
 	var present = false;
@@ -139,7 +147,7 @@ exports.addMembers = function (req, res) {
 
 };
 
-/*
+/**
  * Shows Group Members of a Project
  */ 
 exports.members = function (req, res) {
@@ -169,13 +177,30 @@ exports.removeMember = function (req, res) {
 	  	{ $pull: { members: {_id : req.body} } }
 	  )
 	  .exec(function(err, result) {
-  	    if (err) {console.log(err); res.status(400).send();}
-  	    if (req.body === result.owner._id) {
-  	    	res.status(400).send('Project owners cannot remove themselves');
+  	    if (err) {
+  	    	console.log(err); 
+  	    	res.status(400).send('Member removal unsuccessful');
   	    }
   	    activity.createEntry('Member', 'Removed', req.body, req.params.project_id);
   	    return res.status(200).send('Member removed successfully');
   	  });
+};
+
+/**
+* Change a user's permission using a passed user._id and permission string
+*/
+exports.changePermission = function (req, res, pChange)  {
+	Project
+	  .Update(
+	  	{ _id : req.params.project_id, members: { _id : req.body} },
+	  	{ $set: { 'members.$.permission': pChange } }
+	  )
+	  .exec(function(err, result) {
+	  	if (err) {
+	  	  console.log(err);
+	  	  res.status(400).send();
+	  	}
+	  });
 };
 
 
