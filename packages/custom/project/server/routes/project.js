@@ -1,5 +1,9 @@
 'use strict';
 
+/**
+* Project Route
+*/
+
 // The Package is past automatically as first parameter
 module.exports = function(Project, app, auth, database) {
 

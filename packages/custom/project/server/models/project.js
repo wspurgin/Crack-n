@@ -1,14 +1,19 @@
 'use strict';
+/**
+ * Project Model
+ */ 
+
 
 /**
-* Module dependencies
-*/
+ * Module dependencies
+ */
 var mongoose = require('mongoose'),
 Schema = mongoose.Schema;
 
+
 /**
-* Project Schema
-*/
+ * Project Schema
+ */
 var projectSchema = new Schema({
 	name: {
 		type: String,

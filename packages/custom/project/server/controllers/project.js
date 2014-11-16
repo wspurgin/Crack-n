@@ -1,6 +1,10 @@
 'use strict';
 
 /**
+ * Project Controller
+ */
+
+/**
  * Module depedencies.
  */
 var mongoose = require('mongoose'),
