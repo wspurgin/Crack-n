@@ -114,9 +114,9 @@ exports.remove = function (req, res) {
  *
  * Members storage format:
  * ///////////////////////////////////////
- * // _id : String,						//
- * // name : String,					//
- * // permission : String				//
+ * // _id : String,			
+ * // name : String,		
+ * // permission : String		
  * ///////////////////////////////////////
  *
  */
