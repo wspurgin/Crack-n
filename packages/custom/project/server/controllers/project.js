@@ -209,18 +209,29 @@ exports.changePermission = function (req, res, pChange)  {
 
 /**
 * Delete a project
-  app.route('/projects/:project_id')
-    .delete(project.deleteProject);
+*/
 
-*check permission
+/**
 * if permission is correct, delete
 * else error
 */
+
 exports.deleteProject = function (req, res) {
-/**check permission
-* if permission is correct, delete
-  else error
-*/
+// Check if owner(not permission)
+    var project_id = req.params.project_id;
+    var owner = req.body.owner;
+    var pOwner = project_id.owner;
+    if (owner === pOwner){
+	Project.remove();
+	return res.status(200).send('Project Deleted');
+    }
+    else{
+    res.status(400).send('Only owner of project can delete project');
+    }
+
+
+// 
+
 };
 
 
