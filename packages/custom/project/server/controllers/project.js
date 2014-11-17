@@ -207,4 +207,20 @@ exports.changePermission = function (req, res, pChange)  {
 	  });
 };
 
+/**
+* Delete a project
+  app.route('/projects/:project_id')
+    .delete(project.deleteProject);
+
+*check permission
+* if permission is correct, delete
+* else error
+*/
+exports.deleteProject = function (req, res) {
+/**check permission
+* if permission is correct, delete
+  else error
+*/
+};
+
 
