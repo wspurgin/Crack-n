@@ -31,40 +31,6 @@ exports.all=function(req,res) {
 };
 
 
-//assign task to member
-/*
-exports.assign=function (req, res) {
-	var project_id = req.params.project_id;
-	var phase_id = req.params.phase_id;
-	var task_id = req.params.task_id; 
-	Project.findOne({'_id':project_id}).exec(function(err, result) {
-		if (!err) {
-			Phase.findOne({'_id':phase_id}).exec(function(err, result_phase){
-				if (!err) {
-					Task.findOne({'_id':task_id}).exec(function(err, result_task) {
-						if (!err){ 
-							task.assignedMembers=req.body.assignedMembers;
-							task.save();
-							result_task.assignedMembers.push(task.assignedMembers);
-							result_task.save();
-							return res.json(201, 'Member(s) successfully assigned!');
-						}
-						else {
-							return res.json('Task does not exist!');
-						}
-					});
-				}
-				else {
-					return res.json('Phase does not exist!');
-				}
-			});
-		}
-		else {
-			return res.json('Project does not exist!')
-		}
-	});
-};
-*/
 exports.complete=function(req, res) {
 	var project_id=req.params.project_id;
 	var task_id=req.params.task_id;
@@ -194,7 +160,7 @@ exports.delete=function(req,res) {
 							return res.status(400).send('Could not find task with id ' +req.params.task_id);
 						}
 					});
-				result_phase.tasks.splice(req.params.task_id);
+				result_phase.tasks.remove(req.params.task_id);
 				}
 				else {
 					return res.status(400).send('Could not find phase with id ' + req.params.phase_id);
