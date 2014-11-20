@@ -41,9 +41,24 @@ var projectSchema = new Schema({
 	},
 	messages: { 
 		type: Array
+	},
+	isFlaggedForRemoval: {
+		type: Boolean,
+		default: false
+	},
+	expiresAt: {
+		type: Date,
+		required: false
 	}
 });
 		 
+projectSchema.methods = {
+	flagForRemoval: function(date)  {
+	  this.isFlaggedForRemoval = true;
+	  this.expiresAt = date;
+	  return;
+	}
+};
 
 mongoose.model('Project', projectSchema);
 

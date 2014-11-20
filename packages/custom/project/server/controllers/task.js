@@ -3,7 +3,6 @@
 /**
 * Module dependencies
 */
-
 var mongoose = require('mongoose'),
 	Task = mongoose.model('Task'),
 	Phase = mongoose.model('Phase'),
