@@ -9,7 +9,8 @@
  */
 var mongoose = require('mongoose'),
   Project = mongoose.model('Project'),
-  activity = require('../controllers/activity');
+  activity = require('../controllers/activity'), 
+  adminAuth = require('../controllers/adminAuth');
 
 //var adminAuth = require('../controllers/adminAuth');  
 
