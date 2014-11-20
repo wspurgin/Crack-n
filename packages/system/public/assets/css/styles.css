@@ -18,7 +18,7 @@ body {
 	border-top-right-radius: 60px;
 	border-top-left-radius: 60px;
 	background-color: gray;
-	background-color: rgba(0, 0, 0, .4);
+	background-color: rgba(0, 88, 0, .3);
 }
 
 .container {
@@ -429,9 +429,9 @@ tr.chatBoxL{
 .body{
 	color:white;
 }
-.messagesDisplay{
+/*.messagesDisplay{
 	background-color: darkgray;
-}
+}*/
 
 /*end of Message Board*/
 
