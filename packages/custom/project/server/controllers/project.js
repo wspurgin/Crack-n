@@ -95,19 +95,21 @@ exports.addProject = function (req, res) {
 };
 
 /**
- * Delete a Project from User's Project List
- */
+* Delete a project
+*/
+
 exports.remove = function (req, res) {
-    	var project_id = req.params.project_id;
-	var owner = req.body.owner;
-	Project.findOne({'_id': project_id}).exec(function(err, result){
-	if(owner === Project.owner && !err) {
-		Project.remove();
-		return res.status(200).send('Test database cleared.');
-	}
-	else return res.json('Error'); 
-	});
+    var project_id = req.params.project_id;
+    var owner = req.body.owner;
+    Project.findOne({'_id': project_id}).exec(function(err, result){
+    if (owner === Project.owner && !err){
+	Project.remove();
+	return res.status(200).send('Project Deleted');
+    }
+    else return res.json('Error'); 
+    });
 };
+
 
 /**
  * Add Group Members to Project
@@ -205,33 +207,6 @@ exports.changePermission = function (req, res, pChange)  {
 	  	  res.status(400).send();
 	  	}
 	  });
-};
-
-/**
-* Delete a project
-*/
-
-/**
-* if permission is correct, delete
-* else error
-*/
-
-exports.deleteProject = function (req, res) {
-// Check if owner(not permission)
-    var project_id = req.params.project_id;
-    var owner = req.body.owner;
-    var pOwner = project_id.owner;
-    if (owner === pOwner){
-	Project.remove();
-	return res.status(200).send('Project Deleted');
-    }
-    else{
-    res.status(400).send('Only owner of project can delete project');
-    }
-
-
-// 
-
 };
 
 
