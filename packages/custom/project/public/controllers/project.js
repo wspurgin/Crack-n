@@ -1,7 +1,10 @@
 'use strict';
 
-angular.module('mean.project').controller('ProjectCtrl', ['$scope', '$rootScope', '$http', '$location', '$stateParams', '$interval', 'Global', 'Project', 
-  function($scope,  $rootScope, $http, $location, $stateParams, $interval, Global, Project) {
+angular.module('mean.project').controller('ProjectCtrl', ['$scope',
+  '$rootScope', '$http', '$location', '$stateParams', '$interval', 'Global',
+  'Project', 
+  function($scope,  $rootScope, $http, $location, $stateParams, $interval,
+    Global, Project) {
     $scope.global = Global;
     if (!$scope.global.authenticated)
       return $location.url('/');
@@ -10,7 +13,7 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope', '$rootScope'
 
     $scope.permissionLevels = ['admin', 'general', 'view_only'];
 
-    $scope.Project = Project;
+    $scope.projectService = Project;
 
     function findCurrentMember() {
       for (var i = $scope.project.members.length - 1; i >= 0; i-=1) {
@@ -20,9 +23,18 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope', '$rootScope'
       return false;
     }
 
+    function arrayObjectIndexOf(arr, obj){
+      for(var i = 0; i < arr.length; i+=1){
+          if(arr[i]._id === obj._id){
+              return i;
+          }
+      }
+      return false;
+    }
+
     function getProject() {
       console.log('getting project');
-      Project.get({projectId: $stateParams.projectId},
+      $scope.projectService.get({projectId: $stateParams.projectId},
         function(project) {
           $scope.project = project;
 
@@ -36,14 +48,45 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope', '$rootScope'
           if ($scope.currentMember === false)
             // they aren't allowed to see this project
             $location.url('/');
-      },
-      function(error) {
-        console.log(error);
-        alert('Could not retrieve project :(');
-      });
+        },
+        function(error) {
+          console.log(error);
+          alert('Could not retrieve project :(');
+        });
     }
+
     getProject();
-    var stop = $interval(getProject, 1000*20);
+    
+    function poll() {
+      $scope.projectService.get({projectId: $stateParams.projectId},
+        function (project) {
+          console.log(project);
+          for (var i = 0; i < project.phases.length; i += 1) {
+            var index = arrayObjectIndexOf($scope.project.phases,
+              project.phases[i]);
+            if(index === false) {
+              // append new phase to array
+              $scope.project.phases.push(project.phases[i]);
+            } else {
+              // check for new tasks as well
+              for (var j = 0; j < project.phases[index].tasks.length; j += 1) {
+                var taskIndex = arrayObjectIndexOf(
+                  $scope.project.phases[index].tasks,
+                  project.phases[i].tasks[j]);
+                if (taskIndex === false) {
+                  $scope.project.phases[index].tasks.push(
+                    project.phases[i].tasks[j]);
+                }
+              }
+            }
+          }
+        },
+        function (error) {
+          console.log(error);
+        });
+    }
+
+    var stop = $interval(poll, 1000*20);
 
     $scope.$on('destory', function() {
       if (angular.isDefined(stop)) {
@@ -53,7 +96,8 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope', '$rootScope'
     });
   }
 ])
-.controller('CreateProjectCtrl', ['$scope', '$rootScope', '$http', '$location', 'Global',
+.controller('CreateProjectCtrl', ['$scope', '$rootScope', '$http', '$location',
+  'Global',
   function($scope,  $rootScope, $http, $location, Global) {
     $scope.global = Global;
     $scope.projectCreationForm = true;
@@ -169,7 +213,7 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope', '$rootScope'
       // if we aren't on the project creation form
       if(!$scope.projectCreationForm) {
       if(verifyRemoval(member))
-      $scope.Project.removeMember({projectId: $scope.project._id ? $scope.project._id : $stateParams.projectId}, member._id);
+      $scope.projectService.removeMember({projectId: $scope.project._id ? $scope.project._id : $stateParams.projectId}, member._id);
       else
       return;
       }
@@ -185,7 +229,7 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope', '$rootScope'
       });
       $scope.searchUsersResults.splice(arrayObjectIndexOf($scope.searchUsersResults, member), 1);
       if(!$scope.projectCreationForm)
-        $scope.Project.addMember({projectId: $scope.project._id ? $scope.project._id : $stateParams.projectId}, $scope.project.members[i-1]);
+        $scope.projectService.addMember({projectId: $scope.project._id ? $scope.project._id : $stateParams.projectId}, $scope.project.members[i-1]);
     };
 
     // TODO finalize this function
@@ -193,10 +237,14 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope', '$rootScope'
         // TODO verify that we don't need to check if were on the project creation form for this function
         // if(!$scope.projectCreationForm) {
           if(verifyStatusChange(member))
-            $scope.Project.changePermission({projectId: $scope.project._id ? $scope.project._id : $stateParams.projectId}, member._id, pChange);
+            $scope.projectService.changePermission({projectId: $scope.project._id ? $scope.project._id : $stateParams.projectId}, member._id, pChange);
         else
           return;
     };
+
+    function verifyStatusChange(targetedMember) {
+      return false;
+    }
 
     function verifyRemoval(targetedMember) {
       // when this function is called, by contract, we exprect the $scope variables to be instantiated.
@@ -222,35 +270,6 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope', '$rootScope'
         }
         else {
           alert('You are the last admin in the project, elevate someone else to \'admin\' status before removing yourself.');
-          return false;
-        }
-      }
-      return true;
-    }
-
-    function verifyStatusChange(targetedMember) {
-       // is the currentMember an admin?
-      if ($scope.currentMember.permission !== 'admin') {
-        return false;
-      }
-
-      if (targetedMember._id === $scope.project.owner) {
-        if($scope.currentMember._id === $scope.project.owner)
-          alert('You\'re the owner of this project! The owner cannot be demoted from admin.');
-        else
-          alert('The owner of the project cannot be demoted from admin.');
-        return false;
-      }
-
-      if ($scope.currentMember === targetedMember) {
-        // make sure you aren't the last admin standing
-        if(!isLastAdminStanding(targetedMember)) {
-          var choice = confirm('You\'re demoting yourself, are you sure?');
-          if (!choice)
-            return false;
-        }
-        else {
-          alert('You are the last admin in the project, elevate someone else to \'admin\' status before demoting yourself.');
           return false;
         }
       }
