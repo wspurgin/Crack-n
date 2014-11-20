@@ -187,6 +187,9 @@ exports.removeMember = function (req, res) {
   	    	console.log(err); 
   	    	res.status(400).send('Member removal unsuccessful');
   	    }
+  	    if (adminAuth.isAdmin && adminAuth.getAdminCount === 1) {
+  	    	res.status(401).send('Cannot remove member. There must be at least one admin on this project.');
+  	    }
   	    activity.createEntry('Member', 'Removed', req.body, req.params.project_id);
   	    return res.status(200).send('Member removed successfully');
   	  });
