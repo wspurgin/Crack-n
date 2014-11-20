@@ -5,11 +5,26 @@
  */
 var mongoose = require('mongoose'),
   User = mongoose.model('User'),
+  Project = mongoose.model('Project'),
+  ObjectId = require('mongoose').Types.ObjectId,
   async = require('async'),
   config = require('meanio').loadConfig(),
   crypto = require('crypto'),
   nodemailer = require('nodemailer'),
   templates = require('../template');
+
+/**
+* Makes a random password string
+*/
+function randomizeString() {
+    var randomized = '';
+    var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+    for(var i=0; i < 16; i+=1)
+        randomized += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return randomized;
+}
 
 /**
  * Auth callback
@@ -365,5 +380,54 @@ exports.searchUsers = function(substring, cb) {
   ], function(err, results) {
     if (err) console.log(err);
     cb(results);
+  });
+};
+
+
+/**
+* delete account of user passed in id
+*/
+exports.deleteAccount = function(req, res, id, next) {
+  var expiration = new Date();
+  expiration.setMonth(expiration.getMonth() + 1);
+  var randomized = randomizeString();
+  
+  async.waterfall([
+    // Flag the user for removal
+    function(callback) {
+      User
+      .findOne({_id: new ObjectId(id)},
+      function(err, user) {
+        if (err || !user) 
+          callback('Unsuccessful attempt to flag user for removal');
+        user.flagForRemoval(expiration);
+        user.set('password', randomized);
+        user.save();
+        callback(null);
+      });
+    },
+    // Flag each of user's projects for removal
+    function(callback) {
+      var projectCount;
+      Project
+        .find({owner: new ObjectId(id)},
+        function(err, arr) {
+          projectCount = arr.length;
+        })
+        .forEach( function(err, project) {
+          if (err || !project)
+            callback('Unsuccessful attempt to flag projects for removal');
+          project.flagForRemoval(expiration);
+          project.save();
+          projectCount-=1;
+          if (projectCount===0)
+            callback(null);
+        });
+    }
+    // handle errors if either function goes wrong
+  ], function (err) {
+    if (err) res.status(400).send(err);
+    res.redirect('/');
+    res.status(200).send('User account flagged for deletion successfully');
   });
 };
