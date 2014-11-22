@@ -28,7 +28,7 @@ angular.module('mean.project').controller('CreateTaskCtrl', ['$scope', '$rootSco
     $scope.global = Global;
 
     $scope.addTask = function() {
-      $('#addTaskForm input:first-child').focus();
+      $('#addTaskForm' + $scope.phase._id + ' input:first-child').focus();
     };
 
     $scope.completeTask = function(task) {

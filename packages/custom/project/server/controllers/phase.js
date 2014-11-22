@@ -87,7 +87,33 @@ exports.addPhase = function (req, res) {
 		else {
 			return res.status(400).send('Could not find project with id ' + req.params.project_id);
 		}
-		console.log('project ' + result.phases);
 	}); //MONGODB
+
+	}); 
+};
+
+	exports.delete=function(req,res) {
+		var project_id=req.params.project_id;
+		var phase_id=req.params.phase_id;
+		Project.findOne({'_id':project_id}).exec(function(err, result) {
+			if (!err && result) {
+				Phase.findOne({'_id':phase_id}).exec(function(err, result_phase){
+					if (!err && result_phase) {
+							result_phase.remove();
+							result_phase.save();
+							result.save();
+							return res.json(200, 'Successfully removed phase!');
+					}
+					else {
+						return res.status(400).send('Could not find phase with id ' + req.params.phase_id);
+					}
+				});
+				result.phases.remove(req.params.phase_id);
+			}
+			else {
+				return res.status(400).send('Could not find project with id ' +req.params.project_id);
+			}
+	});
+	//MONGODB
 
 };

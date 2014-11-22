@@ -4,7 +4,9 @@
  * Module dependencies.
  */
 
-//var mongoose = require('mongoose');
+//var mongoose = require('mongoose'), 
+	//Project= mongoose.model('Project'),
+	//var adminAuth = require('../controllers/adminAuth');
 
 //var activity = require('../controllers/activity');
 
@@ -15,6 +17,16 @@ exports.isOwner = function (user_id, project) {
 	else {
 		return false;
 	}
+};
+
+exports.getAdminCount = function(user_id, project) {
+	var adminCount = 0;
+	for (var member in project.members) {
+		if (member.perission==='admin') {
+			adminCount=adminCount+1;
+		}
+	}
+	return adminCount;
 };
 
 exports.isAdmin = function(user_id, project) {
