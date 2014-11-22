@@ -206,18 +206,21 @@ exports.removeMember = function (req, res) {
 /**
 * Change a user's permission using a passed user._id and permission string
 */
-exports.changePermission = function (req, res, pChange)  {
+exports.changePermission = function (req, res)  {
+	console.log(req.body);
 	Project
-	  .Update(
-	  	{ _id : req.params.project_id, members: { _id : req.body} },
-	  	{ $set: { 'members.$.permission': pChange } }
+	  .update(
+	  	{ _id : req.params.project_id, 'members._id' : req.body.member_id },
+	  	{ $set: {'members.$.permission': req.body.permission }}
 	  )
 	  .exec(function(err, result) {
 	  	if (err) {
 	  	  console.log(err);
 	  	  res.status(400).send();
 	  	}
+  	    res.status(200).send('Member edited successfully');
 	  });
+
 };
 
 

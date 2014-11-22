@@ -107,7 +107,10 @@ app.use('/projects/:project_id/members', function(req, res, next){
     .delete(project.remove);
 
   app.route('/projects/:project_id/members')
-    .put(project.addMembers);
+    .post(project.addMembers);
+
+  app.route('/projects/:project_id/members')
+    .put(project.changePermission);
 
   app.route('/projects/:project_id/members')
     .get(project.members);
