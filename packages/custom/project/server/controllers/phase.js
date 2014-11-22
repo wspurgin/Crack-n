@@ -87,9 +87,7 @@ exports.addPhase = function (req, res) {
 		else {
 			return res.status(400).send('Could not find project with id ' + req.params.project_id);
 		}
-	}); //MONGODB
-
-	}); 
+	});
 };
 
 	exports.delete=function(req,res) {
