@@ -12,10 +12,38 @@ var adminAuth = require('../controllers/adminAuth');
 var mongoose = require('mongoose'),
   pProject = mongoose.model('Project');
 
+//make sure user is logged in
 app.use('/project*', auth.requiresLogin, function(req, res, next){
   next();
 });
 
+//make sure user is actually in the project that he is requesting
+app.use('/projects/:project_id*', function(req, res, next) {
+  pProject.findOne({'_id': req.params.project_id}).exec(function(err, result){
+      if (!err && result){
+        //if user is in the project
+        var success = 0;
+        for (var i = 0; i < result.members.length; i+=1){
+          var member = result.members[i];
+          // console.log(member._id);
+          // console.log(req.user.id);
+          if (member._id === req.user.id){
+            console.log('HEY');
+            success = 1;
+            next();
+          }
+        }
+        if (success === 0) {
+          res.status(403).send('Not authorized to complete this action');
+        }
+      }
+      else {
+        return 'Aint no project with that id';
+      }
+    });
+});
+
+//make sure user is admin if they are trying to edit, remove, or add team members
 app.use('/projects/:project_id/members', function(req, res, next){
   if (String(req.method) === 'GET'){
     next();
