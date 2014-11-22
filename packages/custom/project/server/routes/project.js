@@ -8,9 +8,33 @@
 module.exports = function(Project, app, auth, database) {
 
 var project = require('../controllers/project');
+var adminAuth = require('../controllers/adminAuth');
+var mongoose = require('mongoose'),
+  pProject = mongoose.model('Project');
 
 app.use('/project*', auth.requiresLogin, function(req, res, next){
   next();
+});
+
+app.use('/projects/:project_id/members', function(req, res, next){
+  if (String(req.method) === 'GET'){
+    next();
+  }
+  else {
+    pProject.findOne({'_id': req.params.project_id}).exec(function(err, result){
+      if (!err && result){
+        if (adminAuth.isAdmin(req.user.id, result)){
+          next();
+        }
+        else {
+          res.status(403).send('Not authorized to complete this action');
+        }
+      }
+      else {
+        return 'Aint no project with that id';
+      }
+    });
+  }
 });
 
 ///////////////////////////////////////////////////////////////////

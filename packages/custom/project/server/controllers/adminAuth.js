@@ -21,14 +21,16 @@ exports.isAdmin = function(user_id, project) {
 	if (exports.isOwner(user_id, project)){
 		return true;
 	}
-	console.log('user_id: ' + user_id + '   owner: ' + project.owner);
-	for (var member in project.members){
-		if (String(member.id) === String(user_id)){
-			if (member.permission === 'admin'){
-				return true;
+	else {
+		for (var i = 0; i < project.members.length; i+=1){
+			var member = project.members[i];
+			if (String(member._id) === String(user_id)){
+				if (member.permission === 'admin'){
+					return true;
+				}
 			}
 		}
+		return false;
 	}
-	return false;
 };
 

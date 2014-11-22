@@ -11,7 +11,7 @@ var mongoose = require('mongoose'),
   Project = mongoose.model('Project'),
   activity = require('../controllers/activity');
 
-//var adminAuth = require('../controllers/adminAuth');  
+var adminAuth = require('../controllers/adminAuth');  
 
 /**
 /* Shows All Projects
@@ -123,29 +123,34 @@ exports.remove = function (req, res) {
 exports.addMembers = function (req, res) {
 	var present = false;
 	Project.findOne({'_id': req.params.project_id}).exec(function(err, result){
-		if (!err && result) {
-			var members = result.members;
-			for (var i = 0; i < members.length; i+=1) {
-				if (members[i]._id === req.body._id || result.owner === req.body._id){
-					present = true;
-					break;
+		if (adminAuth.isAdmin(req.user.id, result)){
+			if (!err && result) {
+				var members = result.members;
+				for (var i = 0; i < members.length; i+=1) {
+					if (members[i]._id === req.body._id || result.owner === req.body._id){
+						present = true;
+						break;
+					}
+				}
+				if (present === true) {
+					return res.status(202).send('User with that id is already a member in group');
+				}
+				else {
+					Project
+					  .update(
+				   		{ _id: req.params.project_id },
+				  		{ $push: { members: req.body } }
+				  	  )
+				  	  .exec(function(err, result) {
+				  	  	if (err) return res.status(400).send(err);
+				  	  	activity.createEntry('Member', 'Added', req.body, req.params.project_id);
+				  	  	return res.status(201).send('Members added successfully');
+				  	  });
 				}
 			}
-			if (present === true) {
-				return res.status(202).send('User with that id is already a member in group');
-			}
-			else {
-				Project
-				  .update(
-			   		{ _id: req.params.project_id },
-			  		{ $push: { members: req.body } }
-			  	  )
-			  	  .exec(function(err, result) {
-			  	  	if (err) return res.status(400).send(err);
-			  	  	activity.createEntry('Member', 'Added', req.body, req.params.project_id);
-			  	  	return res.status(201).send('Members added successfully');
-			  	  });
-			}
+		}
+		else {
+			return res.status(403).send('This action is reserved for member admins');
 		}
 	});
 
@@ -175,6 +180,7 @@ exports.members = function (req, res) {
 * Remove a user from the project using a passed user._id
 */
 exports.removeMember = function (req, res) {
+
 	Project
 	  .update(
 	  	{ _id: req.params.project_id },
@@ -186,8 +192,9 @@ exports.removeMember = function (req, res) {
   	    	res.status(400).send('Member removal unsuccessful');
   	    }
   	    activity.createEntry('Member', 'Removed', req.body, req.params.project_id);
-  	    return res.status(200).send('Member removed successfully');
-  	  });
+  	    res.status(200).send('Member removed successfully');
+	  }
+  	);
 };
 
 /**
