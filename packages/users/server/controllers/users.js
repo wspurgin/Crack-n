@@ -166,6 +166,7 @@ exports.create = function(req, res, next) {
       if (err) return next(err);
       return res.redirect('/');
     });
+    exports.createNewUser(req, res, next);
     res.status(200);
   });
 };
@@ -337,9 +338,9 @@ exports.forgotpassword = function(req, res, next) {
 };
 
 /**
- * Callback for new user link
+ * Callback for creating new user link
  */
-exports.newUser = function(req, res, next) {
+exports.createNewUser = function(req, res, next) {
   async.waterfall([
 
       function(done) {
@@ -385,6 +386,44 @@ exports.newUser = function(req, res, next) {
       res.json(response);
     }
   );
+};
+
+/**
+ * Callback for following new user link
+ */
+exports.newUser = function(req, res, next) {
+  User.findOne({
+    newUserToken: req.params.token,
+    newUserTokenExpires: {
+      $gt: Date.now()
+    }
+  }, function(err, user) {
+    if (err) {
+      return res.status(400).json({
+        msg: err
+      });
+    }
+    if (!user) {
+      return res.status(400).json({
+        msg: 'Token invalid or expired'
+      });
+    }
+    var errors = req.validationErrors();
+    if (errors) {
+      return res.status(400).send(errors);
+    }
+    user.active = true;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
+    user.save(function(err) {
+      req.logIn(user, function(err) {
+        if (err) return next(err);
+        return res.send({
+          user: user,
+        });
+      });
+    });
+  });
 };
 
 /*
