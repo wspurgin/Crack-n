@@ -68,3 +68,7 @@ modules/views/
 # mean-admin
 #---------------------
 /packages/contrib/mean-admin
+
+config/env/development.js
+
+config/env/production.js
