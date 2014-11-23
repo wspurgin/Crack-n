@@ -336,6 +336,57 @@ exports.forgotpassword = function(req, res, next) {
   );
 };
 
+/**
+ * Callback for new user link
+ */
+exports.newUser = function(req, res, next) {
+  async.waterfall([
+
+      function(done) {
+        crypto.randomBytes(20, function(err, buf) {
+          var token = buf.toString('hex');
+          done(err, token);
+        });
+      },
+      function(token, done) {
+        User.findOne({
+            email: req.body.email
+        }, function(err, user) {
+          if (err || !user) return done(true);
+          done(err, user, token);
+        });
+      },
+      function(user, token, done) {
+        user.newUserToken = token;
+        user.newUserTokenExpires = Date.now() + 3600000; // 1 hour
+        user.save(function(err) {
+          done(err, token, user);
+        });
+      },
+      function(token, user, done) {
+        var mailOptions = {
+          to: user.email,
+          from: config.emailFrom
+        };
+        mailOptions = templates.new_user_email(user, req, token, mailOptions);
+        sendMail(mailOptions);
+        done(null, true);
+      }
+    ],
+    function(err, status) {
+      var response = {
+        message: 'Mail successfully sent',
+        status: 'success'
+      };
+      if (err) {
+        response.message = 'User does not exist';
+        response.status = 'danger';
+      }
+      res.json(response);
+    }
+  );
+};
+
 /*
 *searchUser function (takes a substring and callback function)
 */
