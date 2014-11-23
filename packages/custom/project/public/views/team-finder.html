@@ -17,7 +17,7 @@
         <div data-ng-repeat="member in $parent.project.members">
             <span>{{member.name}}:
                 <span data-ng-repeat="permission in $parent.permissionLevels">
-                    <label>{{permission}}</label><input name="{{member._id}}-{{permission}}" type="radio" data-ng-model="member.permission" value="{{permission}}">
+                    <label>{{permission}}</label><input name="{{member._id}}-{{permission}}" type="radio" data-ng-model="member.permission" value="{{permission}}" data-ng-change="changeMemberPermission(member, member.permission)">
                 </span>
                 <button class="danger-button" data-ng-show="$index" data-ng-click="removeTeamMember($index)">Remove</button>
             </span>

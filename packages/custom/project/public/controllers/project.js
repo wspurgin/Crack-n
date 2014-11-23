@@ -209,13 +209,12 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope',
     };
 
     $scope.removeTeamMember = function(member) {
-
       // if we aren't on the project creation form
       if(!$scope.projectCreationForm) {
-      if(verifyRemoval(member))
-      $scope.projectService.removeMember({projectId: $scope.project._id ? $scope.project._id : $stateParams.projectId}, member._id);
-      else
-      return;
+        if(verifyRemoval(member))
+          $scope.projectService.removeMember({projectId: $scope.project._id ? $scope.project._id : $stateParams.projectId}, member._id);
+        else
+          return;
       }
       $scope.project.members.splice(member, 1);
     };
@@ -232,18 +231,32 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope',
         $scope.projectService.addMember({projectId: $scope.project._id ? $scope.project._id : $stateParams.projectId}, $scope.project.members[i-1]);
     };
 
-    // TODO finalize this function
-    $scope.changeMemberPermission = function(member, pChange) {
-        // TODO verify that we don't need to check if were on the project creation form for this function
-        // if(!$scope.projectCreationForm) {
-          if(verifyStatusChange(member))
-            $scope.projectService.changePermission({projectId: $scope.project._id ? $scope.project._id : $stateParams.projectId}, member._id, pChange);
+    $scope.changeMemberPermission = function(member, oldPermission) {
+      if(!$scope.projectCreationForm) {
+        if(verifyPermissionChange(member))
+          $scope.projectService.changePermission({projectId: $scope.project._id ? $scope.project._id : $stateParams.projectId}, {member_id: member._id, permission: member.permission});
         else
-          return;
+          member.permission = oldPermission;
+      }
     };
 
-    function verifyStatusChange(targetedMember) {
-      return false;
+    function verifyPermissionChange(targetedMember) {
+      // when this function is called, by contract, we exprect the $scope variables to be instantiated.
+      // is the currentMember an admin?
+      if ($scope.currentMember.permission !== 'admin') {
+        return false;
+      }
+
+      if ($scope.currentMember === targetedMember) {
+        if (!isLastAdminStanding(targetedMember)) {
+          var choice = confirm('You\'re changing your own permission from \'admin\', are you sure?');
+          return choice;
+        } else {
+          alert('You are the last admin in the project, elevate someone else to \'admin\' status before removing your admin permissions.');
+          return false;
+        }
+      }
+      return true;
     }
 
     function verifyRemoval(targetedMember) {
@@ -265,8 +278,7 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope',
         // make sure you aren't the last admin standing
         if(!isLastAdminStanding(targetedMember)) {
           var choice = confirm('You\'re removing yourself, are you sure?');
-          if (!choice)
-            return false;
+          return choice;
         }
         else {
           alert('You are the last admin in the project, elevate someone else to \'admin\' status before removing yourself.');
