@@ -166,7 +166,7 @@ exports.create = function(req, res, next) {
       if (err) return next(err);
       return res.redirect('/');
     });
-    exports.createNewUser(req, res, next);
+    //exports.createNewUser(req, res, next);
     res.status(200);
   });
 };
@@ -389,7 +389,7 @@ exports.createNewUser = function(req, res, next) {
 };
 
 /**
- * Callback for following new user link
+ * Method after following new user link
  */
 exports.newUser = function(req, res, next) {
   User.findOne({
