@@ -231,16 +231,21 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope',
         $scope.projectService.addMember({projectId: $scope.project._id ? $scope.project._id : $stateParams.projectId}, $scope.project.members[i-1]);
     };
 
-    $scope.changeMemberPermission = function(member, oldPermission) {
+    $scope.changeMemberPermission = function(member, oldPermission, cPermission) {
+      // reset to previous initially
+      member.permission = oldPermission;
       if(!$scope.projectCreationForm) {
-        if(verifyPermissionChange(member))
-          $scope.projectService.changePermission({projectId: $scope.project._id ? $scope.project._id : $stateParams.projectId}, {member_id: member._id, permission: member.permission});
-        else
+        if(verifyPermissionChange(member)) {
+          $scope.projectService.changePermission({projectId: $scope.project._id ? $scope.project._id : $stateParams.projectId}, {member_id: member._id, permission: cPermission});
+          member.permission = cPermission;
+        }
+        else {
           member.permission = oldPermission;
+        }
       }
     };
 
-    function verifyPermissionChange(targetedMember) {
+    function verifyPermissionChange(targetedMember, cPermission) {
       // when this function is called, by contract, we exprect the $scope variables to be instantiated.
       // is the currentMember an admin?
       if ($scope.currentMember.permission !== 'admin') {
