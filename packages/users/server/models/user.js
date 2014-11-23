@@ -54,6 +54,11 @@ var UserSchema = new Schema({
     unique: true,
     required: true
   },
+  active: {
+    type: Boolean,
+    default: false,
+    required: true,
+  },
   roles: {
     type: Array,
     default: ['authenticated']
@@ -71,6 +76,8 @@ var UserSchema = new Schema({
     required: false 
   },
   salt: String,
+  newUserToken: String,
+  newUserTokenExpries: Date,
   resetPasswordToken: String,
   resetPasswordExpires: Date,
   facebook: {},
