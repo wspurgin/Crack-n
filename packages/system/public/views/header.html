@@ -1,8 +1,8 @@
 <div class="page-header" data-ng-controller="HeaderController">
    <div data-ng-hide="global.authenticated">
-    <div class="alert alert-danger animated fadeIn" ng-show="loginerror">{{loginerror}}</div>
     <div class="loginMenu" ng-controller="LoginController"> 
       <form id="loginForm" class="login-form" ng-submit="login()">
+          <div class="alert alert-danger animated fadeIn" data-ng-show="loginError">{{loginError}}</div>
           <div class="form_group">
               <label for="loginEmail"></label>
               <input type="email" name="loginEmail" placeholder="Email" class="logging" ng-model="user.email">

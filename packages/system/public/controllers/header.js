@@ -43,6 +43,7 @@ angular.module('mean.system').controller('HeaderController', ['$scope', '$rootSc
     $scope.user = {};
     $scope.global = Global;
     $scope.global.registerForm = false;
+    $scope.loginError = false;
     $scope.input = {
       type: 'password',
       placeholder: 'Password',
@@ -74,7 +75,7 @@ angular.module('mean.system').controller('HeaderController', ['$scope', '$rootSc
           }
         })
         .error(function() {
-          $scope.loginerror = 'Authentication failed.';
+          $scope.loginError = 'Username and/or Password are invalid.';
         });
     };
   }
