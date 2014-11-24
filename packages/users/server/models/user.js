@@ -56,7 +56,7 @@ var UserSchema = new Schema({
   },
   active: {
     type: Boolean,
-    default: false,
+    default: true,
     required: true,
   },
   roles: {
@@ -170,6 +170,7 @@ UserSchema.methods = {
 
   flagForRemoval: function(date)  {
     this.expiresAt = date;
+    this.active = false;
     return;
   }
 };

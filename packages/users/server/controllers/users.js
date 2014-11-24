@@ -427,7 +427,7 @@ exports.newUser = function(req, res, next) {
 };
 
 /*
-*searchUser function (takes a substring and callback function)
+* Search for a user using a substring (takes a substring and a callback)
 */
 exports.searchUsers = function(substring, cb) {
   var exp = new RegExp('^' + substring, 'i');
@@ -477,7 +477,7 @@ exports.searchUsers = function(substring, cb) {
 /**
 * delete account of user passed in id
 */
-exports.deleteAccount = function(req, res, id, next) {
+exports.deleteAccount = function(req, res, id) {
   var expiration = new Date();
   expiration.setMonth(expiration.getMonth() + 1);
   var randomized = randomizeString();
@@ -514,10 +514,10 @@ exports.deleteAccount = function(req, res, id, next) {
             callback(null);
         });
     }
-    // handle errors if either function goes wrong
+    // Handle errors if either function goes wrong
   ], function (err) {
     if (err) res.status(400).send(err);
+    console.log('User account flagged for deletion successfully');
     res.redirect('/');
-    res.status(200).send('User account flagged for deletion successfully');
   });
 };

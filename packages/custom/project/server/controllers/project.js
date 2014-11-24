@@ -115,12 +115,11 @@ exports.remove = function (req, res) {
 /**
  * Add Group Members to Project
  *
- * Members storage format:
- * ///////////////////////////////////////
- * // _id : String,			
- * // name : String,		
- * // permission : String		
- * ///////////////////////////////////////
+ *	- Members stored as JSON objects
+ *	- Members attributes:
+ *		_id	: String,
+ *		name : String,		
+ *		permission : String		
  *
  */
 exports.addMembers = function (req, res) {
@@ -180,7 +179,7 @@ exports.members = function (req, res) {
 }; 	
 
 /**
-* Remove a user from the project using a passed user._id
+* Remove a user from the project using a passed user._id string.
 */
 exports.removeMember = function (req, res) {
 
@@ -190,8 +189,8 @@ exports.removeMember = function (req, res) {
 	  	{ $pull: { members: {_id : req.body} } }
 	  )
 	  .exec(function(err, result) {
-  	    if (err) {
-  	    	console.log(err); 
+  	    if (err || !result) {
+  	    	console.log('Member removal unsuccessful'); 
   	    	res.status(400).send('Member removal unsuccessful');
   	    }
   	    if (adminAuth.isAdmin && adminAuth.getAdminCount === 1) {
