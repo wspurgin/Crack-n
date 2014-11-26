@@ -197,6 +197,7 @@ exports.user = function(req, res, next, id) {
  * Resets the password
  */
 exports.resetpassword = function(req, res, next) {
+  console.log('in reset password');
   User.findOne({
     resetPasswordToken: req.params.token,
     resetPasswordExpires: {
@@ -405,11 +406,11 @@ exports.createNewUser = function(req, res, next) {
  */
 exports.newUser = function(req, res, next) {
   console.log('in the new user function');
-  User.findOne({
-    newUserToken: req.params.token,
-    newUserTokenExpires: {
+  User.findOne({ $or: [
+    { newUserToken: req.params.token },
+    { newUserTokenExpires: {
       $gt: Date.now()
-    }
+    } } ]
   }, function(err, user) {
     if (err) {
       return res.status(400).json({
@@ -426,15 +427,17 @@ exports.newUser = function(req, res, next) {
       return res.status(400).send(errors);
     }
     user.active = true;
-    user.resetPasswordToken = undefined;
-    user.resetPasswordExpires = undefined;
+    console.log('should be active');
+    user.newUserToken = undefined;
+    user.newUserTokenExpires = undefined;
     user.save(function(err) {
       req.logIn(user, function(err) {
         if (err) return next(err);
-        res.redirect('/');
-        // return res.send({
-        //   user: user,
-        // });
+        // res.redirect('/');
+        return res.send(
+          //user: user,
+          'Congratulations, your account is now active'
+        );
       });
     });
   });
