@@ -88,7 +88,8 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope',
 
     var stop = $interval(poll, 1000*20);
 
-    $scope.$on('destory', function() {
+    $scope.$on('$destroy', function() {
+      console.log('ProjectCtrl scope recieved destory');
       if (angular.isDefined(stop)) {
         $interval.cancel(stop);
         stop = undefined;
@@ -309,17 +310,6 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope',
     $scope.messageError = false;
     $scope.messages = [];
     $scope.message = {};
-    $http.get('/projects/' + $stateParams.projectId + '/messages')
-      .success(function (res) {
-        $scope.messages = res;
-      })
-      .error(function (error) {
-        $scope.messageError = error;
-      });
-
-      $('.messagesDisplay').animate({
-            scrollTop: $('.messagesDisplay').get(0).scrollHeight
-            }, 1500);
 
     $scope.addMessage = function () {
       $scope.message.user_id = $scope.global.user._id;
@@ -339,29 +329,26 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope',
         });
     };
 
-    function poll(){
-      setTimeout(function(){
-        
-        $http.get('/projects/' + $stateParams.projectId + '/messages')
-          .success(function (res) {
-            $scope.messages = res;
-          })
-          .error(function (error) {
-            $scope.messageError = error;
-          });
-
+    function pollMessages(){  
+      $http.get('/projects/' + $stateParams.projectId + '/messages')
+        .success(function (res) {
+          $scope.messages = res;
           $('.messagesDisplay').animate({
-            scrollTop: $('.messagesDisplay').get(0).scrollHeight
-          }, 1500);
-      }, 1000);
+          scrollTop: $('.messagesDisplay').get(0).scrollHeight
+        }, 1500);
+        })
+        .error(function (error) {
+          $scope.messageError = error;
+        });
     }
+    pollMessages();
+    var stopMessage = $interval(pollMessages, 1000*4);
 
-    var stop = $interval(poll, 1000*8);
-
-    $scope.$on('destory', function() {
-      if (angular.isDefined(stop)) {
-        $interval.cancel(stop);
-        stop = undefined;
+    $scope.$on('$destroy', function() {
+      console.log('MessageBoardCtrl scope recieved destory');
+      if (angular.isDefined(stopMessage)) {
+        $interval.cancel(stopMessage);
+        stopMessage = undefined;
       }
     });
 
