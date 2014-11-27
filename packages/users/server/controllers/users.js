@@ -166,7 +166,7 @@ exports.create = function(req, res, next) {
       if (err) return next(err);
       return res.redirect('/');
     });
-    //exports.createNewUser(req, res, next);
+    exports.createNewUser(req, res, next);
     res.status(200);
   });
 };
@@ -197,6 +197,7 @@ exports.user = function(req, res, next, id) {
  * Resets the password
  */
 exports.resetpassword = function(req, res, next) {
+  console.log('in reset password');
   User.findOne({
     resetPasswordToken: req.params.token,
     resetPasswordExpires: {
@@ -275,9 +276,16 @@ exports.changepassword = function(req, res, next) {
  * Send reset password email
  */
 function sendMail(mailOptions) {
+  console.log('in sendmail');
   var transport = nodemailer.createTransport(config.mailer);
+  console.log('created transport');   
   transport.sendMail(mailOptions, function(err, response) {
-    if (err) return err;
+    console.log('shit');
+    if (err) {
+      console.log('error: ' + err);
+      return err;
+    }
+    console.log('returning sendMail response: ' + response);
     return response;
   });
 }
@@ -358,6 +366,7 @@ exports.createNewUser = function(req, res, next) {
         });
       },
       function(user, token, done) {
+        console.log('assigning token');
         user.newUserToken = token;
         user.newUserTokenExpires = Date.now() + 3600000; // 1 hour
         user.save(function(err) {
@@ -365,6 +374,7 @@ exports.createNewUser = function(req, res, next) {
         });
       },
       function(token, user, done) {
+        console.log('setting mail options');
         var mailOptions = {
           to: user.email,
           from: config.emailFrom
@@ -372,9 +382,11 @@ exports.createNewUser = function(req, res, next) {
         mailOptions = templates.new_user_email(user, req, token, mailOptions);
         sendMail(mailOptions);
         done(null, true);
+        console.log('called sendMail');
       }
     ],
     function(err, status) {
+      console.log('setting response');
       var response = {
         message: 'Mail successfully sent',
         status: 'success'
@@ -383,7 +395,8 @@ exports.createNewUser = function(req, res, next) {
         response.message = 'User does not exist';
         response.status = 'danger';
       }
-      res.json(response);
+      //res.json(response);
+      console.log('response: ' + response.message);
     }
   );
 };
@@ -392,11 +405,12 @@ exports.createNewUser = function(req, res, next) {
  * Method after following new user link
  */
 exports.newUser = function(req, res, next) {
-  User.findOne({
-    newUserToken: req.params.token,
-    newUserTokenExpires: {
+  console.log('in the new user function');
+  User.findOne({ $or: [
+    { newUserToken: req.params.token },
+    { newUserTokenExpires: {
       $gt: Date.now()
-    }
+    } } ]
   }, function(err, user) {
     if (err) {
       return res.status(400).json({
@@ -413,14 +427,17 @@ exports.newUser = function(req, res, next) {
       return res.status(400).send(errors);
     }
     user.active = true;
-    user.resetPasswordToken = undefined;
-    user.resetPasswordExpires = undefined;
+    console.log('should be active');
+    user.newUserToken = undefined;
+    user.newUserTokenExpires = undefined;
     user.save(function(err) {
       req.logIn(user, function(err) {
         if (err) return next(err);
-        return res.send({
-          user: user,
-        });
+        // res.redirect('/');
+        return res.send(
+          //user: user,
+          'Congratulations, your account is now active'
+        );
       });
     });
   });
