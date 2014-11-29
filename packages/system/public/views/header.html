@@ -2,7 +2,7 @@
    <div data-ng-hide="global.authenticated">
     <div class="loginMenu" ng-controller="LoginController"> 
       <form id="loginForm" class="login-form" ng-submit="login()">
-          <div class="alert alert-danger animated fadeIn" data-ng-show="loginError">{{loginError}}</div>
+         
           <div class="form_group">
               <label for="loginEmail"></label>
               <input type="email" name="loginEmail" placeholder="Email" class="logging" ng-model="user.email">
@@ -12,7 +12,9 @@
               <input type="password" name="loginPassword" placeholder="Password" class="logging" ng-model="user.password">
           </div>
           <button type="submit" class="login">Login</button> 
+           <div class="alert alert-danger animated fadeIn" data-ng-show="loginError">{{loginError}}</div>
       </form>
+
     </div>
   </div>
   <div data-ng-show="global.authenticated">
