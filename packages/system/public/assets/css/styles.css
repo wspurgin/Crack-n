@@ -123,7 +123,7 @@ form.login-form{
 }
 .header-clicks{
 	font-size: 1.5em;
-	margin-left: 39%;
+	margin-left: 42%;
 	position: absolute;
 	display: flex;
 }
@@ -330,8 +330,13 @@ margin: 0 auto;
 
 /*my account page */
 .my_account_form {
-	margin-left: 40%;
+	/*margin-left: 40%; */
 	display: inline-block;
+}
+
+div.makeMyAccountCentered{
+	margin: 0 auto;
+	width:410px;
 }
 
 .input-wrapper{
@@ -343,10 +348,12 @@ clear: both;
 	float:right;
 }
 form.form_center{
-	margin-left:380px;
+	/*margin-left:380px; */
 }
 form.form_center h2{
-	margin-left:100px;
+	width: 140px;
+margin: 0 auto;
+margin-top: 15px;
 }
 
 form.form_center input[type="button"]{
@@ -385,8 +392,13 @@ top: 260px;
 fieldset{
 	border:none;
 }
-.create-project{
+button.create-project{
 	text-align: center;
+	height:45px;
+}
+button.my-projects{
+	height:45px;
+	margin-left: 2px;
 }
 .field-group{
 	width:700px;

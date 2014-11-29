@@ -5,6 +5,8 @@
     <div class="alert alert-danger animated fadeIn error2" ng-show="usernameError">{{usernameError}}</div>
     <div class="alert alert-danger animated fadeIn error3" ng-show="emailError">{{emailError}}</div>
     <div class="alert alert-danger animated fadeIn error4" ng-show="passwordError">{{passwordError}}</div>
+    <div class="makeMyAccountCentered">
+    
     <form class="my_account_form form_center">
         <h2>My Account</h2>
         <div class="info_pull_error">
@@ -82,5 +84,8 @@
           <input type="button" class="changepass" id="change_pass" name="change_pass" value="Change Password" ng-show="editing && !changing_pass" ng-click="changePassword()" />
           <input id="save_button" name="save_button" type="button" value="Save" ng-click="save()" ng-show="editing" />
         </div>
-    </form>
+    </form>  
+
+    </div>
+    
 </div>
