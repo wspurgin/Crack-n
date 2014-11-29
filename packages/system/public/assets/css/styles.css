@@ -67,6 +67,17 @@ section div div img {
 
 /*header*/
 
+a:hover{
+
+	color:red;
+}
+a.signLink{
+	color:black;
+}
+a.signLink:hover{
+	color:red;
+}
+
 .header-logo {
 	background-color: gray;
 	background-color: rgba(0, 0, 0, .7);

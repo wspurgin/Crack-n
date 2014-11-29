@@ -23,9 +23,13 @@
         <button class="loggout"><a href="/logout">Log Out</a></button>
     </div>
     </div>
-    <div class="header-clicks">
+    <div data-ng-show="global.authenticated">
+    <div class="header-clicks loggedInMenu">
       <button class="create-project"><a href="#!/projects/create">Create a Project</a></button> 
       <button class="my-projects"><a href="#!/my-projects">My Project</a></button>
     </div>
+    </div>
+
+
   <div class='header-logo'><a ui-sref="home"><img src="img/logo.png"></a></div>
 </div>
