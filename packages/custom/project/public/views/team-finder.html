@@ -1,7 +1,7 @@
 <div class="team-finder" data-ng-controller="TeamMemberCtrl">
     <h3>Team Members</h3>
-    <label class="make_left" for="memberSearch">{{'Search for Members'|lowercase}}</label>
-    <input type="search" class="m_r2" name="memberSearch" ng-model="searchText" data-ng-change="searchForTeamMembers()">
+    <label  for="memberSearch">{{'Search for Members'|lowercase}}</label>
+    <input type="search"  name="memberSearch" ng-model="searchText" data-ng-change="searchForTeamMembers()">
     <div class="search-results" data-ng-show="searchText">
         <div data-ng-repeat="member in searchUsersResults | filter:searchText" class="dropWin" data-ng-click="addTeamMember(member)">
             <span class="member-name" data-crn-member>
@@ -14,8 +14,8 @@
         </div>
     </div>
     <div class="current-team">
-        <div data-ng-repeat="member in $parent.project.members">
-            <span>{{member.name}}:
+        <div class="alignSearchRes" data-ng-repeat="member in $parent.project.members">
+            <span  >{{member.name}}:
                 <span data-ng-repeat="permission in $parent.permissionLevels">
                     <label>{{permission}}</label><input name="{{member._id}}-{{permission}}" type="radio" data-ng-model="member.permission" value="{{permission}}" data-ng-change="changeMemberPermission(member, '{{member.permission}}', permission)">
                 </span>
@@ -23,4 +23,4 @@
             </span>
         </div>
     </div>
-</div>
+</div> 

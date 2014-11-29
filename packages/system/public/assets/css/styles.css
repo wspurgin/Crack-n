@@ -193,6 +193,7 @@ input[type="button"]{
 	padding-left: 20px;
 	padding-bottom: 30px;
 	text-align: -webkit-center;
+	width: 390px;
 }
 
 .dropDown{
@@ -210,7 +211,7 @@ input[type="button"]{
 }
 
 .dropWin{
-background-color: darkslategray;
+background-color: white;
 width: 174px;
 margin: 0 auto;
 margin-left: 160px;
@@ -226,21 +227,36 @@ td.mBody {
 	max-width: 225px;
 	border: 1px groove lightgray;
 }
+button.submit-button{
+	margin-left: 560px;
+}
 
 div.search-results{
 	width: 400px;
-margin: 0 auto;
+margin-left: -30px;
 }
 
 .editButton {
 	padding-top: 15px;
 }
 
+
+.messageBoardWrapper{
+	margin-top: 220px;
+margin-left: 55px;
+}
+
+div.alignSearchRes{
+	text-align: right;
+	margin-bottom: 3px;
+}
+
 .messageBoard{
+
+	margin-top: 100px;
 	width: 300px;
 	text-align: center;
 	border: 1px solid black;
-	margin-top: 30px;
 }
 
 .messagesDisplay {
@@ -268,6 +284,19 @@ margin: 0 auto;
 /*end of project page */
 
 /*phases and tasks */
+
+div.leftTeamDetails{
+	position: absolute;
+	top:10px;
+	left:10px;
+}
+
+
+
+div.leftTeamDetails div.search-results{
+				margin-left:12px!important;
+		}
+
 .phase-wrapper {
 	margin-left: auto;
 	margin-right: auto;
@@ -347,9 +376,9 @@ clear: both;
 .input-wrapper input{
 	float:right;
 }
-form.form_center{
-	/*margin-left:380px; */
-}
+/*form.form_center{
+	margin-left:380px; 
+}*/
 form.form_center h2{
 	width: 140px;
 margin: 0 auto;
@@ -389,6 +418,20 @@ top: 260px;
 /*end my account page */
 
 /*Create a Project page*/
+
+
+h3{
+	text-align: center;
+}
+div.team-finder{
+	width: 390px;
+margin: 0 auto;
+}
+
+input.m_r_none{
+	margin-left:0!important;
+}
+
 fieldset{
 	border:none;
 }
