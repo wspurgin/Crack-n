@@ -2,7 +2,9 @@
   <div>
         <div class="homelogo">
         	<img src="/img/HomeLogo.png">
-            <div> <button class="create-project"><a class="signLink" href="/#!/auth/signup">Get Crack'n!</a></button>  </div>
+        	<div data-ng-hide="global.authenticated">
+          	 <div> <button class="create-project"><a class="signLink" href="/#!/auth/signup">Get Crack'n!</a></button>  </div>
+            </div>
         </div>
   </div>
-</section>
+</section> 
