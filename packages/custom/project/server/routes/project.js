@@ -14,7 +14,13 @@ var mongoose = require('mongoose'),
 
 //make sure user is logged in
 app.use('/project*', auth.requiresLogin, function(req, res, next){
-  next();
+  console.log('user: ' + req.user.active);
+  if (req.user.active === true){
+    next();
+  }
+  else {
+    res.status(403).send('Your account is not active. You must have either deleted your account or simply failed to activate. Bad choice, man, bad choice.');
+  }
 });
 
 //make sure user is actually in the project that he is requesting
