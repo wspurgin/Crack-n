@@ -211,7 +211,7 @@ background: url("/theme/assets/img/bg.png");
     font-family: "open_sans_hebrewregular";
 }
 
-.login-form__left .button_login {
+/*.login-form__left .button_login {
     margin-top: 23px;
 }
 
@@ -265,7 +265,7 @@ background: url("/theme/assets/img/bg.png");
     padding-top: 11px;
     vertical-align: top;
     font-family: "open_sans_hebrewregular";
-}
+}*/
 
 .login-form__center {
     height: 100%;
