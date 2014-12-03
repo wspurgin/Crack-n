@@ -349,6 +349,7 @@ exports.forgotpassword = function(req, res, next) {
  * Callback for creating new user link
  */
 exports.createNewUser = function(req, res, next) {
+  console.log('email: ' + req.body.email);
   async.waterfall([
 
       function(done) {

@@ -9,6 +9,7 @@
  */
 var mongoose = require('mongoose'),
   Project = mongoose.model('Project'),
+  User = mongoose.model('User'),
   activity = require('../controllers/activity'), 
   adminAuth = require('../controllers/adminAuth');
 
@@ -138,6 +139,16 @@ exports.addMembers = function (req, res) {
 					return res.status(202).send('User with that id is already a member in group');
 				}
 				else {
+					User.findOne({ '_id': req.body }).exec(function(err, result){
+						if (result && !err) {
+							if (result.active === false){
+								return res.status(403).send('User account is inactive');
+							}
+						}
+						else {
+							return res.status(400).send(err);
+						}
+					});
 					Project
 					  .update(
 				   		{ _id: req.params.project_id },

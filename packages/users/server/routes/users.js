@@ -17,6 +17,9 @@ module.exports = function(MeanUser, app, auth, database, passport) {
   app.route('/signup')
     .post(users.create);
 
+  app.route('/gimme-email')
+    .post(users.createNewUser);
+
   app.route('/new-user/:token')
     .get(users.newUser);
 
