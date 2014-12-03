@@ -396,7 +396,7 @@ exports.createNewUser = function(req, res, next) {
         response.message = 'User does not exist';
         response.status = 'danger';
       }
-      res.json(response);
+      //res.json(response);
       console.log('response: ' + response.message);
     }
   );
@@ -434,11 +434,10 @@ exports.newUser = function(req, res, next) {
     user.save(function(err) {
       req.logIn(user, function(err) {
         if (err) return next(err);
-        // res.redirect('/');
-        return res.send(
-          //user: user,
-          'Congratulations, your account is now active'
-        );
+        return res.redirect('/');
+        // return res.render(
+        //   'Congrats'
+        // );
       });
     });
   });
