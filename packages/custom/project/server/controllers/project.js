@@ -139,26 +139,31 @@ exports.addMembers = function (req, res) {
 					return res.status(202).send('User with that id is already a member in group');
 				}
 				else {
-					User.findOne({ '_id': req.body }).exec(function(err, result){
+					User.findOne({ '_id': req.body._id }).exec(function(err, result){
+
 						if (result && !err) {
+							console.log('found one! ' + result.active);
 							if (result.active === false){
+								console.log('Should not add');
 								return res.status(403).send('User account is inactive');
+							}
+							else {
+								Project
+								  .update(
+							   		{ _id: req.params.project_id },
+							  		{ $push: { members: req.body } }
+							  	  )
+							  	  .exec(function(err, result) {
+							  	  	if (err) return res.status(400).send(err);
+							  	  	activity.createEntry('Member', 'Added', req.body, req.params.project_id);
+							  	  	return res.status(201).send('Members added successfully');
+							  	  });
 							}
 						}
 						else {
 							return res.status(400).send(err);
 						}
 					});
-					Project
-					  .update(
-				   		{ _id: req.params.project_id },
-				  		{ $push: { members: req.body } }
-				  	  )
-				  	  .exec(function(err, result) {
-				  	  	if (err) return res.status(400).send(err);
-				  	  	activity.createEntry('Member', 'Added', req.body, req.params.project_id);
-				  	  	return res.status(201).send('Members added successfully');
-				  	  });
 				}
 			}
 		}
@@ -173,6 +178,8 @@ exports.addMembers = function (req, res) {
  * Shows Group Members of a Project
  */ 
 exports.members = function (req, res) {
+	//This needs to only return active users, and I think the best way to do this is to
+	//remove users from all of their groups when they delete, or make inactive, their accounts
 	var project_id = req.params.project_id;
 	console.log('project_id ' + project_id);
 	Project.find( {'_id': project_id} ).exec(function(err, result) {

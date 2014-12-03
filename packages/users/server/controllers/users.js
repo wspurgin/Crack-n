@@ -452,11 +452,7 @@ exports.searchUsers = function(substring, cb) {
     // Make query
     function(callback) {
       User
-        .find()
-        .or([
-          {username: {$regex: exp}},
-          {email: {$regex: exp}}
-        ])
+        .find({ $and: [ { active: true }, { $or: [ {username: {$regex: exp}}, {email: {$regex: exp}} ] } ] })
         .lean()
         .select({ _id: 1, username: 1, email: 1, name: 1 })
         .sort('_id')
