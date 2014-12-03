@@ -396,7 +396,7 @@ exports.createNewUser = function(req, res, next) {
         response.message = 'User does not exist';
         response.status = 'danger';
       }
-      //res.json(response);
+      res.json(response);
       console.log('response: ' + response.message);
     }
   );
