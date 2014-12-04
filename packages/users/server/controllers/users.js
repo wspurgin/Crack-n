@@ -496,7 +496,7 @@ exports.deleteAccount = function(req, res, id) {
   var randomized = randomizeString();
   
   async.waterfall([
-    // Flag the user for removal
+    // 1. Flag the user for removal
     function(callback) {
       User
       .findOne({_id: new ObjectId(id)},
@@ -509,7 +509,7 @@ exports.deleteAccount = function(req, res, id) {
         callback(null);
       });
     },
-    // Flag each of user's projects for removal (where user is proj owner)
+    // 2. Flag each of user's projects for removal (where user is proj owner)
     function(callback) {
       var projectCount;
       Project
@@ -527,10 +527,10 @@ exports.deleteAccount = function(req, res, id) {
             callback(null);
         });
     },
-    // Remove user from all projects he is participating in
+    // 3. Remove user from all projects he is participating in
     function(callback) {
       Project
-        // Note: don't use ObjectId because members are stored as strings
+        // Note: not ObjectId(id) because all member data stored as Strings
         .update(
           { 'members._id' : id },
           { $pull: { 'members._id' : id }},
