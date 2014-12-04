@@ -488,7 +488,7 @@ exports.searchUsers = function(substring, cb) {
 
 
 /**
-* delete account of user passed in id
+* delete account of user passed in id string
 */
 exports.deleteAccount = function(req, res, id) {
   var expiration = new Date();
@@ -509,7 +509,7 @@ exports.deleteAccount = function(req, res, id) {
         callback(null);
       });
     },
-    // Flag each of user's projects for removal
+    // Flag each of user's projects for removal (where user is proj owner)
     function(callback) {
       var projectCount;
       Project
@@ -526,6 +526,20 @@ exports.deleteAccount = function(req, res, id) {
           if (projectCount===0)
             callback(null);
         });
+    },
+    // Remove user from all projects he is participating in
+    function(callback) {
+      Project
+        // Note: don't use ObjectId because members are stored as strings
+        .update(
+          { 'members._id' : id },
+          { $pull: { 'members._id' : id }},
+          { multi: true },
+          function (err) {
+            if (err) callback('Unsuccessful attempt to remove user from participating projects');
+            callback(null);
+          }
+        );
     }
     // Handle errors if either function goes wrong
   ], function (err) {
