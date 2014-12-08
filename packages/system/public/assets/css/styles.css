@@ -1,6 +1,12 @@
-html {
+html { 
 	height: 100%;
 	width: 100%;
+	font-family: 'Open Sans Condensed'!important;
+}
+
+
+h1,h2,h3{
+	font-family: 'Cinzel Decorative'!important;
 }
 
 body {
@@ -144,6 +150,7 @@ button{
   margin-bottom: 0;
   font-size: 14px;
   font-weight: normal;
+  font-family: 'Open Sans Condensed'!important;
   line-height: 1.42857143;
   text-align: center;
   white-space: nowrap;
@@ -401,7 +408,7 @@ div.makeMyAccountCentered{
 
 .input-wrapper{
 	width: 350px;
-clear: both;
+	clear: both;
 }
 
 .input-wrapper input{
@@ -411,9 +418,9 @@ clear: both;
 	margin-left:380px; 
 }*/
 form.form_center h2{
-	width: 140px;
-margin: 0 auto;
-margin-top: 15px;
+	width: 180px;
+	margin: 0 auto;
+	margin-top: 15px;
 }
 
 form.form_center input[type="button"]{
@@ -426,8 +433,8 @@ input.changepass{
 
 div.error4{
 	position: absolute;
-left: 470px;
-top: 230px;
+	left: 470px;
+	top: 230px;
 }
 div.error3{
 	position: absolute;
@@ -553,14 +560,3 @@ text-align: center;
 
 /* end of signup form*/
 
-/* fonts */
-
-/* bulletproof error..someone help me with this please :/ */
-
-@font-face {
-    font-family: Bitter;
-    src: url(http://fonts.googleapis.com/css?family=Bitter);
-} 
-
-
-/* end of fonts */
