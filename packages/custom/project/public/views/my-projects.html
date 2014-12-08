@@ -15,7 +15,7 @@
 				<tr ng-repeat="project in projects" >
 					<td>{{$index + 1}}</td>
 					<td>{{project.name}}</td>
-					<td></td>
+					<td>{{project.completion}}% Complete</td>
 					<td> <a href="/#!/project/{{project._id}}"> <input type="button" class="project_button" value="Go" /> </a> </td>
 				</tr>
 
