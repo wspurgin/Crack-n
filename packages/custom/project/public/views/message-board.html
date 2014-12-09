@@ -11,8 +11,8 @@
             </tr>
         </table>
     </div>
-    <div class="postMessage">
+    <form class="postMessage" ng-submit="addMessage()">
         <input type="text" name="post_message" data-ng-model="message.body" /> 
-        <input type="button" value="Post" name="post_button" ng-click="addMessage()" />
-    </div>
+        <input type="button" value="Post" name="post_button" />
+    </form>
 </div>
