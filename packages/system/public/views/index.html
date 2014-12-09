@@ -5,6 +5,10 @@
         	<div data-ng-hide="global.authenticated">
           	 <div> <button class="create-project"><a class="signLink" href="/#!/auth/signup">Get Crack'n!</a></button>  </div>
             </div>
+            <div style="font-size: .75em; width: 75%; margin-left: auto; margin-right: auto;" data-ng-show="global.authenticated && !global.user.active">
+                You're account is not activated yet! You won't be able to Get Crack'n until you activate you're account.
+                We sent you and email at <span style="color: blue;">{{global.user.email}}</span>. You should get it soon, then activate your account!
+            </div>
         </div>
   </div>
 </section> 
