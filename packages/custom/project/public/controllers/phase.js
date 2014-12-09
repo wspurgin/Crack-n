@@ -29,6 +29,19 @@ angular.module('mean.project').controller('CreatePhaseCtrl', ['$scope', '$rootSc
     $scope.addPhase = function() {
       $('#addPhaseForm input:first-child').focus();
     };
+
+    $scope.deletePhase = function(phase) {
+      if ($scope.currentMember.permission === 'admin') {
+        $http.delete('/projects/' + $scope.project._id + '/phases/' + $scope.phase._id)
+          .success(function(res) {
+            // remove task from model data
+            $scope.project.phases.pop($scope.arrayObjectIndexOf($scope.project.phases, phase));
+          })
+          .error(function() {
+            alert('Could not delete task :(');
+          });
+      }
+    };
 }])
 .directive('crnPhase', function(){
   return {

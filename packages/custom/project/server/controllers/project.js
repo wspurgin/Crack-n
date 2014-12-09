@@ -200,11 +200,10 @@ exports.members = function (req, res) {
 * Remove a user from the project using a passed user._id string.
 */
 exports.removeMember = function (req, res) {
-
 	Project
 	  .update(
 	  	{ _id: req.params.project_id },
-	  	{ $pull: { members: {_id : req.body} } }
+	  	{ $pull: { members: {_id : req.params.member_id} } }
 	  )
 	  .exec(function(err, result) {
   	    if (err || !result) {
@@ -214,7 +213,8 @@ exports.removeMember = function (req, res) {
   	    if (adminAuth.isAdmin && adminAuth.getAdminCount === 1) {
   	    	res.status(401).send('Cannot remove member. There must be at least one admin on this project.');
   	    }
-  	    activity.createEntry('Member', 'Removed', req.body, req.params.project_id);
+  	    activity.createEntry('Member ' + req.params.member_id, 'Removed', req.user, req.params.project_id);
+        console.log(result);
   	    res.status(200).send('Member removed successfully');
 	  }
   	);

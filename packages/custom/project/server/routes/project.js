@@ -121,7 +121,7 @@ app.use('/projects/:project_id/members', function(req, res, next){
   app.route('/projects/:project_id/members')
     .get(project.members);
 
-  app.route('/projects/:project_id/members')
+  app.route('/projects/:project_id/members/:member_id')
     .delete(project.removeMember);
 
 

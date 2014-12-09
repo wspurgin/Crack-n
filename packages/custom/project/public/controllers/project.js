@@ -32,6 +32,8 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope',
       return false;
     }
 
+    $scope.arrayObjectIndexOf = arrayObjectIndexOf;
+
     function getProject() {
       console.log('getting project');
       $scope.projectService.get({
@@ -218,12 +220,15 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope',
         if (!$scope.projectCreationForm) {
           if (verifyRemoval(member))
             $scope.projectService.removeMember({
-              projectId: $scope.project._id ? $scope.project._id : $stateParams.projectId
-            }, member._id);
+              projectId: $scope.project._id ? $scope.project._id : $stateParams.projectId,
+              memberId: $scope.project.members[member]._id
+            }, function(req) { $scope.project.members.splice(member, 1); }, 
+            function(err) { alert('Could not remove member :('); });
           else
             return;
+        } else {
+          $scope.project.members.splice(member, 1);
         }
-        $scope.project.members.splice(member, 1);
       };
 
       $scope.addTeamMember = function(member) {

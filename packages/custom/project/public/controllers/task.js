@@ -41,6 +41,19 @@ angular.module('mean.project').controller('CreateTaskCtrl', ['$scope', '$rootSco
       });
 
     };
+
+    $scope.deleteTask = function(task) {
+      if ($scope.currentMember.permission === 'admin') {
+        $http.delete('/projects/' + $scope.project._id + '/phases/' + $scope.phase._id + '/tasks/' + task._id)
+          .success(function(res) {
+            // remove task from model data
+            $scope.phase.tasks.pop($scope.arrayObjectIndexOf($scope.phase.tasks, task));
+          })
+          .error(function() {
+            alert('Could not delete task :(');
+          });
+      }
+    };
 }])
 .directive('crnTask', function(){
   return {
