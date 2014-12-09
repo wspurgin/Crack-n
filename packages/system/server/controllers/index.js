@@ -25,6 +25,7 @@ exports.render = function(req, res) {
       _id: req.user._id,
       username: req.user.username,
       email: req.user.email,
+      active: req.user.active,
       roles: req.user.roles
     } : {},
     modules: modules,
