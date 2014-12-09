@@ -25,6 +25,7 @@ angular.module('mean.project').controller('CreatePhaseCtrl', ['$scope', '$rootSc
 .controller('PhaseCtrl', ['$scope', '$rootScope', '$http', 'Global', 
   function($scope, $rootScope, $http, Global) {
     $scope.global = Global;
+    $scope.editingPhase = false;
     
     $scope.addPhase = function() {
       $('#addPhaseForm input:first-child').focus();
@@ -41,6 +42,16 @@ angular.module('mean.project').controller('CreatePhaseCtrl', ['$scope', '$rootSc
             alert('Could not delete task :(');
           });
       }
+    };
+
+    $scope.editPhase = function(phase) {
+      $http.put('/projects/' + $scope.project._id + '/phases/' + $scope.phase._id, $scope.phase)
+      .success(function(res) {
+        $scope.editingPhase = false;
+      })
+      .error(function() {
+        alert('Could not change the phase to' + $scope.phase.name + ' :(');
+      });
     };
 }])
 .directive('crnPhase', function(){

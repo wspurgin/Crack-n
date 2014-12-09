@@ -1,6 +1,14 @@
-<span class="phase">{{phase.name}}</span>
-<img src="img/edit.png" class="edit-button" data-ng-show="currentMember.permission === 'admin'" data-ng-click="editPhase(phase)">
-<img src="img/delete.png" class="delete-button" data-ng-show="currentMember.permission === 'admin'" data-ng-click="deletePhase(phase)" >
+<div data-ng-hide="editingPhase">
+    <span class="phase">{{phase.name}}</span>
+    <img src="img/edit.png" class="edit-button" data-ng-show="currentMember.permission === 'admin'" data-ng-click="editingPhase = true">
+    <img src="img/delete.png" class="delete-button" data-ng-show="currentMember.permission === 'admin'" data-ng-click="deletePhase(phase)" >
+</div>
+<form data-ng-show="editingPhase" data-ng-submit="editPhase(phase)">
+    <div>
+        <input id="{{phase._id}}-editing" type="text" data-ng-model="phase.name" />
+        <button data-ng-click="editing = false">Cancel</button><button type="submit">Change</button>
+    </div>
+</form>
 <!-- Task directive -->
 <div class="task-wrapper" data-ng-controller="TaskCtrl" data-crn-task data-ng-repeat="task in phase.tasks" data-ng-if="!task.completed"></div>
 <div class="add-task-wrapper" data-ng-include="'project/views/add-task.html'"></div>

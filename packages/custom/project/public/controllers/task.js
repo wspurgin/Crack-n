@@ -10,8 +10,6 @@ angular.module('mean.project').controller('CreateTaskCtrl', ['$scope', '$rootSco
       if($scope.task.name === undefined) {
         alert('Task needs a name');
       } else {
-        console.log($scope.phase);
-        console.log($scope.task);
         $http.post('/projects/' + $scope.project._id + '/phases/' + $scope.phase._id + '/tasks', $scope.task)
           .success(function (res) {
             $scope.phase.tasks.push(res);
@@ -26,6 +24,7 @@ angular.module('mean.project').controller('CreateTaskCtrl', ['$scope', '$rootSco
 .controller('TaskCtrl', ['$scope', '$rootScope', '$http', 'Global', 
   function($scope, $rootScope, $http, Global) {
     $scope.global = Global;
+    $scope.editing = false;
 
     $scope.addTask = function() {
       $('#addTaskForm' + $scope.phase._id + ' input:first-child').focus();
@@ -40,6 +39,16 @@ angular.module('mean.project').controller('CreateTaskCtrl', ['$scope', '$rootSco
         alert('Could not mark task as complete :(');
       });
 
+    };
+
+    $scope.editTask = function(task) {
+      $http.put('/projects/' + $scope.project._id + '/phases/' + $scope.phase._id + '/tasks/' + task._id, $scope.task)
+      .success(function(res) {
+        $scope.editing = false;
+      })
+      .error(function() {
+        alert('Could not change the task to' + $scope.task.name + ' :(');
+      });
     };
 
     $scope.deleteTask = function(task) {
