@@ -276,16 +276,11 @@ exports.changepassword = function(req, res, next) {
  * Send reset password email
  */
 function sendMail(mailOptions) {
-  console.log('in sendmail');
   var transport = nodemailer.createTransport(config.mailer);
-  console.log('created transport');   
   transport.sendMail(mailOptions, function(err, response) {
-    console.log('shit');
     if (err) {
-      console.log('error: ' + err);
       return err;
     }
-    console.log('returning sendMail response: ' + response);
     return response;
   });
 }
@@ -349,7 +344,6 @@ exports.forgotpassword = function(req, res, next) {
  * Callback for creating new user link
  */
 exports.createNewUser = function(req, res, next) {
-  console.log('email: ' + req.body.email);
   async.waterfall([
 
       function(done) {
@@ -367,7 +361,6 @@ exports.createNewUser = function(req, res, next) {
         });
       },
       function(user, token, done) {
-        console.log('assigning token');
         user.newUserToken = token;
         user.newUserTokenExpires = Date.now() + 3600000; // 1 hour
         user.save(function(err) {
@@ -375,7 +368,6 @@ exports.createNewUser = function(req, res, next) {
         });
       },
       function(token, user, done) {
-        console.log('setting mail options');
         var mailOptions = {
           to: user.email,
           from: config.emailFrom
@@ -383,11 +375,9 @@ exports.createNewUser = function(req, res, next) {
         mailOptions = templates.new_user_email(user, req, token, mailOptions);
         sendMail(mailOptions);
         done(null, true);
-        console.log('called sendMail');
       }
     ],
     function(err, status) {
-      console.log('setting response');
       var response = {
         message: 'Mail successfully sent',
         status: 'success'
@@ -397,7 +387,6 @@ exports.createNewUser = function(req, res, next) {
         response.status = 'danger';
       }
       //res.json(response);
-      console.log('response: ' + response.message);
     }
   );
 };
@@ -406,7 +395,6 @@ exports.createNewUser = function(req, res, next) {
  * Method after following new user link
  */
 exports.newUser = function(req, res, next) {
-  console.log('in the new user function');
   User.findOne({ $or: [
     { newUserToken: req.params.token },
     { newUserTokenExpires: {
@@ -428,7 +416,6 @@ exports.newUser = function(req, res, next) {
       return res.status(400).send(errors);
     }
     user.active = true;
-    console.log('should be active');
     user.newUserToken = undefined;
     user.newUserTokenExpires = undefined;
     user.save(function(err) {
