@@ -11,4 +11,17 @@
 </form>
 <!-- Task directive -->
 <div class="task-wrapper" data-ng-controller="TaskCtrl" data-crn-task data-ng-repeat="task in phase.tasks" data-ng-if="!task.completed"></div>
+<!-- Completed task section -->
+<div class="task-wrapper"  data-ng-controller="TaskCtrl" data-ng-repeat="task in phase.tasks" data-ng-if="task.completed">
+	
+
+<div class="taskLeft">
+	<span class="complete-task">{{task.name}}</span>
+</div>
+
+<div class="taskRight">
+<img src="img/delete.png" class="delete-button" data-ng-show="currentMember.permission === 'admin'" data-ng-click="deleteTask(task)">
+</div>
+
+</div>
 <div class="add-task-wrapper" data-ng-include="'project/views/add-task.html'"></div>

@@ -244,6 +244,12 @@ display: inline;
 display: inline;
 }
 
+.complete-task {
+	color: green;
+	text-decoration: line-through;
+
+}
+
 
 td.mBody {
 	word-wrap: break-word;
