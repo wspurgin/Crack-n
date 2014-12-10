@@ -178,8 +178,6 @@ exports.addMembers = function (req, res) {
  * Shows Group Members of a Project
  */ 
 exports.members = function (req, res) {
-	//This needs to only return active users, and I think the best way to do this is to
-	//remove users from all of their groups when they delete, or make inactive, their accounts
 	var project_id = req.params.project_id;
 	console.log('project_id ' + project_id);
 	Project.find( {'_id': project_id} ).exec(function(err, result) {
