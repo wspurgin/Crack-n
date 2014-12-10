@@ -1,7 +1,7 @@
 <form id="addTaskForm{{phase._id}}" name="addTask" data-ng-controller="CreateTaskCtrl" data-ng-submit="createTask()">
     <input class="addTask" type="text" ng-model="task.name" placeholder="Add Task" class="taskName" />
     <select name="task.assignedMember">
-        <option data-ng-repeat="member in project.members" value="member">{{member.username}}</option>
+        <option data-ng-repeat="member in project.members" value="member">{{member.name}}</option>
     </select>
     <input type="submit" class="add-button" value="+" />
 </form> 
