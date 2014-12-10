@@ -282,7 +282,8 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope',
         return true;
       }
 
-      function verifyRemoval(targetedMember) {
+      function verifyRemoval(targetedMemberIndex) {
+        var targetedMember = $scope.project.members[targetedMemberIndex]; //grab member
         // when this function is called, by contract, we exprect the $scope variables to be instantiated.
         // is the currentMember an admin?
         if ($scope.currentMember.permission !== 'admin') {
@@ -297,15 +298,13 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope',
           return false;
         }
 
-        if ($scope.currentMember === targetedMember) {
-          // make sure you aren't the last admin standing
-          if (!isLastAdminStanding(targetedMember)) {
-            var choice = confirm('You\'re removing yourself, are you sure?');
-            return choice;
-          } else {
-            alert('You are the last admin in the project, elevate someone else to \'admin\' status before removing yourself.');
-            return false;
-          }
+        // make sure you aren't the last admin standing
+        if (!isLastAdminStanding(targetedMember)) {
+          var choice = confirm('You\'re removing yourself, are you sure?');
+          return choice;
+        } else {
+          alert('You are the last admin in the project, elevate someone else to \'admin\' status before removing yourself.');
+          return false;
         }
         return true;
       }
@@ -314,8 +313,10 @@ angular.module('mean.project').controller('ProjectCtrl', ['$scope',
         // make sure you aren't the last admin standing
         var lastAdminStanding = true;
         $scope.project.members.forEach(function(member) {
-          if (member !== targetedMember && member.permission === 'admin')
+          if (member._id !== targetedMember._id && member.permission === 'admin') {
+            console.log(member._id, targetedMember._id);
             lastAdminStanding = false;
+          }
         });
         return lastAdminStanding;
       }
