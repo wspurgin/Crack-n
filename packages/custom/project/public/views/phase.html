@@ -11,4 +11,4 @@
 </form>
 <!-- Task directive -->
 <div class="task-wrapper" data-ng-controller="TaskCtrl" data-crn-task data-ng-repeat="task in phase.tasks" data-ng-if="!task.completed"></div>
-<div class="add-task-wrapper" data-ng-include="'project/views/add-task.html'"></div>
+<div class="add-task-wrapper" data-ng-hide="currentMember.permission === 'view_only'" data-ng-include="'project/views/add-task.html'"></div>

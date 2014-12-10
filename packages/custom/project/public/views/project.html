@@ -6,9 +6,6 @@
 			<section class="project">
 
 			<div class="leftTeamDetails">
-				 
-
-			
 				<div class="team-details">
 					<h3 data-ng-hide="editingMembers">Team Members</h3>
 					<div class="teamMemberNames" data-ng-hide="editingMembers">
@@ -26,7 +23,7 @@
 
 				<div class="dropDown">
 					<div class="phase-wrapper" data-crn-phase data-ng-controller="PhaseCtrl" data-ng-repeat="phase in project.phases"></div>
-					<div class="add-phase-wrapper" data-ng-include="'project/views/add-phase.html'"></div>
+					<div class="add-phase-wrapper" data-ng-hide="currentMember.permission === 'view_only'" data-ng-include="'project/views/add-phase.html'"></div>
 				</div>
 			</section>
 		</div>
