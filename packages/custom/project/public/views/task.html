@@ -10,7 +10,7 @@
     </div>
 </form>
 <div class="taskRight" data-ng-hide="editing">
-<img src="img/check.png" class="check-button" data-ng-click="completeTask(task)"> 
+<img src="img/check.png" class="check-button" data-ng-hide="currentMember.permission === 'view-only'" data-ng-click="completeTask(task)"> 
 <img src="img/edit.png" class="edit-button" data-ng-show="currentMember.permission === 'admin'" data-ng-click="editing = true">
 <img src="img/delete.png" class="delete-button" data-ng-show="currentMember.permission === 'admin'" data-ng-click="deleteTask(task)">
 </div>
