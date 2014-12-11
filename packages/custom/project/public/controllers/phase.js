@@ -39,7 +39,7 @@ angular.module('mean.project').controller('CreatePhaseCtrl', ['$scope', '$rootSc
             $scope.project.phases.pop($scope.arrayObjectIndexOf($scope.project.phases, phase));
           })
           .error(function() {
-            alert('Could not delete task :(');
+            alert('Could not delete phase :(');
           });
       }
     };
