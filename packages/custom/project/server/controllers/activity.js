@@ -56,7 +56,7 @@ exports.createEntry = function(type, action, user, project_id) {
 		  	}
 		  /* falls through */
 		  case 'Task':
-		    if (action === 'Created' || action === 'Completed' || action === 'Removed') {
+		    if (action === 'Created' || action === 'Completed' || action === 'Removed' || action === 'Edited') {
 		 	  callback();
 		 	  break;
 		 	}
@@ -77,10 +77,10 @@ exports.createEntry = function(type, action, user, project_id) {
 	  },
 	  // Concatinate the log body and save
 	  function(callback) {
-	    type.toLowerCase();
-		action.toLowerCase();
+	    type = type.toLowerCase();
+			action = action.toLowerCase();
 		if (type === 'message' && action === 'created')
-		  action = ' posted';
+		  action = 'posted';
 		entry.body = action + ' a ' + type;
 		entry.save();
 		callback();
