@@ -290,7 +290,7 @@ margin-left: -30px;
 
 .messageBoardWrapper{
 	margin-top: 220px;
-margin-left: 55px;
+    margin-left: 55px;
 }
 
 div.alignSearchRes{
@@ -301,7 +301,7 @@ div.alignSearchRes{
 .messageBoard{
 
 	margin-top: -120px;
-	margin-left:800px;
+	margin-left: 700px;
 	width: 300px;
 	text-align: center;
 	border: 1px solid black;
