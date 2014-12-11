@@ -154,7 +154,7 @@ exports.delete=function(req,res) {
 			Phase.findOne({'_id':phase_id}).exec(function(err, result_phase){
 				if (!err && result_phase) {
 					Task.findOne({'_id':task_id}).exec(function(err, result_task) {
-						if (!err, result_task) {
+						if (!err && result_task) {
 							result_task.remove();
 							result_task.save();
 							result_phase.save();
