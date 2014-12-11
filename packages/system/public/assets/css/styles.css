@@ -1,7 +1,7 @@
 html { 
 	height: 100%;
 	width: 100%;
-	font-family: 'Open Sans Condensed'!important;
+	font-family: 'Abel'!important;
 }
 
 
@@ -213,8 +213,8 @@ input[type="button"]{
 .dropDown{
 	padding-top: 20px;
 	position: absolute;
-	left: 500px;
-	top: 200px;
+	left: 420px;
+	top: 100px;
 }
 
 .dropDown input[type="button"]{
@@ -247,6 +247,7 @@ display: inline;
 .complete-task {
 	color: green;
 	text-decoration: line-through;
+	font-family: 'Abel', sans-serif;
 
 }
 
@@ -299,7 +300,8 @@ div.alignSearchRes{
 
 .messageBoard{
 
-	margin-top: 100px;
+	margin-top: -120px;
+	margin-left:800px;
 	width: 300px;
 	text-align: center;
 	border: 1px solid black;
@@ -333,7 +335,7 @@ div.alignSearchRes{
 
 div.leftTeamDetails{
 	position: absolute;
-	top:10px;
+	top:130px;
 	left:10px;
 }
 
@@ -360,8 +362,10 @@ div.leftTeamDetails div.search-results{
 
 .phase {
 	color: black;
-	font-size: 2.2em;
+	font-size: 1.8em;
 	padding-right: 20px;
+	font-family: 'Abel', sans-serif;
+	font-weight: bold;
 }
 
 .task {
@@ -372,6 +376,7 @@ div.leftTeamDetails div.search-results{
 	padding-right: 6px;
 	font-size: 1.4em;
 	margin-left: 30px;
+	font-family: 'Abel', sans-serif;
 }
 
 .add-button {
@@ -548,7 +553,7 @@ tr.chatBoxL{
 	color: darkblue;
 }
 .body{
-	color:white;
+	color:black;
 }
 /*.messagesDisplay{
 	background-color: darkgray;
